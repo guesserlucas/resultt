@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultt+ Soluções em Contabilidade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Estilo customizado para usar a fonte Poppins */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Cores da marca para fácil acesso */
+        :root {
+            --brand-orange: #F28C28; /* Tom aproximado do logo */
+            --brand-green: #98D7C2;  /* Tom aproximado do logo */
+        }
+        .bg-brand-orange { background-color: var(--brand-orange); }
+        .text-brand-orange { color: var(--brand-orange); }
+        .bg-brand-green { background-color: var(--brand-green); }
+        .text-brand-green { color: var(--brand-green); }
+        .border-brand-orange { border-color: var(--brand-orange); }
+        .border-brand-green { border-color: var(--brand-green); }
+        .ring-brand-orange { --tw-ring-color: var(--brand-orange); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Cabeçalho -->
+    <header id="header" class="bg-white shadow-md fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <img src="https://i.imgur.com/w1j3f5b.png" alt="Logo Resultt+" class="h-10">
+            </a>
+
+            <!-- Navegação para Desktop -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#inicio" class="text-gray-600 hover:text-brand-orange transition duration-300 font-medium">Início</a>
+                <a href="#servicos" class="text-gray-600 hover:text-brand-orange transition duration-300 font-medium">Serviços</a>
+                <a href="#sobre" class="text-gray-600 hover:text-brand-orange transition duration-300 font-medium">Sobre Nós</a>
+                <a href="#contato" class="text-gray-600 hover:text-brand-orange transition duration-300 font-medium">Contato</a>
+            </nav>
+
+            <!-- Botão de Contato Desktop -->
+            <a href="#contato" class="hidden md:inline-block bg-brand-orange text-white font-bold py-2 px-5 rounded-full hover:bg-opacity-90 transition duration-300 shadow-lg">
+                Fale Conosco
+            </a>
+
+            <!-- Botão do Menu Mobile -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <i data-lucide="menu" class="h-6 w-6"></i>
+            </button>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="#inicio" class="block py-3 px-6 text-gray-600 hover:bg-gray-100 hover:text-brand-orange transition duration-300">Início</a>
+            <a href="#servicos" class="block py-3 px-6 text-gray-600 hover:bg-gray-100 hover:text-brand-orange transition duration-300">Serviços</a>
+            <a href="#sobre" class="block py-3 px-6 text-gray-600 hover:bg-gray-100 hover:text-brand-orange transition duration-300">Sobre Nós</a>
+            <a href="#contato" class="block py-3 px-6 text-gray-600 hover:bg-gray-100 hover:text-brand-orange transition duration-300">Contato</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Seção Inicial (Hero) -->
+        <section id="inicio" class="pt-24 md:pt-32 pb-16 bg-white">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+                <!-- Texto da Hero Section -->
+                <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+                        Contabilidade Inteligente para <span class="text-brand-orange">Resultados Reais</span>.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Simplificamos a complexidade financeira para que você possa focar no crescimento do seu negócio.
+                    </p>
+                    <a href="#servicos" class="bg-brand-orange text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition duration-300 shadow-xl text-lg">
+                        Conheça Nossas Soluções
+                    </a>
+                </div>
+                <!-- Imagem da Hero Section -->
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://i.imgur.com/uGgY9GW.png" alt="Selo Resultt+ Contabilidade" class="w-2/3 md:w-3/4 max-w-sm">
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Serviços -->
+        <section id="servicos" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Nossos Serviços</h2>
+                    <p class="text-gray-600 mt-2 max-w-2xl mx-auto">Oferecemos um portfólio completo de soluções para impulsionar sua empresa.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Card de Serviço 1: Contabilidade Completa -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="bg-brand-green text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                            <i data-lucide="book-check" class="h-8 w-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Contabilidade Completa</h3>
+                        <p class="text-gray-600">Gestão contábil e fiscal precisa, garantindo conformidade e tranquilidade para sua empresa.</p>
+                    </div>
+                    <!-- Card de Serviço 2: Consultoria Empresarial -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="bg-brand-green text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                            <i data-lucide="lightbulb" class="h-8 w-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Consultoria de Gestão</h3>
+                        <p class="text-gray-600">Análise e estratégias para otimizar processos, reduzir custos e aumentar a lucratividade.</p>
+                    </div>
+                    <!-- Card de Serviço 3: Apoio Administrativo -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                        <div class="bg-brand-green text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                            <i data-lucide="clipboard-list" class="h-8 w-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Apoio Administrativo</h3>
+                        <p class="text-gray-600">Serviços de suporte para o dia a dia do seu escritório, liberando seu tempo para o que importa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Sobre Nós -->
+        <section id="sobre" class="py-20 bg-white">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop" alt="Equipe colaborando" class="rounded-xl shadow-2xl w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Mais que números, geramos <span class="text-brand-orange">parcerias de sucesso</span>.</h2>
+                    <p class="text-gray-600 mb-4">
+                        A Resultt+ nasceu da vontade de transformar a contabilidade em uma ferramenta estratégica para empreendedores. Acreditamos que, com informação clara e suporte dedicado, podemos ajudar nossos clientes a alcançar resultados extraordinários.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        Nossa equipe combina experiência de mercado com inovação, utilizando a tecnologia para oferecer um serviço ágil, transparente e totalmente focado nas necessidades do seu negócio.
+                    </p>
+                    <div class="flex space-x-6">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="target" class="h-6 w-6 text-brand-orange"></i>
+                            <span class="font-semibold">Missão:</span>
+                        </div>
+                        <p class="text-gray-600">Potencializar o sucesso dos nossos clientes.</p>
+                    </div>
+                     <div class="flex space-x-6 mt-2">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="eye" class="h-6 w-6 text-brand-orange"></i>
+                            <span class="font-semibold">Visão:</span>
+                        </div>
+                        <p class="text-gray-600">Ser referência em contabilidade consultiva.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Contato -->
+        <section id="contato" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Vamos Conversar?</h2>
+                    <p class="text-gray-600 mt-2">Envie sua mensagem ou venha nos visitar. Estamos prontos para ajudar.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <!-- Formulário de Contato -->
+                    <div class="lg:w-1/2 bg-white p-8 rounded-xl shadow-lg">
+                        <form id="contact-form">
+                            <div class="mb-5">
+                                <label for="name" class="block mb-2 font-medium text-gray-700">Nome</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange" required>
+                            </div>
+                            <div class="mb-5">
+                                <label for="email" class="block mb-2 font-medium text-gray-700">E-mail</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange" required>
+                            </div>
+                            <div class="mb-5">
+                                <label for="message" class="block mb-2 font-medium text-gray-700">Mensagem</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-orange text-white font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition duration-300 shadow-lg">
+                                Enviar Mensagem
+                            </button>
+                            <p id="form-status" class="text-center mt-4"></p>
+                        </form>
+                    </div>
+                    <!-- Informações de Contato e Mapa -->
+                    <div class="lg:w-1/2">
+                       <div class="bg-white p-8 rounded-xl shadow-lg mb-6">
+                           <h3 class="text-xl font-bold mb-4">Nossas Informações</h3>
+                           <div class="space-y-4 text-gray-600">
+                               <div class="flex items-start space-x-3">
+                                   <i data-lucide="map-pin" class="h-6 w-6 text-brand-orange mt-1"></i>
+                                   <span>R. José Bonifácio, 157, Centro - Treze Tílias, SC, 89650-000</span>
+                               </div>
+                               <div class="flex items-center space-x-3">
+                                   <i data-lucide="mail" class="h-6 w-6 text-brand-orange"></i>
+                                   <a href="mailto:contato@resulttcontabilidade.com.br" class="hover:text-brand-orange">contato@resulttcontabilidade.com.br</a>
+                               </div>
+                               <div class="flex items-center space-x-3">
+                                   <i data-lucide="phone" class="h-6 w-6 text-brand-orange"></i>
+                                   <a href="tel:+554935650038" class="hover:text-brand-orange">(49) 3565-0038</a>
+                               </div>
+                               <div class="flex items-center space-x-3">
+                                   <i data-lucide="instagram" class="h-6 w-6 text-brand-orange"></i>
+                                   <a href="https://www.instagram.com/resultt.contabilidade?igsh=dzFqcW5xZTI0NXhl" target="_blank" rel="noopener noreferrer" class="hover:text-brand-orange">@resultt.contabilidade</a>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="rounded-xl shadow-lg overflow-hidden h-64 md:h-80">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.189762118491!2d-51.40989838495764!3d-26.80165898317208!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94e25a40b1548657%3A0x6b44a694a533816c!2sR.%20Jos%C3%A9%20Bonif%C3%A1cio%2C%20157%20-%20Centro%2C%20Treze%20T%C3%ADlias%20-%20SC%2C%2089650-000!5e0!3m2!1spt-BR!2sbr!4v1672596812345!5m2!1spt-BR!2sbr" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <a href="#" class="inline-block mb-4">
+                 <img src="https://i.imgur.com/w1j3f5b.png" alt="Logo Resultt+ Branco" class="h-12" style="filter: brightness(0) invert(1);">
+            </a>
+            <div class="flex justify-center space-x-6 my-6">
+                <a href="https://www.instagram.com/resultt.contabilidade?igsh=dzFqcW5xZTI0NXhl" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram">
+                    <i data-lucide="instagram" class="h-7 w-7"></i>
+                </a>
+            </div>
+            <p class="mb-4">&copy; <span id="current-year"></span> Resultt+ Soluções em Contabilidade. Todos os direitos reservados.</p>
+            <p class="text-sm text-gray-400">Desenvolvido com criatividade e tecnologia.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializa os ícones Lucide
+        lucide.createIcons();
+
+        // Lógica do Menu Mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = mobileMenuButton.querySelector('i');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenuIcon.setAttribute('data-lucide', 'menu');
+            } else {
+                mobileMenuIcon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons(); // Recria o ícone para refletir a mudança
+        });
+
+        // Fecha o menu mobile ao clicar em um link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+        
+        // Simulação de envio de formulário
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            formStatus.textContent = 'Enviando...';
+            formStatus.classList.remove('text-red-500');
+            formStatus.classList.add('text-blue-500');
+
+            setTimeout(() => {
+                formStatus.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
+                formStatus.classList.remove('text-blue-500');
+                formStatus.classList.add('text-green-600');
+                contactForm.reset();
+            }, 1500);
+        });
+
+        // Atualiza o ano no rodapé
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    </script>
+</body>
+</html>
