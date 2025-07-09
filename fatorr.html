@@ -22,6 +22,11 @@
             background-color: #f3f4f6;
             border: 1px solid #d1d5db;
         }
+        .calculated-field {
+            background-color: #e5e7eb;
+            border: 1px solid #d1d5db;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
@@ -60,19 +65,19 @@
                             <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="faturamento_mensal" class="text-sm font-medium text-gray-700 text-right">Faturamento Bruto:</label>
                                 <input type="number" id="faturamento_mensal" class="input-field p-2 rounded-md text-right" value="12000" oninput="calcularTudo()">
-                                <span id="faturamento_anual" class="p-2 rounded-md text-right bg-gray-200">R$ 144.000,00</span>
+                                <span id="faturamento_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
                             <!-- Pro-labore -->
                             <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="pro_labore_mensal" class="text-sm font-medium text-gray-700 text-right">Pró-labore:</label>
                                 <input type="number" id="pro_labore_mensal" class="input-field p-2 rounded-md text-right" value="3360" oninput="calcularTudo()">
-                                <span id="folha_anual" class="p-2 rounded-md text-right bg-gray-200">R$ 40.320,00</span>
+                                <span id="pro_labore_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
-                            <!-- INSS -->
+                            <!-- INSS (Calculado) -->
                              <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="inss_pro_labore" class="text-sm font-medium text-gray-700 text-right">INSS Pró-labore (11%):</label>
-                                <input type="number" id="inss_pro_labore" class="input-field p-2 rounded-md text-right" value="369.60" oninput="calcularTudo()">
-                                <span id="inss_anual" class="p-2 rounded-md text-right bg-gray-200">R$ 4.435,20</span>
+                                <input type="number" id="inss_pro_labore" class="calculated-field p-2 rounded-md text-right" readonly>
+                                <span id="inss_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
                         </div>
                     </div>
@@ -98,22 +103,22 @@
                         <div class="space-y-3 p-4 border rounded-b-md bg-gray-50">
                             <div class="flex justify-between items-center">
                                 <span class="text-sm font-medium text-gray-700">Fator 'R' (Folha / Faturamento):</span>
-                                <span id="fator_r" class="font-bold text-lg resultt-text-green">28.00%</span>
+                                <span id="fator_r" class="font-bold text-lg resultt-text-green"></span>
                             </div>
                             <hr>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm font-medium text-gray-700">Anexo Aplicado:</span>
-                                <span id="anexo_aplicado" class="font-bold text-lg text-gray-800">Anexo III</span>
+                                <span id="anexo_aplicado" class="font-bold text-lg text-gray-800"></span>
                             </div>
                              <hr>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm font-medium text-gray-700">Alíquota Nominal:</span>
-                                <span id="aliquota_nominal" class="font-bold text-lg text-gray-800">6.00%</span>
+                                <span id="aliquota_nominal" class="font-bold text-lg text-gray-800"></span>
                             </div>
                             <hr>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm font-medium text-gray-700">Alíquota Efetiva:</span>
-                                <span id="aliquota_efetiva" class="font-bold text-lg text-gray-800">6.00%</span>
+                                <span id="aliquota_efetiva" class="font-bold text-lg text-gray-800"></span>
                             </div>
                         </div>
                     </div>
@@ -122,7 +127,7 @@
                     <div>
                         <h2 class="font-bold resultt-green text-white p-2 rounded-t-md text-center">IMPOSTO A PAGAR (DAS)</h2>
                         <div class="p-4 border rounded-b-md text-center bg-green-50">
-                            <span id="imposto_a_pagar" class="text-3xl font-bold text-gray-800">R$ 720,00</span>
+                            <span id="imposto_a_pagar" class="text-3xl font-bold text-gray-800"></span>
                         </div>
                     </div>
                 </div>
@@ -179,19 +184,24 @@
         }
 
         function calcularTudo() {
-            // Obter valores dos inputs
+            // Obter valores dos inputs principais
             const faturamentoMensal = parseFloat(document.getElementById('faturamento_mensal').value) || 0;
             const proLaboreMensal = parseFloat(document.getElementById('pro_labore_mensal').value) || 0;
-            const inssProLabore = parseFloat(document.getElementById('inss_pro_labore').value) || 0;
             const aplicarFatorR = document.getElementById('aplicar_fator_r').value === 'Sim';
 
-            // Cálculos primários
-            const faturamentoAnual = faturamentoMensal * 12;
-            const folhaMensal = proLaboreMensal + inssProLabore;
-            const folhaAnual = folhaMensal * 12;
-            const inssAnual = inssProLabore * 12;
+            // --- CÁLCULOS AUTOMÁTICOS ---
+            // 1. Calcular INSS mensal e atualizar o campo
+            const inssProLaboreMensal = proLaboreMensal * 0.11;
+            document.getElementById('inss_pro_labore').value = inssProLaboreMensal.toFixed(2);
 
-            const fatorR = faturamentoAnual > 0 ? folhaAnual / faturamentoAnual : 0;
+            // 2. Calcular valores anuais para exibição e lógica
+            const faturamentoAnual = faturamentoMensal * 12;
+            const proLaboreAnual = proLaboreMensal * 12;
+            const inssAnual = inssProLaboreMensal * 12;
+            
+            // --- LÓGICA DO SIMPLES NACIONAL ---
+            // Cálculo do Fator R conforme solicitado: Pró-labore Anual / Faturamento Bruto Anual
+            const fatorR = faturamentoAnual > 0 ? proLaboreAnual / faturamentoAnual : 0;
 
             // Seleção da tabela
             let tabelaSelecionada = tabela_anexo_v;
@@ -210,15 +220,14 @@
             if (faturamentoAnual > 0) {
                 aliquotaEfetiva = ((faturamentoAnual * aliquotaNominal) - parcelaADeduzir) / faturamentoAnual;
             }
-             // Garante que a alíquota efetiva não seja negativa
-            aliquotaEfetiva = Math.max(0, aliquotaEfetiva);
+            aliquotaEfetiva = Math.max(0, aliquotaEfetiva); // Garante que não seja negativa
 
             // Cálculo do imposto
             const impostoAPagar = faturamentoMensal * aliquotaEfetiva;
 
-            // Atualizar a UI (Interface do Usuário)
+            // --- ATUALIZAR A INTERFACE ---
             document.getElementById('faturamento_anual').innerText = formatCurrency(faturamentoAnual);
-            document.getElementById('folha_anual').innerText = formatCurrency(folhaAnual);
+            document.getElementById('pro_labore_anual').innerText = formatCurrency(proLaboreAnual);
             document.getElementById('inss_anual').innerText = formatCurrency(inssAnual);
             
             document.getElementById('fator_r').innerText = formatPercent(fatorR);
@@ -227,14 +236,14 @@
             document.getElementById('aliquota_efetiva').innerText = formatPercent(aliquotaEfetiva);
             document.getElementById('imposto_a_pagar').innerText = formatCurrency(impostoAPagar);
 
-            // Mudar cor do Fator R
-            const fatorR_element = document.getElementById('fator_r');
+            // Mudar cor do Fator R para feedback visual
+            const fatorRElement = document.getElementById('fator_r');
             if (fatorR >= 0.28) {
-                fatorR_element.classList.remove('text-red-600');
-                fatorR_element.classList.add('resultt-text-green');
+                fatorRElement.classList.remove('text-red-600');
+                fatorRElement.classList.add('resultt-text-green');
             } else {
-                fatorR_element.classList.remove('resultt-text-green');
-                fatorR_element.classList.add('text-red-600');
+                fatorRElement.classList.remove('resultt-text-green');
+                fatorRElement.classList.add('text-red-600');
             }
         }
 
