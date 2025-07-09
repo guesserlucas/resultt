@@ -76,8 +76,14 @@
                             <!-- INSS (Calculado) -->
                              <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="inss_pro_labore" class="text-sm font-medium text-gray-700 text-right">INSS Pró-labore (11%):</label>
-                                <input type="number" id="inss_pro_labore" class="calculated-field p-2 rounded-md text-right" readonly>
+                                <span id="inss_pro_labore_mensal" class="calculated-field p-2 rounded-md text-right"></span>
                                 <span id="inss_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
+                            </div>
+                            <!-- Imposto de Renda (Calculado) -->
+                            <div class="grid grid-cols-3 items-center gap-2">
+                                <label for="imposto_renda_mensal" class="text-sm font-medium text-gray-700 text-right">Imposto de Renda (IRPF):</label>
+                                <span id="imposto_renda_mensal" class="calculated-field p-2 rounded-md text-right"></span>
+                                <span id="imposto_renda_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
                         </div>
                     </div>
@@ -99,10 +105,10 @@
                 <div class="space-y-6">
                     <!-- Seção Alíquotas -->
                     <div>
-                        <h2 class="font-bold bg-gray-700 text-white p-2 rounded-t-md">RESULTADO DO CÁLCULO</h2>
+                        <h2 class="font-bold bg-gray-700 text-white p-2 rounded-t-md">RESULTADO DO CÁLCULO (SIMPLES NACIONAL)</h2>
                         <div class="space-y-3 p-4 border rounded-b-md bg-gray-50">
                             <div class="flex justify-between items-center">
-                                <span class="text-sm font-medium text-gray-700">Fator 'R' (Folha / Faturamento):</span>
+                                <span class="text-sm font-medium text-gray-700">Fator 'R' (Pró-labore / Faturamento):</span>
                                 <span id="fator_r" class="font-bold text-lg resultt-text-green"></span>
                             </div>
                             <hr>
@@ -137,8 +143,8 @@
             <div class="mt-8 p-4 border-2 border-dashed rounded-md text-center">
                 <h3 class="font-bold text-gray-800">IMPORTANTE</h3>
                 <p class="text-xs text-gray-600 mt-2">
-                    O benefício do Fator R (tributação pelo Anexo III) só é aplicado quando a relação folha/faturamento for igual ou superior a 28%.
-                    Esta calculadora tem finalidade demonstrativa e educativa. Consulte sempre um profissional de contabilidade para analisar seu caso específico.
+                    O benefício do Fator R (tributação pelo Anexo III) só é aplicado quando a relação pró-labore/faturamento for igual ou superior a 28%.
+                    Esta calculadora tem finalidade demonstrativa e educativa. O cálculo do IRPF é uma estimativa que considera a opção mais vantajosa entre a dedução padrão (INSS) e o desconto simplificado. Consulte sempre um profissional de contabilidade para analisar seu caso específico.
                 </p>
             </div>
         </main>
@@ -174,14 +180,49 @@
         };
 
         // --- Funções de Cálculo ---
-        function getFaixa(faturamentoAnual, tabela) {
+        function getFaixa(valor, tabela) {
             for (const faixa of tabela) {
-                if (faturamentoAnual <= faixa.ate) {
+                if (valor <= faixa.ate || valor <= faixa.limite) { // Suporta ambas as chaves 'ate' e 'limite'
                     return faixa;
                 }
             }
-            return tabela[tabela.length - 1]; // Retorna a última faixa se exceder
+            return tabela[tabela.length - 1];
         }
+
+        function calcularIrpfProLabore(proLaboreMensal) {
+            // --- Parâmetros para Julho/2025 ---
+            const ALIQUOTA_INSS = 0.11;
+            const TETO_INSS_2025 = 8157.41;
+            const DESCONTO_SIMPLIFICADO = 607.20;
+            const TABELA_IRPF = [
+                { limite: 2428.80, aliquota: 0.0, deducao: 0.0 },
+                { limite: 2826.65, aliquota: 0.075, deducao: 182.16 },
+                { limite: 3751.05, aliquota: 0.15, deducao: 394.16 },
+                { limite: 4664.68, aliquota: 0.225, deducao: 675.49 },
+                { limite: Infinity, aliquota: 0.275, deducao: 908.73 },
+            ];
+
+            // Passo 1: Calcular a dedução legal do INSS (respeitando o teto)
+            const baseCalculoInss = Math.min(proLaboreMensal, TETO_INSS_2025);
+            const deducaoInss = baseCalculoInss * ALIQUOTA_INSS;
+
+            // Passo 2: Determinar a dedução ótima
+            const deducaoOtima = Math.max(deducaoInss, DESCONTO_SIMPLIFICADO);
+
+            // Passo 3: Calcular a Base de Cálculo final do IRPF
+            let baseCalculoIrpf = proLaboreMensal - deducaoOtima;
+            baseCalculoIrpf = Math.max(0, baseCalculoIrpf); // Não pode ser negativa
+
+            // Passo 4: Aplicar a alíquota e a parcela a deduzir
+            const faixaIrpf = getFaixa(baseCalculoIrpf, TABELA_IRPF);
+            const impostoBruto = baseCalculoIrpf * faixaIrpf.aliquota;
+            let impostoDevido = impostoBruto - faixaIrpf.deducao;
+            
+            impostoDevido = Math.max(0, impostoDevido); // Não pode ser negativo
+
+            return impostoDevido;
+        }
+
 
         function calcularTudo() {
             // Obter valores dos inputs principais
@@ -189,21 +230,19 @@
             const proLaboreMensal = parseFloat(document.getElementById('pro_labore_mensal').value) || 0;
             const aplicarFatorR = document.getElementById('aplicar_fator_r').value === 'Sim';
 
-            // --- CÁLCULOS AUTOMÁTICOS ---
-            // 1. Calcular INSS mensal e atualizar o campo
-            const inssProLaboreMensal = proLaboreMensal * 0.11;
-            document.getElementById('inss_pro_labore').value = inssProLaboreMensal.toFixed(2);
-
-            // 2. Calcular valores anuais para exibição e lógica
+            // --- CÁLCULOS DE VALORES BASE ---
+            const inssProLaboreMensal = proLaboreMensal * 0.11; // INSS sem teto, para exibição
             const faturamentoAnual = faturamentoMensal * 12;
             const proLaboreAnual = proLaboreMensal * 12;
             const inssAnual = inssProLaboreMensal * 12;
             
+            // --- CÁLCULO DO IRPF ---
+            const impostoRenda = calcularIrpfProLabore(proLaboreMensal);
+            const impostoRendaAnual = impostoRenda * 12;
+
             // --- LÓGICA DO SIMPLES NACIONAL ---
-            // Cálculo do Fator R conforme solicitado: Pró-labore Anual / Faturamento Bruto Anual
             const fatorR = faturamentoAnual > 0 ? proLaboreAnual / faturamentoAnual : 0;
 
-            // Seleção da tabela
             let tabelaSelecionada = tabela_anexo_v;
             let anexoAplicadoTexto = "Anexo V";
             if (aplicarFatorR && fatorR >= 0.28) {
@@ -215,20 +254,20 @@
             const aliquotaNominal = faixaSelecionada.aliquota;
             const parcelaADeduzir = faixaSelecionada.deducao;
 
-            // Cálculo da alíquota efetiva
             let aliquotaEfetiva = 0;
             if (faturamentoAnual > 0) {
                 aliquotaEfetiva = ((faturamentoAnual * aliquotaNominal) - parcelaADeduzir) / faturamentoAnual;
             }
-            aliquotaEfetiva = Math.max(0, aliquotaEfetiva); // Garante que não seja negativa
-
-            // Cálculo do imposto
+            aliquotaEfetiva = Math.max(0, aliquotaEfetiva);
             const impostoAPagar = faturamentoMensal * aliquotaEfetiva;
 
             // --- ATUALIZAR A INTERFACE ---
             document.getElementById('faturamento_anual').innerText = formatCurrency(faturamentoAnual);
             document.getElementById('pro_labore_anual').innerText = formatCurrency(proLaboreAnual);
+            document.getElementById('inss_pro_labore_mensal').innerText = formatCurrency(inssProLaboreMensal);
             document.getElementById('inss_anual').innerText = formatCurrency(inssAnual);
+            document.getElementById('imposto_renda_mensal').innerText = formatCurrency(impostoRenda);
+            document.getElementById('imposto_renda_anual').innerText = formatCurrency(impostoRendaAnual);
             
             document.getElementById('fator_r').innerText = formatPercent(fatorR);
             document.getElementById('anexo_aplicado').innerText = anexoAplicadoTexto;
@@ -236,19 +275,17 @@
             document.getElementById('aliquota_efetiva').innerText = formatPercent(aliquotaEfetiva);
             document.getElementById('imposto_a_pagar').innerText = formatCurrency(impostoAPagar);
 
-            // Mudar cor do Fator R para feedback visual
             const fatorRElement = document.getElementById('fator_r');
             if (fatorR >= 0.28) {
                 fatorRElement.classList.remove('text-red-600');
                 fatorRElement.classList.add('resultt-text-green');
             } else {
-                fatorRElement.classList.remove('resultt-text-green');
+                fatorRElement.classList.remove('text-red-600');
                 fatorRElement.classList.add('text-red-600');
             }
         }
 
         // --- Execução Inicial ---
-        // Chama a função de cálculo quando a página carregar para popular os valores iniciais.
         window.onload = calcularTudo;
     </script>
 </body>
