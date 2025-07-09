@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Simples Nacional - Anexo V com Fator R</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .resultt-green {
+            background-color: #00b050; /* Cor verde similar à da logo */
+        }
+        .resultt-text-green {
+            color: #00b050;
+        }
+        .input-field {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-lg p-6 md:p-8">
+
+        <!-- Cabeçalho -->
+        <header class="flex flex-col md:flex-row justify-between items-center pb-4 border-b">
+            <div class="flex-shrink-0 mb-4 md:mb-0">
+                <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/200x80/cccccc/000000?text=Logo';">
+            </div>
+            <div class="text-center md:text-right">
+                <h1 class="text-xl md:text-2xl font-bold text-gray-800">CALCULE O IMPOSTO NO SIMPLES NACIONAL</h1>
+                <p class="text-sm text-gray-500">Anexo V com Fator R</p>
+            </div>
+        </header>
+        
+        <main class="mt-6">
+            <p class="text-center text-sm text-gray-600 mb-6">*PREENCHER APENAS OS CAMPOS EM CINZA PARA SIMULAÇÃO.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Coluna de Entradas -->
+                <div class="space-y-6">
+                    <!-- Seção de Dados -->
+                    <div>
+                        <div class="flex justify-between items-center bg-gray-700 text-white p-2 rounded-t-md">
+                            <h2 class="font-bold">DADOS PARA O CÁLCULO</h2>
+                            <div class="flex space-x-8 mr-4">
+                                <span class="text-sm font-semibold">MENSAL</span>
+                                <span class="text-sm font-semibold">ANUAL</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2 p-4 border rounded-b-md">
+                            <!-- Faturamento -->
+                            <div class="grid grid-cols-3 items-center gap-2">
+                                <label for="faturamento_mensal" class="text-sm font-medium text-gray-700 text-right">Faturamento Bruto:</label>
+                                <input type="number" id="faturamento_mensal" class="input-field p-2 rounded-md text-right" value="12000" oninput="calcularTudo()">
+                                <span id="faturamento_anual" class="p-2 rounded-md text-right bg-gray-200">R$ 144.000,00</span>
+                            </div>
+                            <!-- Pro-labore -->
+                            <div class="grid grid-cols-3 items-center gap-2">
+                                <label for="pro_labore_mensal" class="text-sm font-medium text-gray-700 text-right">Pró-labore:</label>
+                                <input type="number" id="pro_labore_mensal" class="input-field p-2 rounded-md text-right" value="3360" oninput="calcularTudo()">
+                                <span id="folha_anual" class="p-2 rounded-md text-right bg-gray-200">R$ 40.320,00</span>
+                            </div>
+                            <!-- INSS -->
+                             <div class="grid grid-cols-3 items-center gap-2">
+                                <label for="inss_pro_labore" class="text-sm font-medium text-gray-700 text-right">INSS Pró-labore (11%):</label>
+                                <input type="number" id="inss_pro_labore" class="input-field p-2 rounded-md text-right" value="369.60" oninput="calcularTudo()">
+                                <span id="inss_anual" class="p-2 rounded-md text-right bg-gray-200">R$ 4.435,20</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opção Fator R -->
+                    <div>
+                        <h2 class="font-bold bg-gray-700 text-white p-2 rounded-t-md">OPÇÃO FATOR R</h2>
+                        <div class="flex justify-between items-center p-4 border rounded-b-md">
+                            <label for="aplicar_fator_r" class="text-sm font-medium text-gray-700">Deseja aplicar o benefício do Fator R?</label>
+                            <select id="aplicar_fator_r" class="input-field p-2 rounded-md" onchange="calcularTudo()">
+                                <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coluna de Resultados -->
+                <div class="space-y-6">
+                    <!-- Seção Alíquotas -->
+                    <div>
+                        <h2 class="font-bold bg-gray-700 text-white p-2 rounded-t-md">RESULTADO DO CÁLCULO</h2>
+                        <div class="space-y-3 p-4 border rounded-b-md bg-gray-50">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-700">Fator 'R' (Folha / Faturamento):</span>
+                                <span id="fator_r" class="font-bold text-lg resultt-text-green">28.00%</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-700">Anexo Aplicado:</span>
+                                <span id="anexo_aplicado" class="font-bold text-lg text-gray-800">Anexo III</span>
+                            </div>
+                             <hr>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-700">Alíquota Nominal:</span>
+                                <span id="aliquota_nominal" class="font-bold text-lg text-gray-800">6.00%</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-700">Alíquota Efetiva:</span>
+                                <span id="aliquota_efetiva" class="font-bold text-lg text-gray-800">6.00%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Imposto a Pagar -->
+                    <div>
+                        <h2 class="font-bold resultt-green text-white p-2 rounded-t-md text-center">IMPOSTO A PAGAR (DAS)</h2>
+                        <div class="p-4 border rounded-b-md text-center bg-green-50">
+                            <span id="imposto_a_pagar" class="text-3xl font-bold text-gray-800">R$ 720,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção Importante -->
+            <div class="mt-8 p-4 border-2 border-dashed rounded-md text-center">
+                <h3 class="font-bold text-gray-800">IMPORTANTE</h3>
+                <p class="text-xs text-gray-600 mt-2">
+                    O benefício do Fator R (tributação pelo Anexo III) só é aplicado quando a relação folha/faturamento for igual ou superior a 28%.
+                    Esta calculadora tem finalidade demonstrativa e educativa. Consulte sempre um profissional de contabilidade para analisar seu caso específico.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Definição das Tabelas do Simples Nacional (Anexo III e V) ---
+        const tabela_anexo_v = [
+            { faixa: 1, ate: 180000.00, aliquota: 0.1550, deducao: 0.00 },
+            { faixa: 2, ate: 360000.00, aliquota: 0.1800, deducao: 4500.00 },
+            { faixa: 3, ate: 720000.00, aliquota: 0.1950, deducao: 9900.00 },
+            { faixa: 4, ate: 1800000.00, aliquota: 0.2050, deducao: 17100.00 },
+            { faixa: 5, ate: 3600000.00, aliquota: 0.2300, deducao: 62100.00 },
+            { faixa: 6, ate: 4800000.00, aliquota: 0.3050, deducao: 540000.00 },
+        ];
+
+        const tabela_anexo_iii = [
+            { faixa: 1, ate: 180000.00, aliquota: 0.0600, deducao: 0.00 },
+            { faixa: 2, ate: 360000.00, aliquota: 0.1120, deducao: 9360.00 },
+            { faixa: 3, ate: 720000.00, aliquota: 0.1350, deducao: 17640.00 },
+            { faixa: 4, ate: 1800000.00, aliquota: 0.1600, deducao: 35640.00 },
+            { faixa: 5, ate: 3600000.00, aliquota: 0.2100, deducao: 125640.00 },
+            { faixa: 6, ate: 4800000.00, aliquota: 0.3300, deducao: 648000.00 },
+        ];
+
+        // --- Funções de Formatação ---
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+        };
+
+        const formatPercent = (value) => {
+            return (value * 100).toFixed(2).replace('.', ',') + '%';
+        };
+
+        // --- Funções de Cálculo ---
+        function getFaixa(faturamentoAnual, tabela) {
+            for (const faixa of tabela) {
+                if (faturamentoAnual <= faixa.ate) {
+                    return faixa;
+                }
+            }
+            return tabela[tabela.length - 1]; // Retorna a última faixa se exceder
+        }
+
+        function calcularTudo() {
+            // Obter valores dos inputs
+            const faturamentoMensal = parseFloat(document.getElementById('faturamento_mensal').value) || 0;
+            const proLaboreMensal = parseFloat(document.getElementById('pro_labore_mensal').value) || 0;
+            const inssProLabore = parseFloat(document.getElementById('inss_pro_labore').value) || 0;
+            const aplicarFatorR = document.getElementById('aplicar_fator_r').value === 'Sim';
+
+            // Cálculos primários
+            const faturamentoAnual = faturamentoMensal * 12;
+            const folhaMensal = proLaboreMensal + inssProLabore;
+            const folhaAnual = folhaMensal * 12;
+            const inssAnual = inssProLabore * 12;
+
+            const fatorR = faturamentoAnual > 0 ? folhaAnual / faturamentoAnual : 0;
+
+            // Seleção da tabela
+            let tabelaSelecionada = tabela_anexo_v;
+            let anexoAplicadoTexto = "Anexo V";
+            if (aplicarFatorR && fatorR >= 0.28) {
+                tabelaSelecionada = tabela_anexo_iii;
+                anexoAplicadoTexto = "Anexo III";
+            }
+
+            const faixaSelecionada = getFaixa(faturamentoAnual, tabelaSelecionada);
+            const aliquotaNominal = faixaSelecionada.aliquota;
+            const parcelaADeduzir = faixaSelecionada.deducao;
+
+            // Cálculo da alíquota efetiva
+            let aliquotaEfetiva = 0;
+            if (faturamentoAnual > 0) {
+                aliquotaEfetiva = ((faturamentoAnual * aliquotaNominal) - parcelaADeduzir) / faturamentoAnual;
+            }
+             // Garante que a alíquota efetiva não seja negativa
+            aliquotaEfetiva = Math.max(0, aliquotaEfetiva);
+
+            // Cálculo do imposto
+            const impostoAPagar = faturamentoMensal * aliquotaEfetiva;
+
+            // Atualizar a UI (Interface do Usuário)
+            document.getElementById('faturamento_anual').innerText = formatCurrency(faturamentoAnual);
+            document.getElementById('folha_anual').innerText = formatCurrency(folhaAnual);
+            document.getElementById('inss_anual').innerText = formatCurrency(inssAnual);
+            
+            document.getElementById('fator_r').innerText = formatPercent(fatorR);
+            document.getElementById('anexo_aplicado').innerText = anexoAplicadoTexto;
+            document.getElementById('aliquota_nominal').innerText = formatPercent(aliquotaNominal);
+            document.getElementById('aliquota_efetiva').innerText = formatPercent(aliquotaEfetiva);
+            document.getElementById('imposto_a_pagar').innerText = formatCurrency(impostoAPagar);
+
+            // Mudar cor do Fator R
+            const fatorR_element = document.getElementById('fator_r');
+            if (fatorR >= 0.28) {
+                fatorR_element.classList.remove('text-red-600');
+                fatorR_element.classList.add('resultt-text-green');
+            } else {
+                fatorR_element.classList.remove('resultt-text-green');
+                fatorR_element.classList.add('text-red-600');
+            }
+        }
+
+        // --- Execução Inicial ---
+        // Chama a função de cálculo quando a página carregar para popular os valores iniciais.
+        window.onload = calcularTudo;
+    </script>
+</body>
+</html>
