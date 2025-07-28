@@ -46,6 +46,10 @@
             <form id="signature-form">
                 <div class="space-y-4">
                     <div>
+                        <label for="identifier" class="block text-sm font-medium text-gray-600">Identificador:</label>
+                        <input type="text" id="identifier" name="identifier" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
                         <label for="document-name" class="block text-sm font-medium text-gray-600">Nome do Documento:</label>
                         <input type="text" id="document-name" name="document-name" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
@@ -87,12 +91,17 @@
 
                 <!-- Seção Documento -->
                 <section class="p-4 border-b">
-                     <div class="flex justify-between items-center mb-2">
-                        <h3 class="font-bold text-lg text-gray-600">DOCUMENTO</h3>
-                        <img src="https://cryptoid.com.br/wp-content/uploads/2020/01/icp-brasil.jpg" alt="Logo ICP Brasil" class="h-24">
+                     <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-600">DOCUMENTO</h3>
+                             <div id="report-identifier-container" class="text-center my-3">
+                                <!-- O identificador será inserido aqui -->
+                            </div>
+                            <p class="text-sm"><span class="font-semibold">Nome:</span> <span id="report-document-name"></span></p>
+                            <p class="text-sm"><span class="font-semibold">Data de criação:</span> <span id="report-creation-date"></span></p>
+                        </div>
+                        <img src="https://cryptoid.com.br/wp-content/uploads/2020/01/icp-brasil.jpg" alt="Logo ICP Brasil" class="h-32">
                     </div>
-                    <p class="text-sm"><span class="font-semibold">Nome:</span> <span id="report-document-name"></span></p>
-                    <p class="text-sm"><span class="font-semibold">Data de criação:</span> <span id="report-creation-date"></span></p>
                 </section>
 
                 <!-- Seção Assinaturas -->
@@ -158,6 +167,7 @@
             event.preventDefault(); // Impede o envio padrão do formulário
 
             // 1. Coletar dados do formulário
+            const identifier = document.getElementById('identifier').value;
             const docName = document.getElementById('document-name').value;
             const name = document.getElementById('subscriber-name').value;
             const cpf = document.getElementById('subscriber-cpf').value;
@@ -169,6 +179,9 @@
             const todayFormatted = formatDate(new Date().toISOString().slice(0, 10));
 
             // 2. Preencher os dados no template do relatório
+            const identifierContainer = document.getElementById('report-identifier-container');
+            identifierContainer.innerHTML = `<p class="text-sm font-semibold">IDENTIFICADOR:</p><p class="text-xl font-bold text-gray-800">${identifier}</p>`;
+            
             document.getElementById('report-document-name').textContent = docName;
             document.getElementById('report-creation-date').textContent = todayFormatted;
             document.getElementById('report-subscriber-name').textContent = name;
@@ -186,15 +199,17 @@
             const qrContainer = document.getElementById('qrcode-container');
             qrContainer.innerHTML = ''; // Limpa o container do QR Code anterior
             try {
-                const typeNumber = 4; // Tipo do QR Code, ajusta a densidade
+                // Usar typeNumber 0 para permitir que a biblioteca escolha o tamanho ideal
+                const typeNumber = 0; 
                 const errorCorrectionLevel = 'L'; // Nível de correção de erro
                 const qr = qrcode(typeNumber, errorCorrectionLevel);
                 qr.addData(link);
                 qr.make();
-                qrContainer.innerHTML = qr.createImgTag(4, 8); // (tamanho do módulo, margem)
+                // O tamanho do módulo (primeiro argumento) pode ser ajustado se necessário
+                qrContainer.innerHTML = qr.createImgTag(3, 6); // (tamanho do módulo, margem)
             } catch (e) {
                 console.error("Erro ao gerar QR Code:", e);
-                qrContainer.innerHTML = '<p class="text-red-500 text-xs">Erro ao gerar QR Code.</p>';
+                qrContainer.innerHTML = '<p class="text-red-500 text-xs">Erro ao gerar QR Code para este link.</p>';
             }
 
 
@@ -218,19 +233,20 @@
                 document.getElementById('qrcode-container').innerHTML = ''; // Limpa o QR Code
             }, 500);
         }
-    </script>
-    <script>
+
+        // Função para preencher o link de download via parâmetro de URL
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const fileUrl = urlParams.get('fileUrl');
             
             if (fileUrl) {
-                const downloadLinkField = document.getElementById('download-link'); // ID corrigido
+                const downloadLinkField = document.getElementById('download-link');
                 if (downloadLinkField) {
                     downloadLinkField.value = fileUrl;
                 }
             }
         });
     </script>
+
 </body>
 </html>
