@@ -49,7 +49,8 @@
                 </div>
                  <input type="file" id="fileInput" name="manifestoFile" class="hidden" accept=".pdf">
             </div>
-            <div id="fileName" class="text-center mt-4 text-gray-700 font-medium"></div>
+            <!-- Estilo do nome do arquivo alterado para ser mais chamativo -->
+            <div id="fileName" class="text-center mt-4 text-resultt-blue text-lg font-semibold"></div>
 
             <div class="mt-4 text-sm text-gray-500 text-center">
                 <p>Permitido apenas arquivos <strong>.pdf</strong> com no máximo <strong>10 MB</strong>.</p>
@@ -66,8 +67,35 @@
         </form>
     </div>
 
+    <!--
+    ===================================================================================
+    PASSO 3: INSTRUÇÕES PARA A PÁGINA DE DESTINO (/manifesto)
+    ===================================================================================
+    Na sua página de destino (ex: https://www.resulttcontabilidade.com.br/manifesto),
+    certifique-se de que você tem um campo de formulário com id="download-link".
+    
+    Exemplo: <input type="text" id="download-link">
+
+    Adicione o script abaixo antes do fechamento da tag </body> nessa página
+    para que o link do download seja preenchido automaticamente.
+    
+    <script>
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const fileUrl = urlParams.get('fileUrl');
+            
+            if (fileUrl) {
+                const downloadLinkField = document.getElementById('download-link'); // ID corrigido
+                if (downloadLinkField) {
+                    downloadLinkField.value = fileUrl;
+                }
+            }
+        });
+    </script>
+    ===================================================================================
+    -->
+
     <!-- SDK do Firebase -->
-    <!-- Adicione os scripts do Firebase antes do seu script principal -->
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-storage-compat.js"></script>
 
@@ -75,49 +103,34 @@
         // ===================================================================================
         // PASSO 1: CONFIGURAÇÃO DO FIREBASE
         // ===================================================================================
-        // 1. Acesse https://console.firebase.google.com/ e crie um novo projeto.
-        // 2. No painel do seu projeto, clique no ícone de engrenagem > "Configurações do projeto".
-        // 3. Na aba "Geral", role para baixo até "Seus apps" e clique no ícone da web (</>).
-        // 4. Dê um nome ao seu app e clique em "Registrar app".
-        // 5. O Firebase mostrará um objeto `firebaseConfig`. Copie e cole ele aqui embaixo.
-        
-const firebaseConfig = {
-  apiKey: "AIzaSyDftWh4XYHEusvRSRoP0bHeFqDJ9Y0nsP0",
-  authDomain: "resultt-a940f.firebaseapp.com",
-  projectId: "resultt-a940f",
-  storageBucket: "resultt-a940f.firebasestorage.app",
-  messagingSenderId: "399761440092",
-  appId: "1:399761440092:web:225959e9faebdde4389599",
-  measurementId: "G-DMZGM7139F"
-};
+        const firebaseConfig = {
+          apiKey: "AIzaSyDftWh4XYHEusvRSRoP0bHeFqDJ9Y0nsP0",
+          authDomain: "resultt-a940f.firebaseapp.com",
+          projectId: "resultt-a940f",
+          storageBucket: "resultt-a940f.appspot.com",
+          messagingSenderId: "399761440092",
+          appId: "1:399761440092:web:225959e9faebdde4389599",
+          measurementId: "G-DMZGM7139F"
+        };
 
-        // Inicializa o Firebase
         firebase.initializeApp(firebaseConfig);
         const storage = firebase.storage();
 
         // ===================================================================================
         // PASSO 2: REGRAS DE SEGURANÇA DO STORAGE
         // ===================================================================================
-        // 1. No painel do Firebase, vá para "Storage" (no menu à esquerda).
-        // 2. Clique em "Primeiros passos" e configure o local do seu bucket.
-        // 3. Vá para a aba "Regras" e substitua o conteúdo pelo seguinte:
         /*
             rules_version = '2';
             service firebase.storage {
               match /b/{bucket}/o {
-                // Permite que qualquer pessoa leia os arquivos na pasta 'manifestos'
                 match /manifestos/{fileName} {
                   allow read;
-                  // Permite a escrita apenas de arquivos PDF com menos de 10MB.
                   allow write: if request.resource.size < 10 * 1024 * 1024
                                && request.resource.contentType == 'application/pdf';
                 }
               }
             }
         */
-        // 4. Clique em "Publicar". Agora seu storage está pronto!
-        // ===================================================================================
-
 
         const uploadForm = document.getElementById('uploadForm');
         const fileInput = document.getElementById('fileInput');
@@ -174,7 +187,6 @@ const firebaseConfig = {
             }
         });
 
-        // Lógica de arrastar e soltar
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); });
         dropZone.addEventListener('drop', (e) => {
@@ -190,7 +202,6 @@ const firebaseConfig = {
         });
         dropZone.addEventListener('click', () => fileInput.click());
 
-        // Evento de submissão do formulário
         uploadForm.addEventListener('submit', function(event) {
             event.preventDefault();
             const file = fileInput.files[0];
@@ -201,35 +212,25 @@ const firebaseConfig = {
             loader.classList.remove('hidden');
 
             const newFilename = generateRandomFilename(20);
-            // Cria uma referência para o arquivo no Firebase Storage
             const storageRef = storage.ref(`manifestos/${newFilename}`);
-
-            // Inicia o upload do arquivo
             const uploadTask = storageRef.put(file);
 
-            // Acompanha o progresso do upload
             uploadTask.on('state_changed', 
                 (snapshot) => {
-                    // Opcional: pode adicionar uma barra de progresso aqui
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('Upload is ' + progress + '% done');
                 }, 
                 (error) => {
-                    // Trata erros no upload
                     console.error("Erro no upload:", error);
                     showError('Ocorreu um erro ao enviar o arquivo. Verifique sua conexão e as regras do Firebase.');
                     submitButton.classList.remove('hidden');
                     loader.classList.add('hidden');
                 }, 
                 () => {
-                    // Upload concluído com sucesso
                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         console.log('Arquivo disponível em', downloadURL);
-                        
-                        // Constrói a URL de redirecionamento com o link do arquivo
+                        // ID do campo na página de destino foi corrigido para 'download-link' nas instruções
                         const redirectUrl = `https://www.resulttcontabilidade.com.br/manifesto?fileUrl=${encodeURIComponent(downloadURL)}`;
-                        
-                        // Redireciona o usuário
                         window.location.href = redirectUrl;
                     });
                 }
