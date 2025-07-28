@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Manifesto - Resultt Contabilidade</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #f0f4f8; }
+        .bg-resultt-blue { background-color: #0a2b4c; }
+        .text-resultt-gold { color: #f3c243; }
+        .btn-upload { background-color: #f3c243; color: #0a2b4c; transition: all 0.3s ease; }
+        .btn-upload:hover { background-color: #0a2b4c; color: #f3c243; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .drop-zone { border: 2px dashed #0a2b4c; border-radius: 0.5rem; padding: 2.5rem; text-align: center; cursor: pointer; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .drop-zone.dragover { background-color: #e0e7ff; border-color: #f3c243; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #f3c243; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl">
+        
+        <div class="text-center mb-8">
+            <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade" class="mx-auto h-20 w-auto">
+            <h1 class="text-2xl md:text-3xl font-bold text-resultt-blue mt-4">Envio de Manifesto</h1>
+            <p class="text-gray-600 mt-2">Por favor, envie seu arquivo em formato PDF.</p>
+        </div>
+
+        <!-- O formulário não precisa mais dos atributos action e method -->
+        <form id="uploadForm">
+            
+            <div id="dropZone" class="drop-zone bg-gray-50 hover:bg-gray-100">
+                <div class="flex flex-col items-center">
+                    <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-4-4V6a4 4 0 014-4h10a4 4 0 014 4v6a4 4 0 01-4 4H7z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0 0l-2-2m2 2l2-2"></path></svg>
+                    <p class="mt-4 text-lg text-resultt-blue">Arraste e solte o arquivo aqui</p>
+                    <p class="text-gray-500">ou</p>
+                    <label for="fileInput" class="mt-2 font-medium text-resultt-gold hover:text-resultt-blue cursor-pointer">
+                        Selecione o arquivo
+                    </label>
+                </div>
+                 <input type="file" id="fileInput" name="manifestoFile" class="hidden" accept=".pdf">
+            </div>
+            <div id="fileName" class="text-center mt-4 text-gray-700 font-medium"></div>
+
+            <div class="mt-4 text-sm text-gray-500 text-center">
+                <p>Permitido apenas arquivos <strong>.pdf</strong> com no máximo <strong>10 MB</strong>.</p>
+            </div>
+
+            <div id="errorMessage" class="hidden mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center"></div>
+
+            <div class="mt-8 text-center">
+                 <button type="submit" id="submitButton" class="btn-upload font-bold py-3 px-8 rounded-lg w-full md:w-auto text-lg shadow-md">
+                    Enviar Manifesto
+                </button>
+                <div id="loader" class="hidden mx-auto loader"></div>
+            </div>
+        </form>
+    </div>
+
+    <!-- SDK do Firebase -->
+    <!-- Adicione os scripts do Firebase antes do seu script principal -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-storage-compat.js"></script>
+
+    <script>
+        // ===================================================================================
+        // PASSO 1: CONFIGURAÇÃO DO FIREBASE
+        // ===================================================================================
+        // 1. Acesse https://console.firebase.google.com/ e crie um novo projeto.
+        // 2. No painel do seu projeto, clique no ícone de engrenagem > "Configurações do projeto".
+        // 3. Na aba "Geral", role para baixo até "Seus apps" e clique no ícone da web (</>).
+        // 4. Dê um nome ao seu app e clique em "Registrar app".
+        // 5. O Firebase mostrará um objeto `firebaseConfig`. Copie e cole ele aqui embaixo.
+        
+const firebaseConfig = {
+  apiKey: "AIzaSyDftWh4XYHEusvRSRoP0bHeFqDJ9Y0nsP0",
+  authDomain: "resultt-a940f.firebaseapp.com",
+  projectId: "resultt-a940f",
+  storageBucket: "resultt-a940f.firebasestorage.app",
+  messagingSenderId: "399761440092",
+  appId: "1:399761440092:web:225959e9faebdde4389599",
+  measurementId: "G-DMZGM7139F"
+};
+
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
+        // ===================================================================================
+        // PASSO 2: REGRAS DE SEGURANÇA DO STORAGE
+        // ===================================================================================
+        // 1. No painel do Firebase, vá para "Storage" (no menu à esquerda).
+        // 2. Clique em "Primeiros passos" e configure o local do seu bucket.
+        // 3. Vá para a aba "Regras" e substitua o conteúdo pelo seguinte:
+        /*
+            rules_version = '2';
+            service firebase.storage {
+              match /b/{bucket}/o {
+                // Permite que qualquer pessoa leia os arquivos na pasta 'manifestos'
+                match /manifestos/{fileName} {
+                  allow read;
+                  // Permite a escrita apenas de arquivos PDF com menos de 10MB.
+                  allow write: if request.resource.size < 10 * 1024 * 1024
+                               && request.resource.contentType == 'application/pdf';
+                }
+              }
+            }
+        */
+        // 4. Clique em "Publicar". Agora seu storage está pronto!
+        // ===================================================================================
+
+
+        const uploadForm = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const dropZone = document.getElementById('dropZone');
+        const fileNameDisplay = document.getElementById('fileName');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitButton = document.getElementById('submitButton');
+        const loader = document.getElementById('loader');
+
+        const MAX_FILE_SIZE_MB = 10;
+        const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function clearError() {
+            errorMessage.classList.add('hidden');
+        }
+
+        function generateRandomFilename(length) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result + '.pdf';
+        }
+
+        function validateFile(file) {
+            clearError();
+            if (!file) return false;
+            if (file.type !== 'application/pdf') {
+                showError('Erro: Apenas arquivos com a extensão .pdf são permitidos.');
+                return false;
+            }
+            if (file.size > MAX_FILE_SIZE_BYTES) {
+                showError(`Erro: O arquivo excede o tamanho máximo de ${MAX_FILE_SIZE_MB} MB.`);
+                return false;
+            }
+            return true;
+        }
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                if (validateFile(file)) {
+                    fileNameDisplay.textContent = `Arquivo selecionado: ${file.name}`;
+                } else {
+                    fileInput.value = '';
+                    fileNameDisplay.textContent = '';
+                }
+            }
+        });
+
+        // Lógica de arrastar e soltar
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && validateFile(file)) {
+                fileInput.files = e.dataTransfer.files;
+                fileNameDisplay.textContent = `Arquivo selecionado: ${file.name}`;
+            } else {
+                fileNameDisplay.textContent = '';
+            }
+        });
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        // Evento de submissão do formulário
+        uploadForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const file = fileInput.files[0];
+
+            if (!validateFile(file)) return;
+            
+            submitButton.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            const newFilename = generateRandomFilename(20);
+            // Cria uma referência para o arquivo no Firebase Storage
+            const storageRef = storage.ref(`manifestos/${newFilename}`);
+
+            // Inicia o upload do arquivo
+            const uploadTask = storageRef.put(file);
+
+            // Acompanha o progresso do upload
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Opcional: pode adicionar uma barra de progresso aqui
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                }, 
+                (error) => {
+                    // Trata erros no upload
+                    console.error("Erro no upload:", error);
+                    showError('Ocorreu um erro ao enviar o arquivo. Verifique sua conexão e as regras do Firebase.');
+                    submitButton.classList.remove('hidden');
+                    loader.classList.add('hidden');
+                }, 
+                () => {
+                    // Upload concluído com sucesso
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log('Arquivo disponível em', downloadURL);
+                        
+                        // Constrói a URL de redirecionamento com o link do arquivo
+                        const redirectUrl = `https://www.resulttcontabilidade.com.br/manifesto?fileUrl=${encodeURIComponent(downloadURL)}`;
+                        
+                        // Redireciona o usuário
+                        window.location.href = redirectUrl;
+                    });
+                }
+            );
+        });
+    </script>
+</body>
+</html>
