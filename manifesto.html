@@ -219,6 +219,18 @@
             }, 500);
         }
     </script>
-
+    <script>
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const fileUrl = urlParams.get('fileUrl');
+            
+            if (fileUrl) {
+                const downloadLinkField = document.getElementById('download-link'); // ID corrigido
+                if (downloadLinkField) {
+                    downloadLinkField.value = fileUrl;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
