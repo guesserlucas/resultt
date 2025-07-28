@@ -247,6 +247,28 @@
             }
         });
     </script>
+    <script>
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Preenche o link de download
+            const fileUrl = urlParams.get('fileUrl');
+            if (fileUrl) {
+                const downloadLinkField = document.getElementById('download-link');
+                if (downloadLinkField) {
+                    downloadLinkField.value = fileUrl;
+                }
+            }
 
+            // Preenche o identificador em maiúsculas
+            const identifier = urlParams.get('identifier');
+            if (identifier) {
+                const identifierField = document.getElementById('identifier');
+                if (identifierField) {
+                    identifierField.value = identifier.toUpperCase();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
