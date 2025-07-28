@@ -71,23 +71,34 @@
     ===================================================================================
     PASSO 3: INSTRUÇÕES PARA A PÁGINA DE DESTINO (/manifesto)
     ===================================================================================
-    Na sua página de destino (ex: https://www.resulttcontabilidade.com.br/manifesto),
-    certifique-se de que você tem um campo de formulário com id="download-link".
+    Na sua página de destino, certifique-se de que você tem os seguintes campos:
     
-    Exemplo: <input type="text" id="download-link">
+    Exemplo: 
+    <input type="text" id="download-link">
+    <input type="text" id="identifier">
 
     Adicione o script abaixo antes do fechamento da tag </body> nessa página
-    para que o link do download seja preenchido automaticamente.
+    para que os campos sejam preenchidos automaticamente.
     
     <script>
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const fileUrl = urlParams.get('fileUrl');
             
+            // Preenche o link de download
+            const fileUrl = urlParams.get('fileUrl');
             if (fileUrl) {
-                const downloadLinkField = document.getElementById('download-link'); // ID corrigido
+                const downloadLinkField = document.getElementById('download-link');
                 if (downloadLinkField) {
                     downloadLinkField.value = fileUrl;
+                }
+            }
+
+            // Preenche o identificador em maiúsculas
+            const identifier = urlParams.get('identifier');
+            if (identifier) {
+                const identifierField = document.getElementById('identifier');
+                if (identifierField) {
+                    identifierField.value = identifier.toUpperCase();
                 }
             }
         });
@@ -229,8 +240,13 @@
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         console.log('Arquivo disponível em', downloadURL);
-                        // ID do campo na página de destino foi corrigido para 'download-link' nas instruções
-                        const redirectUrl = `https://www.resulttcontabilidade.com.br/manifesto?fileUrl=${encodeURIComponent(downloadURL)}`;
+                        
+                        // Cria o identificador sem a extensão .pdf
+                        const identifier = newFilename.replace('.pdf', '');
+
+                        // Adiciona o identificador e o link do arquivo aos parâmetros da URL
+                        const redirectUrl = `https://www.resulttcontabilidade.com.br/manifesto?fileUrl=${encodeURIComponent(downloadURL)}&identifier=${encodeURIComponent(identifier)}`;
+                        
                         window.location.href = redirectUrl;
                     });
                 }
