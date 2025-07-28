@@ -35,7 +35,6 @@
             <p class="text-gray-600 mt-2">Por favor, envie seu arquivo em formato PDF.</p>
         </div>
 
-        <!-- O formulário não precisa mais dos atributos action e method -->
         <form id="uploadForm">
             
             <div id="dropZone" class="drop-zone bg-gray-50 hover:bg-gray-100">
@@ -49,7 +48,6 @@
                 </div>
                  <input type="file" id="fileInput" name="manifestoFile" class="hidden" accept=".pdf">
             </div>
-            <!-- Estilo do nome do arquivo alterado para ser mais chamativo -->
             <div id="fileName" class="text-center mt-4 text-resultt-blue text-lg font-semibold"></div>
 
             <div class="mt-4 text-sm text-gray-500 text-center">
@@ -69,7 +67,7 @@
 
     <!--
     ===================================================================================
-    PASSO 3: INSTRUÇÕES PARA A PÁGINA DE DESTINO (/manifesto)
+    INSTRUÇÕES PARA A PÁGINA DE DESTINO (/manifesto)
     ===================================================================================
     Na sua página de destino, certifique-se de que você tem os seguintes campos:
     
@@ -84,7 +82,6 @@
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
             
-            // Preenche o link de download
             const fileUrl = urlParams.get('fileUrl');
             if (fileUrl) {
                 const downloadLinkField = document.getElementById('download-link');
@@ -93,7 +90,6 @@
                 }
             }
 
-            // Preenche o identificador em maiúsculas
             const identifier = urlParams.get('identifier');
             if (identifier) {
                 const identifierField = document.getElementById('identifier');
@@ -106,11 +102,12 @@
     ===================================================================================
     -->
 
-    <!-- SDK do Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-storage-compat.js"></script>
+    <!-- O script principal agora é um módulo para usar a sintaxe moderna do Firebase -->
+    <script type="module">
+        // Importa as funções necessárias da SDK do Firebase v9+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-storage.js";
 
-    <script>
         // ===================================================================================
         // PASSO 1: CONFIGURAÇÃO DO FIREBASE
         // ===================================================================================
@@ -124,11 +121,13 @@
           measurementId: "G-DMZGM7139F"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const storage = firebase.storage();
+        // Inicializa o Firebase e o Storage
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        console.log("Firebase inicializado com sucesso.");
 
         // ===================================================================================
-        // PASSO 2: REGRAS DE SEGURANÇA DO STORAGE
+        // PASSO 2: REGRAS DE SEGURANÇA DO STORAGE (Lembre-se de publicá-las no seu painel)
         // ===================================================================================
         /*
             rules_version = '2';
@@ -183,6 +182,7 @@
                 showError(`Erro: O arquivo excede o tamanho máximo de ${MAX_FILE_SIZE_MB} MB.`);
                 return false;
             }
+            console.log("Arquivo validado com sucesso:", file.name);
             return true;
         }
 
@@ -215,38 +215,56 @@
 
         uploadForm.addEventListener('submit', function(event) {
             event.preventDefault();
+            console.log("Formulário submetido. Tentando iniciar o upload.");
             const file = fileInput.files[0];
 
-            if (!validateFile(file)) return;
+            if (!validateFile(file)) {
+                console.error("A validação do arquivo falhou. Upload cancelado.");
+                return;
+            }
             
             submitButton.classList.add('hidden');
             loader.classList.remove('hidden');
 
             const newFilename = generateRandomFilename(20);
-            const storageRef = storage.ref(`manifestos/${newFilename}`);
-            const uploadTask = storageRef.put(file);
+            const storageRef = ref(storage, `manifestos/${newFilename}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            console.log(`Iniciando upload para: manifestos/${newFilename}`);
 
             uploadTask.on('state_changed', 
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + progress + '% done');
+                    console.log('Upload está ' + progress + '% concluído');
                 }, 
                 (error) => {
                     console.error("Erro no upload:", error);
-                    showError('Ocorreu um erro ao enviar o arquivo. Verifique sua conexão e as regras do Firebase.');
+                    // Mapeia erros comuns do Firebase para mensagens mais amigáveis
+                    let friendlyMessage = 'Ocorreu um erro ao enviar o arquivo. Tente novamente.';
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            friendlyMessage = 'Erro de permissão. Verifique as regras de segurança do Firebase Storage.';
+                            break;
+                        case 'storage/canceled':
+                            friendlyMessage = 'O upload foi cancelado.';
+                            break;
+                        case 'storage/unknown':
+                            friendlyMessage = 'Ocorreu um erro desconhecido. Verifique a sua conexão com a internet.';
+                            break;
+                    }
+                    showError(friendlyMessage);
                     submitButton.classList.remove('hidden');
                     loader.classList.add('hidden');
                 }, 
                 () => {
-                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    console.log("Upload concluído com sucesso. Obtendo URL de download...");
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log('Arquivo disponível em', downloadURL);
                         
-                        // Cria o identificador sem a extensão .pdf
                         const identifier = newFilename.replace('.pdf', '');
-
-                        // Adiciona o identificador e o link do arquivo aos parâmetros da URL
                         const redirectUrl = `https://www.resulttcontabilidade.com.br/manifesto?fileUrl=${encodeURIComponent(downloadURL)}&identifier=${encodeURIComponent(identifier)}`;
                         
+                        console.log("Redirecionando para:", redirectUrl);
                         window.location.href = redirectUrl;
                     });
                 }
