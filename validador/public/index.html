@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Assinatura Digital</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Validador de Documentos</h1>
+            <p>Faça o upload de um arquivo PDF assinado digitalmente para gerar o manifesto de assinaturas.</p>
+        </header>
+        <main>
+            <form action="upload_processor.php" method="post" enctype="multipart/form-data" id="uploadForm">
+                <div class="form-group">
+                    <label for="file-upload" class="custom-file-upload">
+                        <i class="icon-upload"></i> Escolher Arquivo PDF
+                    </label>
+                    <input id="file-upload" name="signedPdf" type="file" accept="application/pdf" required>
+                    <span id="file-name" class="file-name">Nenhum arquivo selecionado</span>
+                </div>
+                <button type="submit" class="submit-btn">Gerar Manifesto</button>
+            </form>
+        </main>
+        <footer>
+            <p>A validação oficial dos arquivos deve ser feita em <a href="https://validar.iti.gov.br/" target="_blank" rel="noopener noreferrer">https://validar.iti.gov.br/</a></p>
+        </footer>
+    </div>
+    <script>
+        // Script para exibir o nome do arquivo selecionado
+        document.getElementById('file-upload').onchange = function () {
+            const fileName = this.files? this.files.name : 'Nenhum arquivo selecionado';
+            document.getElementById('file-name').textContent = fileName;
+        };
+    </script>
+</body>
+</html>
