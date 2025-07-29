@@ -72,6 +72,7 @@
                     <div>
                         <label for="download-link" class="block text-sm font-medium text-gray-600">Link para Download/Verificação:</label>
                         <input type="url" id="download-link" name="download-link" placeholder="https://exemplo.com/documento" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <p id="link-status" class="text-xs text-gray-500 mt-1 h-4"></p>
                     </div>
                 </div>
                 <button type="submit" class="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 font-semibold">
@@ -151,22 +152,82 @@
     </div>
 
     <script>
-        // Função para formatar data para o padrão brasileiro (dd/mm/yyyy)
+        // --- Elementos do DOM ---
+        const form = document.getElementById('signature-form');
+        const formContainer = document.getElementById('form-container');
+        const reportContainer = document.getElementById('report-container');
+        const downloadLinkField = document.getElementById('download-link');
+        const linkStatus = document.getElementById('link-status');
+
+        // --- Funções ---
+
+        /**
+         * Formata uma string de data (yyyy-mm-dd) para o padrão brasileiro (dd/mm/yyyy).
+         * @param {string} dateString - A data no formato yyyy-mm-dd.
+         * @returns {string} A data formatada.
+         */
         function formatDate(dateString) {
             if (!dateString) return '';
             const [year, month, day] = dateString.split('-');
             return `${day}/${month}/${year}`;
         }
 
-        // Manipulação do formulário
-        const form = document.getElementById('signature-form');
-        const formContainer = document.getElementById('form-container');
-        const reportContainer = document.getElementById('report-container');
+        /**
+         * Encurta uma URL usando a API gratuita do TinyURL.
+         * @param {string} url - A URL longa para encurtar.
+         * @returns {Promise<string|null>} A URL encurtada ou null em caso de erro.
+         */
+        async function shortenUrl(url) {
+            if (!url || !url.startsWith('http')) {
+                linkStatus.textContent = '';
+                return null;
+            }
+            if (url.includes('tinyurl.com')) {
+                linkStatus.textContent = 'Este link já está encurtado.';
+                return url;
+            }
 
+            linkStatus.textContent = 'Encurtando link...';
+            try {
+                // Usamos um proxy para evitar problemas de CORS se necessário, mas a API do TinyURL geralmente funciona diretamente.
+                const response = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);
+                if (response.ok) {
+                    const shortUrl = await response.text();
+                    linkStatus.textContent = 'Link encurtado com sucesso!';
+                    return shortUrl;
+                } else {
+                    throw new Error('Falha na resposta da API ao encurtar o link.');
+                }
+            } catch (error) {
+                console.error('Erro no encurtador de URL:', error);
+                linkStatus.textContent = 'Erro ao encurtar o link.';
+                return null; // Retorna nulo para não substituir o link original em caso de erro
+            }
+        }
+
+        /**
+         * Reseta o formulário para o estado inicial.
+         */
+        function resetForm() {
+            reportContainer.classList.add('opacity-0');
+            setTimeout(() => {
+                reportContainer.classList.add('hidden');
+                formContainer.classList.remove('hidden');
+                formContainer.classList.add('opacity-100');
+                form.reset();
+                document.getElementById('qrcode-container').innerHTML = '';
+                linkStatus.textContent = '';
+            }, 500);
+        }
+
+        // --- Event Listeners ---
+
+        /**
+         * Manipula o envio do formulário para gerar o manifesto.
+         */
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Impede o envio padrão do formulário
+            event.preventDefault();
 
-            // 1. Coletar dados do formulário
             const identifier = document.getElementById('identifier').value;
             const docName = document.getElementById('document-name').value;
             const name = document.getElementById('subscriber-name').value;
@@ -178,7 +239,6 @@
             const formattedDate = formatDate(date);
             const todayFormatted = formatDate(new Date().toISOString().slice(0, 10));
 
-            // 2. Preencher os dados no template do relatório
             const identifierContainer = document.getElementById('report-identifier-container');
             identifierContainer.innerHTML = `<p class="text-sm font-semibold">IDENTIFICADOR:</p><p class="text-xl font-bold text-gray-800">${identifier}</p>`;
             
@@ -195,72 +255,52 @@
             validationLink.href = link;
             validationLink.textContent = link;
 
-            // 3. Gerar o QR Code
             const qrContainer = document.getElementById('qrcode-container');
-            qrContainer.innerHTML = ''; // Limpa o container do QR Code anterior
+            qrContainer.innerHTML = '';
             try {
-                // Usar typeNumber 0 para permitir que a biblioteca escolha o tamanho ideal
-                const typeNumber = 0; 
-                const errorCorrectionLevel = 'L'; // Nível de correção de erro
-                const qr = qrcode(typeNumber, errorCorrectionLevel);
+                const qr = qrcode(0, 'L');
                 qr.addData(link);
                 qr.make();
-                // O tamanho do módulo (primeiro argumento) pode ser ajustado se necessário
-                qrContainer.innerHTML = qr.createImgTag(3, 6); // (tamanho do módulo, margem)
+                qrContainer.innerHTML = qr.createImgTag(3, 6);
             } catch (e) {
                 console.error("Erro ao gerar QR Code:", e);
-                qrContainer.innerHTML = '<p class="text-red-500 text-xs">Erro ao gerar QR Code para este link.</p>';
+                qrContainer.innerHTML = '<p class="text-red-500 text-xs">Erro ao gerar QR Code.</p>';
             }
 
-
-            // 4. Exibir o relatório e ocultar o formulário
             formContainer.classList.add('opacity-0');
             setTimeout(() => {
                 formContainer.classList.add('hidden');
                 reportContainer.classList.remove('hidden');
                 reportContainer.classList.add('opacity-100');
-            }, 500); // Tempo correspondente à transição de opacidade
-        });
-
-        // Função para resetar e voltar ao formulário
-        function resetForm() {
-            reportContainer.classList.add('opacity-0');
-            setTimeout(() => {
-                reportContainer.classList.add('hidden');
-                formContainer.classList.remove('hidden');
-                formContainer.classList.add('opacity-100');
-                form.reset(); // Limpa os campos do formulário
-                document.getElementById('qrcode-container').innerHTML = ''; // Limpa o QR Code
             }, 500);
-        }
+        });
 
-        // Função para preencher o link de download via parâmetro de URL
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const fileUrl = urlParams.get('fileUrl');
-            
-            if (fileUrl) {
-                const downloadLinkField = document.getElementById('download-link');
-                if (downloadLinkField) {
-                    downloadLinkField.value = fileUrl;
-                }
+        /**
+         * Encurta a URL quando o usuário sai do campo de link.
+         */
+        downloadLinkField.addEventListener('blur', async () => {
+            const longUrl = downloadLinkField.value;
+            const shortUrl = await shortenUrl(longUrl);
+            if (shortUrl) {
+                downloadLinkField.value = shortUrl;
             }
         });
-    </script>
-    <script>
-        window.addEventListener('load', function() {
+
+        /**
+         * Preenche os campos do formulário a partir de parâmetros da URL ao carregar a página.
+         */
+        window.addEventListener('load', async function() {
             const urlParams = new URLSearchParams(window.location.search);
             
-            // Preenche o link de download
             const fileUrl = urlParams.get('fileUrl');
             if (fileUrl) {
-                const downloadLinkField = document.getElementById('download-link');
-                if (downloadLinkField) {
-                    downloadLinkField.value = fileUrl;
+                downloadLinkField.value = fileUrl;
+                const shortUrl = await shortenUrl(fileUrl); // Encurta automaticamente
+                if (shortUrl) {
+                    downloadLinkField.value = shortUrl;
                 }
             }
 
-            // Preenche o identificador em maiúsculas
             const identifier = urlParams.get('identifier');
             if (identifier) {
                 const identifierField = document.getElementById('identifier');
