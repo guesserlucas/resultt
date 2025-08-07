@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Detalhado de Acesso e Upload - Onvio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .step-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .step-card-content {
+            flex-grow: 1;
+        }
+        .step-card img {
+            margin-top: auto;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .modal-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1a202c;
+        }
+        .modal-content ul {
+            list-style-position: inside;
+            margin-left: 0.5rem;
+        }
+        .modal-content li {
+            margin-bottom: 0.5rem;
+        }
+        .top-nav a {
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md p-4 sticky top-0 z-40">
+        <div class="container mx-auto flex justify-between items-center">
+            <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade" class="h-12">
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-6 top-nav">
+                <a href="#primeiro-acesso" class="text-gray-600 hover:text-orange-600 font-medium border-b-2 border-transparent hover:border-orange-500 pb-1">Primeiro Acesso</a>
+                <a href="#upload-docs" class="text-gray-600 hover:text-orange-600 font-medium border-b-2 border-transparent hover:border-orange-500 pb-1">Upload de Documentos</a>
+                <a href="#portal-cliente" class="text-gray-600 hover:text-orange-600 font-medium border-b-2 border-transparent hover:border-orange-500 pb-1">Portal do Cliente</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4 mt-8">Guia Detalhado: Plataforma Onvio</h1>
+        <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">Siga os passos abaixo para realizar seu primeiro acesso e aprender a enviar seus documentos de forma simples e segura.</p>
+
+        <!-- Botão para Relação de Documentos -->
+        <div class="text-center mb-12">
+            <button id="openModalBtn" class="bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-orange-700 transition-colors duration-300">
+                Relação de Documentos para Envio
+            </button>
+        </div>
+
+        <!-- Seção: Primeiro Acesso -->
+        <section id="primeiro-acesso" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 border-l-4 border-orange-500 pl-4">PRIMEIRO ACESSO E CONFIGURAÇÃO DE SEGURANÇA</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Passo 1 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 1</span>
+                        <h3 class="font-semibold text-lg my-2">Acesse o Portal</h3>
+                        <p class="text-gray-600 mb-4">Acesse <a href="https://onvio.com.br/clientcenter/" target="_blank" class="text-blue-600 hover:underline">onvio.com.br</a> e clique em "Entrar".</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/login.JPG" alt="Tela inicial do Onvio" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 2 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 2</span>
+                        <h3 class="font-semibold text-lg my-2">Identificação</h3>
+                        <p class="text-gray-600 mb-4">Preencha seu e-mail e em seguida sua senha cadastrada.</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/login_email.JPG" alt="Campo para inserir e-mail" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 3 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 3</span>
+                        <h3 class="font-semibold text-lg my-2">Inicie a Verificação</h3>
+                        <p class="text-gray-600 mb-4">Para sua segurança, faremos uma verificação em duas etapas. Escolha a opção "SMS".</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/login_dois%20fatores.JPG" alt="Escolha do método de verificação" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 4 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 4</span>
+                        <h3 class="font-semibold text-lg my-2">Confirme o Celular</h3>
+                        <p class="text-gray-600 mb-4">Insira seu número de celular com DDD e clique em "Mensagem de texto".</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/login_dois%20fatores_celular.JPG" alt="Configuração de autenticação por celular" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 5 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 5</span>
+                        <h3 class="font-semibold text-lg my-2">Código de Recuperação</h3>
+                        <p class="text-gray-600 mb-4">Copie e guarde seu código de recuperação em um lugar seguro. Marque a opção "Eu registrei..." e continue.</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/login_dois%20fatores_cod.JPG" alt="Código de recuperação" class="rounded-lg w-full border">
+                </div>
+                 <!-- Passo 6 -->
+                <div class="step-card p-6 lg:col-span-2 xl:col-span-3">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 6</span>
+                        <h3 class="font-semibold text-lg my-2">Painel Inicial</h3>
+                        <p class="text-gray-600 mb-4">Após o login, você verá o painel principal. No canto superior esquerdo, você pode alternar entre as empresas vinculadas ao seu usuário. O painel também exibe vencimentos, notícias e documentos.</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/troca%20de%20empresa.JPG" alt="Painel inicial com troca de empresa" class="rounded-lg w-full border">
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Upload de Documentos -->
+        <section id="upload-docs" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 border-l-4 border-orange-500 pl-4">UPLOAD DE DOCUMENTOS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Passo 7 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 7</span>
+                        <h3 class="font-semibold text-lg my-2">Acesse "Documentos"</h3>
+                        <p class="text-gray-600 mb-4">No menu superior, clique na aba "DOCUMENTOS".</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/documentos.JPG" alt="Menu Documentos" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 8 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 8</span>
+                        <h3 class="font-semibold text-lg my-2">Navegue até a Pasta</h3>
+                        <p class="text-gray-600 mb-4">No menu lateral, navegue até a pasta do mês de referência: <br><b>PROTOCOLO > ANO > MÊS</b>.</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/protocolo.JPG" alt="Estrutura de pastas de protocolo" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 9 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 9</span>
+                        <h3 class="font-semibold text-lg my-2">Adicione um Arquivo</h3>
+                        <p class="text-gray-600 mb-4">Clique no botão "Adicionar" e, no menu que aparece, selecione "Arquivo".</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/arquivo.JPG" alt="Botão para adicionar arquivo" class="rounded-lg w-full border">
+                </div>
+                <!-- Passo 10 -->
+                <div class="step-card p-6">
+                    <div class="step-card-content">
+                        <span class="text-orange-500 font-bold">PASSO 10</span>
+                        <h3 class="font-semibold text-lg my-2">Envie Seus Documentos</h3>
+                        <p class="text-gray-600 mb-4">Clique em "PESQUISAR POR ARQUIVO", selecione os documentos em seu computador e clique em "ADICIONAR" para finalizar.</p>
+                    </div>
+                    <img src="https://www.resulttcontabilidade.com.br/onvio/adicionar.JPG" alt="Adicionar arquivos" class="rounded-lg w-full border">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção: Portal do Cliente -->
+        <section id="portal-cliente" class="mt-16 pt-16 -mt-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 border-l-4 border-orange-500 pl-4">PORTAL DO CLIENTE: SOLICITAÇÕES DE SERVIÇOS</h2>
+             <div class="step-card p-6">
+                <div class="step-card-content">
+                    <p class="text-gray-600 mb-4">Na aba <b>Portal do Cliente</b>, você pode fazer diversas solicitações de serviços à contabilidade de forma prática, como cadastro de empregados, aviso de férias, cálculo de rescisão e muito mais.</p>
+                </div>
+                <img src="https://www.resulttcontabilidade.com.br/onvio/portal%20do%20cliente.JPG" alt="Tela do Portal do Cliente" class="rounded-lg w-full border">
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="documentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Relação de Documentos para Envio</h2>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            
+            <div class="space-y-6 text-gray-700">
+                <div>
+                    <h3 class="text-orange-600">MENSAL</h3>
+                </div>
+
+                <div>
+                    <h3>Por malote:</h3>
+                    <ol class="list-decimal list-inside space-y-2 mt-2">
+                        <li>Notas Fiscais de Entrada de Mercadorias e Serviços;</li>
+                        <li>Relação De Notas Emitidas no Período;</li>
+                        <li>Pagamentos efetuados - comprovantes de depósitos ou transferências (devidamente identificados), cheques (cópia simples) e boletos;</li>
+                        <li>Pagamentos recebidos - comprovantes de depósitos ou transferências (devidamente identificados), cheques (cópia simples) e boletos;</li>
+                        <li>Contratos realizados no período (financiamentos, de vendas, de compras, etc);</li>
+                        <li>Documentação de qualquer transação, financeira ou não, relevante;</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3>Por Portal, e-mail (fiscal@resulttcontabilidade.com.br) ou Whatsapp:</h3>
+                    <ol class="list-decimal list-inside space-y-2 mt-2">
+                        <li>Arquivos SPED de Entradas e Saídas;</li>
+                        <li>Relação Movimentação de Produtos (custo);</li>
+                        <li>Relação de títulos a receber (boletos) não descontados em bancos;</li>
+                        <li>Relação dos cheques em carteira;</li>
+                        <li>Extrato das contas correntes em PDF e OFX;</li>
+                        <li>Inventário de Estoque;</li>
+                        <li>Extrato financiamentos movimentados (todos os bancos com financiamentos);</li>
+                        <li>Extrato das aplicações financeiras.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Get modal elements
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modal = document.getElementById('documentModal');
+
+        // Function to open the modal
+        function openModal() {
+            modal.classList.remove('hidden');
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Event listeners
+        openModalBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking on the backdrop
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Close modal with the Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
