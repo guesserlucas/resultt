@@ -1,0 +1,12 @@
+# Define o tipo de autenticação
+AuthType Basic
+
+# Mensagem que aparecerá na janela de login
+AuthName "Acesso Restrito - Digite a senha"
+
+# Caminho para o arquivo de senhas (veja o Passo 2)
+# IMPORTANTE: Mude o /home/seu_usuario/ para o caminho real no seu servidor
+AuthUserFile /restrito_publico/.htpasswd
+
+# Exige um usuário válido para acessar
+Require valid-user
