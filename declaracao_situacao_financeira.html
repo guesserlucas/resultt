@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Declaração de Situação Financeira - Resultt Contabilidade</title>
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Container Principal */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 40, 100, 0.12);
+            border-top: 5px solid #0056b3;
+        }
+
+        /* Cabeçalho com Logo */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 20px;
+        }
+
+        .header img {
+            max-width: 280px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            color: #003366;
+            margin: 0;
+        }
+
+        /* Estilos de Seção */
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 1.4em;
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Grupos de Formulário */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+            outline: none;
+        }
+        
+        .form-group input[readonly] {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+
+        /* Botões */
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        /* Tabela de Resultados */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .results-table th, .results-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .results-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .results-table td {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .status-ok { color: #28a745; }
+        .status-fail { color: #dc3545; }
+
+        /* Seção do Relatório Gerado */
+        #report {
+            margin-top: 40px;
+            border: 1px solid #ccc;
+            padding: 30px;
+            display: none;
+            background-color: #fff;
+        }
+
+        .report-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+
+        #report p {
+            line-height: 1.8;
+            text-align: justify;
+            font-size: 1.1em;
+        }
+
+        .signatures {
+            margin-top: 80px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .signature-block {
+            text-align: center;
+            width: 300px;
+        }
+        
+        .signature-block p {
+            margin: 0;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 60px;
+            width: 100%;
+        }
+
+        /* Estilos Otimizados para Impressão em 1 Página A4 Retrato */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 2cm; /* Margem padrão para documentos A4 */
+            }
+
+            body {
+                background-color: #fff;
+                margin: 0;
+                padding: 0;
+                font-size: 11pt; /* Reduzido para caber mais conteúdo */
+                -webkit-print-color-adjust: exact; /* Garante a impressão de cores no Chrome/Safari */
+                print-color-adjust: exact;
+            }
+
+            /* Esconde o formulário, o título principal e os botões */
+            .form-section,
+            .button-group,
+            .container > .header {
+                display: none;
+            }
+            
+            /* Reseta os estilos do container para impressão */
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Garante que a seção do relatório seja exibida e ocupe a página */
+            #report {
+                display: block !important;
+                margin: 0;
+                padding: 0;
+                border: none;
+                width: 100%;
+            }
+            
+            #report .header img {
+                max-width: 200px; /* Reduz um pouco o logo na impressão */
+            }
+            
+            #report .report-header {
+                font-size: 1.3em; /* Reduz o título do relatório */
+                margin-bottom: 20px;
+            }
+
+            #report p {
+                line-height: 1.5; /* Reduz o espaçamento entre linhas */
+                text-align: justify;
+                font-size: 1em; /* Garante que o p herde o 11pt do body */
+                margin: 1em 0; /* Ajusta a margem do parágrafo */
+            }
+
+            .results-table th, .results-table td {
+                padding: 8px; /* Reduz o padding da tabela */
+            }
+
+            /* Evita quebras de página dentro de elementos importantes */
+            .results-table, .signatures {
+                page-break-inside: avoid;
+            }
+
+            .signatures {
+                margin-top: 2.5cm; /* Reduzido para evitar quebra de página */
+                page-break-before: auto; /* Garante que não force uma quebra antes se não for necessário */
+            }
+            
+            .signature-line {
+                margin-top: 40px; /* Reduz o espaço acima da linha de assinatura */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade">
+        <h1>Gerador de Declaração de Situação Financeira</h1>
+    </header>
+
+    <main class="form-section">
+        <input type="hidden" id="cidadeEmpresa"> <!-- Campo oculto para guardar a cidade -->
+        <section class="section">
+            <h2>1. Dados da Empresa</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="cnpj">CNPJ</label>
+                    <input type="text" id="cnpj" placeholder="Apenas números">
+                </div>
+                <div class="form-group" style="justify-content: flex-end;">
+                    <button class="btn" onclick="buscarCNPJ()">Buscar Dados via API</button>
+                </div>
+            </div>
+            <div class="form-grid" style="margin-top: 20px;">
+                <div class="form-group">
+                    <label for="razaoSocial">Razão Social</label>
+                    <input type="text" id="razaoSocial" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" id="endereco" readonly>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>2. Dados dos Responsáveis</h2>
+             <div class="form-grid">
+                <div class="form-group">
+                    <label for="contador">Nome do Contador</label>
+                    <input type="text" id="contador">
+                </div>
+                <div class="form-group">
+                    <label for="cpfContador">CPF do Contador</label>
+                    <input type="text" id="cpfContador">
+                </div>
+                <div class="form-group">
+                    <label for="crcContador">CRC do Contador (com UF)</label>
+                    <input type="text" id="crcContador" placeholder="Ex: CRC/SP 123456/O-7">
+                </div>
+                <div class="form-group">
+                    <label for="repLegal">Nome do Representante Legal</label>
+                    <input type="text" id="repLegal">
+                </div>
+                <div class="form-group">
+                    <label for="cpfRepLegal">CPF do Representante Legal</label>
+                    <input type="text" id="cpfRepLegal">
+                </div>
+                 <div class="form-group">
+                    <label for="cargoRepLegal">Cargo do Representante Legal</label>
+                    <input type="text" id="cargoRepLegal">
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>3. Dados para Cálculo dos Índices</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="dataFechamento">Data de Fechamento do Balanço</label>
+                    <input type="date" id="dataFechamento">
+                </div>
+                <div class="form-group">
+                    <label for="ativoCirculante">Ativo Circulante</label>
+                    <input type="number" id="ativoCirculante" placeholder="0.00" oninput="calcularIndices()">
+                </div>
+                <div class="form-group">
+                    <label for="passivoCirculante">Passivo Circulante</label>
+                    <input type="number" id="passivoCirculante" placeholder="0.00" oninput="calcularIndices()">
+                </div>
+                <div class="form-group">
+                    <label for="ativoNaoCirculante">Ativo Não Circulante</label>
+                    <input type="number" id="ativoNaoCirculante" placeholder="0.00" oninput="calcularIndices()">
+                </div>
+                <div class="form-group">
+                    <label for="passivoNaoCirculante">Passivo Não Circulante</label>
+                    <input type="number" id="passivoNaoCirculante" placeholder="0.00" oninput="calcularIndices()">
+                </div>
+                <div class="form-group">
+                    <label for="ativoPermanente">Ativo Permanente (Imobilizado, Investimentos, Intangível)</label>
+                    <input type="number" id="ativoPermanente" placeholder="0.00" oninput="calcularIndices()">
+                </div>
+            </div>
+            
+            <h3>Resultados dos Índices</h3>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Índice Financeiro</th>
+                        <th>Resultado</th>
+                        <th>Condição de Habilitação (>= 1.00)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Índice de Liquidez Corrente (ILC)</td>
+                        <td id="resultadoILC">0.00</td>
+                        <td id="statusILC">-</td>
+                    </tr>
+                    <tr>
+                        <td>Índice de Liquidez Geral (ILG)</td>
+                        <td id="resultadoILG">0.00</td>
+                        <td id="statusILG">-</td>
+                    </tr>
+                    <tr>
+                        <td>Índice de Solvência Geral (ISG)</td>
+                        <td id="resultadoISG">0.00</td>
+                        <td id="statusISG">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="button-group">
+            <button class="btn" onclick="gerarRelatorio()">Gerar Declaração</button>
+            <button class="btn btn-secondary" onclick="window.print()">Imprimir</button>
+        </div>
+    </main>
+
+    <section id="report">
+        <header class="header">
+            <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade">
+        </header>
+        <h2 class="report-header">DECLARAÇÃO DE BOA SITUAÇÃO FINANCEIRA</h2>
+        <p>
+            A empresa <strong id="reportRazaoSocial"></strong>, inscrita no CNPJ sob o nº <strong id="reportCnpj"></strong>, com sede em <strong id="reportEndereco"></strong>, declara, para os devidos fins, sob as penas da Lei, que goza de boa situação financeira, conforme apurado em seu Balanço Patrimonial encerrado em <strong id="reportDataFechamento"></strong>.
+        </p>
+        <p>
+            A presente declaração é fundamentada nos seguintes índices financeiros, os quais atendem às exigências de habilitação, apresentando resultado igual ou superior a 1,00 (um):
+        </p>
+        
+        <table class="results-table">
+             <thead>
+                <tr>
+                    <th>Índice Financeiro</th>
+                    <th>Resultado Apurado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Índice de Liquidez Corrente (ILC)</td>
+                    <td id="reportILC"></td>
+                </tr>
+                <tr>
+                    <td>Índice de Liquidez Geral (ILG)</td>
+                    <td id="reportILG"></td>
+                </tr>
+                <tr>
+                    <td>Índice de Solvência Geral (ISG)</td>
+                    <td id="reportISG"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Por ser a expressão da verdade, firmamos a presente declaração.
+        </p>
+        <p style="text-align: center; margin-top: 20px;">
+            <span id="reportLocalData"></span>
+        </p>
+
+        <div class="signatures">
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <p><strong id="reportRepLegal"></strong></p>
+                <p><span id="reportCargoRepLegal"></span></p>
+                <p>CPF: <span id="reportCpfRepLegal"></span></p>
+            </div>
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <p><strong id="reportContador"></strong></p>
+                <p>Contador(a)</p>
+                <p><span id="reportCrcContador"></span></p>
+                <p>CPF: <span id="reportCpfContador"></span></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Função para buscar dados do CNPJ usando a BrasilAPI
+    async function buscarCNPJ() {
+        let cnpj = document.getElementById('cnpj').value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        if (cnpj.length !== 14) {
+            alert('Por favor, digite um CNPJ válido com 14 dígitos.');
+            return;
+        }
+
+        const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Erro na API: ${response.statusText}`);
+            }
+            const data = await response.json();
+            
+            document.getElementById('razaoSocial').value = data.razao_social || '';
+            const endereco = `${data.logradouro}, ${data.numero}, ${data.bairro}, ${data.municipio} - ${data.uf}, CEP: ${data.cep}`;
+            document.getElementById('endereco').value = endereco;
+            document.getElementById('cidadeEmpresa').value = data.municipio || ''; // Guarda a cidade no campo oculto
+
+        } catch (error) {
+            alert('Não foi possível consultar o CNPJ. Verifique o número digitado ou tente novamente mais tarde.');
+            console.error('Erro ao buscar CNPJ:', error);
+        }
+    }
+
+    // Função para calcular os índices financeiros
+    function calcularIndices() {
+        const ac = parseFloat(document.getElementById('ativoCirculante').value) || 0;
+        const pc = parseFloat(document.getElementById('passivoCirculante').value) || 0;
+        const anc = parseFloat(document.getElementById('ativoNaoCirculante').value) || 0;
+        const pnc = parseFloat(document.getElementById('passivoNaoCirculante').value) || 0;
+        const ap = parseFloat(document.getElementById('ativoPermanente').value) || 0;
+
+        // Cálculo ILC
+        const ilc = pc > 0 ? (ac / pc) : 0;
+        document.getElementById('resultadoILC').textContent = ilc.toFixed(2);
+        updateStatus('statusILC', ilc);
+
+        // Cálculo ILG (fórmula atualizada)
+        const ilg = (pc + pnc) > 0 ? ((ac + anc - ap) / (pc + pnc)) : 0;
+        document.getElementById('resultadoILG').textContent = ilg.toFixed(2);
+        updateStatus('statusILG', ilg);
+
+        // Cálculo ISG 
+        const isg = (pc + pnc) > 0 ? ((ac + anc) / (pc + pnc)) : 0;
+        document.getElementById('resultadoISG').textContent = isg.toFixed(2);
+        updateStatus('statusISG', isg);
+    }
+    
+    // Função auxiliar para atualizar o status de habilitação
+    function updateStatus(elementId, value) {
+        const el = document.getElementById(elementId);
+        if (value >= 1) {
+            el.textContent = 'Habilitado';
+            el.className = 'status-ok';
+        } else {
+            el.textContent = 'Inabilitado';
+            el.className = 'status-fail';
+        }
+    }
+
+    // Função para gerar o relatório
+    function gerarRelatorio() {
+        // Validação de campos obrigatórios
+        const campos = [
+            'cnpj', 'razaoSocial', 'endereco', 'contador', 'cpfContador', 
+            'crcContador', 'repLegal', 'cpfRepLegal', 'cargoRepLegal',
+            'dataFechamento', 'ativoCirculante', 'passivoCirculante', 'ativoNaoCirculante', 
+            'passivoNaoCirculante', 'ativoPermanente'
+        ];
+        
+        for (const campo of campos) {
+            if (!document.getElementById(campo).value) {
+                alert(`Por favor, preencha o campo: ${document.querySelector(`label[for=${campo}]`).textContent}`);
+                return;
+            }
+        }
+        
+        // Transferir dados para a declaração
+        document.getElementById('reportRazaoSocial').textContent = document.getElementById('razaoSocial').value;
+        document.getElementById('reportCnpj').textContent = document.getElementById('cnpj').value;
+        document.getElementById('reportEndereco').textContent = document.getElementById('endereco').value;
+        document.getElementById('reportRepLegal').textContent = document.getElementById('repLegal').value;
+        document.getElementById('reportCargoRepLegal').textContent = document.getElementById('cargoRepLegal').value;
+        document.getElementById('reportCpfRepLegal').textContent = document.getElementById('cpfRepLegal').value;
+        document.getElementById('reportContador').textContent = document.getElementById('contador').value;
+        document.getElementById('reportCrcContador').textContent = document.getElementById('crcContador').value;
+        document.getElementById('reportCpfContador').textContent = document.getElementById('cpfContador').value;
+        
+        // Formatar e transferir a data de fechamento
+        const dataFechamentoRaw = document.getElementById('dataFechamento').value;
+        const [ano, mes, dia] = dataFechamentoRaw.split('-');
+        const dataFechamentoFormatada = `${dia}/${mes}/${ano}`;
+        document.getElementById('reportDataFechamento').textContent = dataFechamentoFormatada;
+
+
+        // Transferir resultados dos índices
+        document.getElementById('reportILC').textContent = document.getElementById('resultadoILC').textContent;
+        document.getElementById('reportILG').textContent = document.getElementById('resultadoILG').textContent;
+        document.getElementById('reportISG').textContent = document.getElementById('resultadoISG').textContent;
+
+        // Gerar local e data usando a cidade da empresa
+        const hoje = new Date();
+        const opcoesData = { year: 'numeric', month: 'long', day: 'numeric' };
+        const cidade = document.getElementById('cidadeEmpresa').value; 
+        document.getElementById('reportLocalData').textContent = `${cidade}, ${hoje.toLocaleDateString('pt-BR', opcoesData)}.`;
+
+        // Exibir a declaração
+        document.getElementById('report').style.display = 'block';
+        
+        // Rolar a página para a declaração
+        document.getElementById('report').scrollIntoView({ behavior: 'smooth' });
+    }
+
+</script>
+
+</body>
+</html>
