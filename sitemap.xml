@@ -49,7 +49,7 @@
     <priority>0.8</priority>
   </url>
     <url>
-    <loc>https://www.resulttcontabilidade.com.br/gerador_de_declara%C3%A7%C3%B5es.html</loc>
+    <loc>https://www.resulttcontabilidade.com.br/restrito_publico/gerador_de_declara%C3%A7%C3%B5es.html</loc>
     <lastmod>2025-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -61,11 +61,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.resulttcontabilidade.com.br/declaracao_situacao_financeira.html</loc>
+    <loc>https://www.resulttcontabilidade.com.br/restrito_publico/declaracao_situacao_financeira.html</loc>
     <lastmod>2025-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   </urlset>
+
 
 
