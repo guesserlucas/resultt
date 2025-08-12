@@ -1169,3 +1169,307 @@ declaracao_situacao_financeira.html
 
 </body>
 </html>
+
+ricms_sc_.html
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Tributária RICMS/SC - Resultt Contabilidade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Cor primária inspirada na imagem - Laranja */
+        .bg-primary {
+            background-color: #f28524;
+        }
+        .text-primary {
+            color: #f28524;
+        }
+        .border-primary {
+            border-color: #f28524;
+        }
+        .btn-primary {
+            background-color: #f28524;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e67e22;
+        }
+        /* Estilo para o spinner de carregamento */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f28524;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .prose h2 {
+            color: #f28524;
+            font-weight: 600;
+        }
+        .focus\:ring-primary:focus {
+            --tw-ring-color: #f28524;
+        }
+    </style>
+</head>
+<body class="pt-8 md:pt-12">
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-200">
+            
+            <div class="text-center mb-8">
+                <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade" class="h-16 mx-auto mb-6" onerror="this.onerror=null;this.src='https://placehold.co/250x60/ffffff/f28524?text=Resultt';">
+                <h1 class="text-2xl md:text-3xl font-bold text-primary">Consulta de Tratamento Tributário</h1>
+                <p class="text-gray-600 mt-2">Pesquise por NCM ou descrição do produto no RICMS/SC</p>
+            </div>
+
+            <!-- Aviso Legal -->
+            <div class="bg-orange-50 p-4 rounded-lg mb-8 text-center border border-orange-200">
+                <p class="text-sm text-orange-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1 -mt-px text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <strong>Aviso Legal:</strong> O sistema utiliza Inteligência Artificial para levantamento de dados e pode estar sujeito a erros. Indicamos a verificação da base legal.
+                </p>
+            </div>
+
+            <!-- Formulário de Busca -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="searchInput" class="flex-grow w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors" placeholder="Digite o NCM ou a descrição do produto...">
+                <button id="searchButton" class="btn-primary font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg w-full sm:w-auto flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                    Buscar
+                </button>
+            </div>
+
+            <!-- Botão para o Regulamento -->
+            <div class="text-center mt-6 mb-6">
+                <a href="https://legislacao.sef.sc.gov.br/consulta/views/Publico/Frame.aspx?x=/Cabecalhos/frame_ricms_01_00_00.htm" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-primary transition-colors duration-200">
+                    Acessar Regulamento Completo (RICMS/SC)
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Área de Resultados -->
+            <div id="results">
+                <div id="placeholder" class="text-center text-gray-500 py-10 border-t pt-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="mt-4 font-medium">Os resultados da sua busca aparecerão aqui.</p>
+                </div>
+                <div id="loader" class="hidden flex-col items-center justify-center py-10 border-t pt-8">
+                    <div class="loader"></div>
+                    <p class="mt-4 text-primary font-semibold">Buscando informações... Por favor, aguarde.</p>
+                </div>
+                <div id="error" class="hidden text-center text-red-600 bg-red-50 p-4 rounded-lg border-t pt-8">
+                    <p class="font-bold">Ocorreu um erro!</p>
+                    <p id="errorMessage" class="text-sm">Não foi possível processar a sua solicitação. Tente novamente.</p>
+                </div>
+                <div id="resultContent" class="prose max-w-none text-gray-800 border-t pt-6"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="text-center py-8 mt-4">
+        <p class="text-gray-500 text-sm">&copy; <span id="year"></span> Resultt Contabilidade. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Define o ano atual no rodapé
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Elementos do DOM
+        const searchButton = document.getElementById('searchButton');
+        const searchInput = document.getElementById('searchInput');
+        const resultsContainer = document.getElementById('results');
+        const placeholder = document.getElementById('placeholder');
+        const loader = document.getElementById('loader');
+        const errorContainer = document.getElementById('error');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultContent = document.getElementById('resultContent');
+
+        // Adiciona evento de clique ao botão de busca
+        searchButton.addEventListener('click', performSearch);
+        
+        // Permite buscar pressionando Enter
+        searchInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        /**
+         * Função principal que executa a busca
+         */
+        async function performSearch() {
+            const query = searchInput.value.trim();
+            if (!query) {
+                showError("Por favor, digite um NCM ou descrição para buscar.");
+                return;
+            }
+
+            // Prepara a UI para a busca
+            showLoading();
+
+            try {
+                // Monta o prompt para a API do Gemini
+                const prompt = `
+                    Com base na legislação do RICMS/SC (Regulamento do ICMS de Santa Catarina) ATUALIZADA, 
+                    forneça um resumo detalhado e claro do tratamento tributário para o seguinte item: "${query}".
+
+                    O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
+
+                    1.  **Alíquota Interna:** Qual a alíquota padrão de ICMS para este produto em operações dentro de SC?
+                    2.  **Substituição Tributária (ICMS-ST):** O produto está sujeito ao regime de ST? Se sim, mencione o MVA/IVA-ST aplicável (original e ajustado para 4% e 12%, se houver) e a base legal (dispositivo do RICMS/SC).
+                    3.  **Isenção:** Existe alguma isenção de ICMS para este produto? Se sim, qual e sob quais condições? Citar a base legal.
+                    4.  **Redução de Base de Cálculo:** Há alguma redução na base de cálculo do ICMS? Se sim, qual o percentual e as condições? Citar a base legal.
+                    5.  **Crédito Presumido:** Existe algum benefício de crédito presumido? Se sim, qual o percentual e para qual tipo de empresa/operação se aplica? Citar a base legal.
+                    6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
+
+                    Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
+                    Se o NCM não for encontrado ou a descrição for muito genérica, informe que não foi possível localizar uma tributação específica e peça mais detalhes.
+                    Aja como um consultor tributário especialista em legislação catarinense.
+                `;
+
+                // Chama a API do Gemini
+                const responseText = await callGeminiApi(prompt);
+
+                // Exibe os resultados
+                showResult(responseText);
+
+            } catch (err) {
+                console.error("Erro ao buscar dados:", err);
+                showError("Falha na comunicação com o serviço de busca. Verifique sua conexão ou tente mais tarde.");
+            }
+        }
+
+        /**
+         * Chama a API do Gemini com retentativa (exponential backoff)
+         * @param {string} prompt O prompt a ser enviado
+         * @returns {Promise<string>} O texto da resposta
+         */
+        async function callGeminiApi(prompt) {
+            const apiKey = ""; // A chave é injetada pelo ambiente de execução
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [{ text: prompt }]
+                }],
+                generationConfig: {
+                    temperature: 0.2,
+                    topP: 0.9,
+                }
+            };
+            
+            let response;
+            let retries = 3;
+            let delay = 1000;
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            return result.candidates[0].content.parts[0].text;
+                        } else {
+                           throw new Error("Resposta da API inválida ou vazia.");
+                        }
+                    } else {
+                        if (response.status === 429 && i < retries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            delay *= 2; 
+                            continue; 
+                        }
+                        throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
+                    }
+                } catch (error) {
+                    console.error(`Tentativa ${i + 1} falhou:`, error);
+                    if (i === retries - 1) throw error; 
+                }
+            }
+        }
+
+        /**
+         * Mostra o estado de carregamento
+         */
+        function showLoading() {
+            placeholder.classList.add('hidden');
+            errorContainer.classList.add('hidden');
+            resultContent.classList.add('hidden');
+            resultContent.innerHTML = '';
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+            searchButton.disabled = true;
+            searchButton.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        /**
+         * Mostra o resultado da busca
+         * @param {string} text O texto de resultado em Markdown
+         */
+        function showResult(text) {
+            loader.classList.add('hidden');
+            loader.classList.remove('flex');
+            errorContainer.classList.add('hidden');
+            
+            resultContent.innerHTML = marked.parse(text);
+            
+            resultContent.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            searchButton.disabled = false;
+            searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        /**
+         * Mostra uma mensagem de erro
+         * @param {string} message A mensagem a ser exibida
+         */
+        function showError(message) {
+            loader.classList.add('hidden');
+            loader.classList.remove('flex');
+            placeholder.classList.add('hidden');
+            resultContent.classList.add('hidden');
+            
+            errorMessage.textContent = message;
+            errorContainer.classList.remove('hidden');
+            
+            searchButton.disabled = false;
+            searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+    </script>
+</body>
+</html>
