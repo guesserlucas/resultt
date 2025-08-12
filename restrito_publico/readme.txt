@@ -1331,7 +1331,6 @@ ricms_sc_.html
                 return;
             }
 
-            // Prepara a UI para a busca
             showLoading();
 
             try {
@@ -1354,15 +1353,16 @@ ricms_sc_.html
                     Aja como um consultor tributário especialista em legislação catarinense.
                 `;
 
-                // Chama a API do Gemini
                 const responseText = await callGeminiApi(prompt);
-
-                // Exibe os resultados
                 showResult(responseText);
 
             } catch (err) {
                 console.error("Erro ao buscar dados:", err);
-                showError("Falha na comunicação com o serviço de busca. Verifique sua conexão ou tente mais tarde.");
+                if (err.message === "API_KEY_MISSING") {
+                    showError("Erro de configuração: A chave da API do Google não foi adicionada. Edite o arquivo HTML e insira sua chave.");
+                } else {
+                    showError("Falha na comunicação com o serviço de busca. Verifique sua conexão ou tente mais tarde.");
+                }
             }
         }
 
@@ -1372,7 +1372,15 @@ ricms_sc_.html
          * @returns {Promise<string>} O texto da resposta
          */
         async function callGeminiApi(prompt) {
-            const apiKey = ""; // A chave é injetada pelo ambiente de execução
+            // =================================================================================
+            // IMPORTANTE: Chave de API do Google AI Studio.
+            // =================================================================================
+            const apiKey = "AIzaSyAwr9NszWntg_sxgRVf_6qJhAYHDPYGoeA";
+
+            if (apiKey === "SUA_CHAVE_API_AQUI") {
+                throw new Error("API_KEY_MISSING");
+            }
+
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             
             const payload = {
@@ -1400,9 +1408,7 @@ ricms_sc_.html
 
                     if (response.ok) {
                         const result = await response.json();
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
+                        if (result.candidates && result.candidates[0]?.content?.parts?.[0]) {
                             return result.candidates[0].content.parts[0].text;
                         } else {
                            throw new Error("Resposta da API inválida ou vazia.");
@@ -1473,3 +1479,5 @@ ricms_sc_.html
     </script>
 </body>
 </html>
+
+
