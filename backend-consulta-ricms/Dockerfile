@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia o script principal para o diretório de trabalho
-COPY main.py.
+COPY main.py .
 
 # Define o comando que será executado quando o contêiner iniciar
 CMD ["python", "main.py"]
