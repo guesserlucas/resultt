@@ -5,13 +5,13 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copia o arquivo de dependências para o diretório de trabalho
-COPY requirements.txt.
+COPY requirements.txt .
 
 # Instala as dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia o script principal para o diretório de trabalho
-COPY main.py.
+COPY main.py .
 
 # Expõe a porta que o Google Cloud Run usa por padrão
 EXPOSE 8080
