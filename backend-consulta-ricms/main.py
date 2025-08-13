@@ -32,7 +32,6 @@ def extrair_texto_sef(url):
         return ""
 
 def coletar_toda_legislacao():
-    # ESTA É A LINHA CORRIGIDA
     textos =
     for chave, url in URLS_LEGISLACAO.items():
         print(f"Coletando dados de: {chave}")
