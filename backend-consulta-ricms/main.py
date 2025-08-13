@@ -57,7 +57,7 @@ def extrair_texto_sef(url):
 
 def coletar_toda_legislacao():
     """Coleta e consolida os textos de todas as URLs configuradas."""
-    textos =
+    textos = []
     for chave, url in URLS_LEGISLACAO.items():
         logging.info(f"Coletando dados de: {chave}")
         texto = extrair_texto_sef(url)
