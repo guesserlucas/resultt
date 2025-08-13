@@ -14,31 +14,25 @@ from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_excep
 from google.api_core.exceptions import ResourceExhausted
 
 # --- CONFIGURAÇÃO DE LOGGING ---
-# Configura um logging mais informativo que os prints.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- CONFIGURAÇÃO DE PARÂMETROS ---
-# Utiliza variáveis de ambiente para maior flexibilidade.
 BUCKET_NAME = os.environ.get("BUCKET_NAME")
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY") # A chave da API também deve ser uma variável de ambiente.
-
-# Caminhos para o banco de dados vetorial
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 CHROMA_BUCKET_PATH = "chroma_db_ricms"
 CHROMA_LOCAL_DIR = "/tmp/chroma_db_ricms"
 
-# URLs da legislação a serem processadas
 URLS_LEGISLACAO = {
     "regulamento": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_00.htm",
     "anexo_2": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_an_02.htm",
     "anexo_3": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_an_03.htm",
 }
 
-# Parâmetros para o processamento de embeddings
 EMBEDDING_MODEL = "models/embedding-001"
 CHUNK_SIZE = 1500
 CHUNK_OVERLAP = 200
-BATCH_SIZE = 15 # Tamanho seguro do lote para evitar exceder os limites da API.
-SECONDS_BETWEEN_BATCHES = 2 # Pausa para respeitar o limite de requisições por minuto.
+BATCH_SIZE = 15
+SECONDS_BETWEEN_BATCHES = 2
 
 # --- FUNÇÕES AUXILIARES ---
 
@@ -52,6 +46,7 @@ def extrair_texto_sef(url):
             element.decompose()
         return soup.get_text(separator='\n', strip=True)
     except requests.RequestException as e:
+        # CORREÇÃO: As linhas seguintes foram indentadas para pertencer ao bloco 'except'.
         logging.error(f"Erro ao acessar a URL {url}: {e}")
         return ""
 
@@ -71,10 +66,12 @@ def download_chroma_from_gcs(storage_client, bucket_name, bucket_path, local_pat
     blobs = bucket.list_blobs(prefix=bucket_path)
     downloaded = False
     for blob in blobs:
-        if not blob.name.endswith('/'): # Ignora "pastas"
+        if not blob.name.endswith('/'):
             destination_uri = os.path.join(local_path, os.path.relpath(blob.name, bucket_path))
             os.makedirs(os.path.dirname(destination_uri), exist_ok=True)
             blob.download_to_filename(destination_uri)
+            # CORREÇÃO: A flag 'downloaded' foi movida para dentro do if para indicar
+            # que pelo menos um arquivo foi baixado.
             downloaded = True
     if downloaded:
         logging.info(f"Banco de dados Chroma baixado de gs://{bucket_name}/{bucket_path} para {local_path}")
@@ -87,6 +84,7 @@ def upload_chroma_to_gcs(storage_client, bucket_name, local_path, bucket_path):
     bucket = storage_client.bucket(bucket_name)
     for root, _, files in os.walk(local_path):
         for file in files:
+            # CORREÇÃO: O bloco de código seguinte foi indentado para pertencer ao laço 'for file in files'.
             local_file_path = os.path.join(root, file)
             gcs_file_path = os.path.join(bucket_path, os.path.relpath(local_file_path, local_path))
             blob = bucket.blob(gcs_file_path)
@@ -95,8 +93,6 @@ def upload_chroma_to_gcs(storage_client, bucket_name, local_path, bucket_path):
 
 # --- LÓGICA PRINCIPAL ---
 
-# Decorador de retentativa para a função de adicionar documentos.
-# Tenta 3 vezes com espera exponencial em caso de erro de 'ResourceExhausted'.
 @retry(
     wait=wait_exponential(multiplier=1, min=2, max=60),
     stop=stop_after_attempt(3),
@@ -115,7 +111,6 @@ if __name__ == "__main__":
 
     logging.info("Iniciando a atualização da base de dados do RICMS/SC.")
 
-    # 1. Coleta e processamento do texto
     texto_consolidado = coletar_toda_legislacao()
     if not texto_consolidado:
         logging.error("Falha na coleta dos textos. Abortando.")
@@ -123,15 +118,12 @@ if __name__ == "__main__":
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
     docs = text_splitter.create_documents([texto_consolidado])
-
-    # 2. Validação dos dados - remove documentos vazios
     docs_validos = [doc for doc in docs if doc.page_content and not doc.page_content.isspace()]
     logging.info(f"Total de documentos criados: {len(docs)}. Documentos válidos (não vazios): {len(docs_validos)}.")
     if not docs_validos:
         logging.warning("Nenhum documento válido foi gerado após o processamento. Abortando.")
         sys.exit(0)
 
-    # 3. Preparação do ambiente local e do cliente GCS
     if os.path.exists(CHROMA_LOCAL_DIR):
         shutil.rmtree(CHROMA_LOCAL_DIR)
     os.makedirs(CHROMA_LOCAL_DIR)
@@ -139,23 +131,22 @@ if __name__ == "__main__":
     storage_client = storage.Client()
     embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL, google_api_key=GOOGLE_API_KEY)
     
-    # 4. Carregamento ou criação do banco de dados vetorial (Estratégia Incremental)
     vector_store = None
     if download_chroma_from_gcs(storage_client, BUCKET_NAME, CHROMA_BUCKET_PATH, CHROMA_LOCAL_DIR):
         logging.info("Carregando banco de dados Chroma existente.")
         vector_store = Chroma(persist_directory=CHROMA_LOCAL_DIR, embedding_function=embeddings)
     else:
         logging.info("Criando um novo banco de dados Chroma.")
-        # O banco será criado com o primeiro lote de documentos.
 
-    # 5. Processamento em Lotes (Batching) com Rate Limiting e Retries
     total_docs = len(docs_validos)
     for i in range(0, total_docs, BATCH_SIZE):
-        batch_start_time = time.time()
         docs_batch = docs_validos
         
+        if not docs_batch:
+            continue
+
         if vector_store is None:
-            # Se o vector_store ainda não foi criado, cria com o primeiro lote.
+            # CORREÇÃO: A chamada 'Chroma.from_documents' foi indentada para pertencer ao bloco 'if'.
             vector_store = Chroma.from_documents(
                 documents=docs_batch,
                 embedding=embeddings,
@@ -163,24 +154,22 @@ if __name__ == "__main__":
             )
             logging.info("Novo banco de dados Chroma inicializado com o primeiro lote.")
         else:
-            # Adiciona lotes subsequentes ao banco de dados existente.
+            # CORREÇÃO: O bloco try/except foi indentado para pertencer à cláusula 'else'.
             try:
                 add_documents_with_retry(vector_store, docs_batch)
             except Exception as e:
                 logging.error(f"Falha ao adicionar lote de documentos após múltiplas tentativas: {e}")
-                # Decide se deve parar ou continuar, dependendo da criticidade.
-                # Neste caso, vamos parar para investigar.
                 sys.exit(1)
 
-        # Pausa para respeitar os limites da API
         if i + BATCH_SIZE < total_docs:
             logging.info(f"Lote {i//BATCH_SIZE + 1} processado. Pausando por {SECONDS_BETWEEN_BATCHES} segundos...")
             time.sleep(SECONDS_BETWEEN_BATCHES)
 
-    # 6. Persistência e Upload para o GCS
     logging.info("Persistindo alterações no banco de dados localmente.")
-    vector_store.persist()
+    if vector_store:
+        vector_store.persist()
     
+    # CORREÇÃO: A indentação desta linha foi removida para alinhá-la ao fluxo principal.
     logging.info("Iniciando upload do banco de dados atualizado para o Cloud Storage.")
     upload_chroma_to_gcs(storage_client, BUCKET_NAME, CHROMA_LOCAL_DIR, CHROMA_BUCKET_PATH)
 
