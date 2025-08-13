@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '-t'
+  - 'southamerica-east1-docker.pkg.dev/resultt-a940f/cloud-run-source-deploy/atualizar-base-ricms:latest'
+  - '.'
+images:
+- 'southamerica-east1-docker.pkg.dev/resultt-a940f/cloud-run-source-deploy/atualizar-base-ricms:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
