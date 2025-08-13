@@ -1,5 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
+  # ESTA É A LINHA ADICIONADA PARA CORRIGIR O ERRO
+  dir: 'backend-consulta-ricms'
   args:
   - 'build'
   - '-t'
