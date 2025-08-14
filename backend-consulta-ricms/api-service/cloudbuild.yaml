@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  # Aponta para o diretório correto do serviço de API
+  dir: 'backend-consulta-ricms/api-service'
+  args:
+  - 'build'
+  - '-t'
+  # Define o nome correto e descritivo para a imagem da API
+  - 'southamerica-east1-docker.pkg.dev/resultt-a940f/cloud-run-source-deploy/consultar-ricms-api:latest'
+  - '.'
+images:
+# Garante que a imagem construída seja enviada para o registro
+- 'southamerica-east1-docker.pkg.dev/resultt-a940f/cloud-run-source-deploy/consultar-ricms-api:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
