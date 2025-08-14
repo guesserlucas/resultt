@@ -1,9 +1,12 @@
+# backend-consulta-ricms/main_corrigido.py
+
 import os
 import sys
 import time
 import shutil
 import logging
 import requests
+import psutil  # Adicionado para monitoramento de memória
 from bs4 import BeautifulSoup
 from google.cloud import storage
 from langchain_community.vectorstores import Chroma
@@ -31,10 +34,21 @@ URLS_LEGISLACAO = {
 EMBEDDING_MODEL = "models/embedding-001"
 CHUNK_SIZE = 1500
 CHUNK_OVERLAP = 200
-BATCH_SIZE = 15
-SECONDS_BETWEEN_BATCHES = 2
+BATCH_SIZE = 100  # Aumentado para otimizar chamadas de API
+SECONDS_BETWEEN_BATCHES = 5 # Aumentado para respeitar limites de API
 
 # --- FUNÇÕES AUXILIARES ---
+
+def log_memory_usage(stage=""):
+    """Registra o uso atual de memória do sistema."""
+    process = psutil.Process(os.getpid())
+    mem_info = process.memory_info()
+    total_mem = psutil.virtual_memory()
+    logging.info(
+        f"Uso de Memória ({stage}): "
+        f"Processo RSS: {mem_info.rss / 1024 / 1024:.2f} MB. "
+        f"Total do Sistema Usado: {total_mem.used / 1024 / 1024:.2f} MB ({total_mem.percent}%)"
+    )
 
 def extrair_texto_sef(url):
     """Extrai o texto limpo de uma URL da SEF/SC."""
@@ -46,13 +60,12 @@ def extrair_texto_sef(url):
             element.decompose()
         return soup.get_text(separator='\n', strip=True)
     except requests.RequestException as e:
-        # CORREÇÃO: As linhas seguintes foram indentadas para pertencer ao bloco 'except'.
         logging.error(f"Erro ao acessar a URL {url}: {e}")
         return ""
 
 def coletar_toda_legislacao():
     """Coleta e consolida os textos de todas as URLs configuradas."""
-    textos = []
+    textos =
     for chave, url in URLS_LEGISLACAO.items():
         logging.info(f"Coletando dados de: {chave}")
         texto = extrair_texto_sef(url)
@@ -63,28 +76,25 @@ def coletar_toda_legislacao():
 def download_chroma_from_gcs(storage_client, bucket_name, bucket_path, local_path):
     """Baixa o banco de dados Chroma existente do GCS."""
     bucket = storage_client.bucket(bucket_name)
-    blobs = bucket.list_blobs(prefix=bucket_path)
-    downloaded = False
+    blobs = list(bucket.list_blobs(prefix=bucket_path))
+    if not blobs:
+        logging.info(f"Nenhum banco de dados Chroma encontrado em gs://{bucket_name}/{bucket_path}")
+        return False
+    
+    os.makedirs(local_path, exist_ok=True)
     for blob in blobs:
         if not blob.name.endswith('/'):
             destination_uri = os.path.join(local_path, os.path.relpath(blob.name, bucket_path))
             os.makedirs(os.path.dirname(destination_uri), exist_ok=True)
             blob.download_to_filename(destination_uri)
-            # CORREÇÃO: A flag 'downloaded' foi movida para dentro do if para indicar
-            # que pelo menos um arquivo foi baixado.
-            downloaded = True
-    if downloaded:
-        logging.info(f"Banco de dados Chroma baixado de gs://{bucket_name}/{bucket_path} para {local_path}")
-    else:
-        logging.info(f"Nenhum banco de dados Chroma encontrado em gs://{bucket_name}/{bucket_path}")
-    return downloaded
+    logging.info(f"Banco de dados Chroma baixado de gs://{bucket_name}/{bucket_path} para {local_path}")
+    return True
 
 def upload_chroma_to_gcs(storage_client, bucket_name, local_path, bucket_path):
     """Faz o upload do banco de dados Chroma local para o GCS."""
     bucket = storage_client.bucket(bucket_name)
     for root, _, files in os.walk(local_path):
         for file in files:
-            # CORREÇÃO: O bloco de código seguinte foi indentado para pertencer ao laço 'for file in files'.
             local_file_path = os.path.join(root, file)
             gcs_file_path = os.path.join(bucket_path, os.path.relpath(local_file_path, local_path))
             blob = bucket.blob(gcs_file_path)
@@ -94,8 +104,8 @@ def upload_chroma_to_gcs(storage_client, bucket_name, local_path, bucket_path):
 # --- LÓGICA PRINCIPAL ---
 
 @retry(
-    wait=wait_exponential(multiplier=1, min=2, max=60),
-    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=2, min=4, max=60),
+    stop=stop_after_attempt(5),
     retry=retry_if_exception_type(ResourceExhausted)
 )
 def add_documents_with_retry(vector_store, docs_batch):
@@ -109,17 +119,24 @@ if __name__ == "__main__":
         logging.error("Erro: As variáveis de ambiente BUCKET_NAME e GOOGLE_API_KEY devem estar definidas.")
         sys.exit(1)
 
+    log_memory_usage("Início do Job")
     logging.info("Iniciando a atualização da base de dados do RICMS/SC.")
 
     texto_consolidado = coletar_toda_legislacao()
     if not texto_consolidado:
         logging.error("Falha na coleta dos textos. Abortando.")
         sys.exit(1)
+    
+    log_memory_usage("Após coleta de texto")
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
     docs = text_splitter.create_documents([texto_consolidado])
     docs_validos = [doc for doc in docs if doc.page_content and not doc.page_content.isspace()]
     logging.info(f"Total de documentos criados: {len(docs)}. Documentos válidos (não vazios): {len(docs_validos)}.")
+    
+    del texto_consolidado, docs # Libera memória
+    log_memory_usage("Após divisão de texto")
+
     if not docs_validos:
         logging.warning("Nenhum documento válido foi gerado após o processamento. Abortando.")
         sys.exit(0)
@@ -132,45 +149,48 @@ if __name__ == "__main__":
     embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL, google_api_key=GOOGLE_API_KEY)
     
     vector_store = None
-    if download_chroma_from_gcs(storage_client, BUCKET_NAME, CHROMA_BUCKET_PATH, CHROMA_LOCAL_DIR):
-        logging.info("Carregando banco de dados Chroma existente.")
-        vector_store = Chroma(persist_directory=CHROMA_LOCAL_DIR, embedding_function=embeddings)
-    else:
-        logging.info("Criando um novo banco de dados Chroma.")
+    # Esta abordagem ainda usa o sistema de arquivos em memória.
+    # A recomendação arquitetural é usar um banco de dados vetorial gerenciado.
+    logging.info("Criando um novo banco de dados Chroma.")
 
     total_docs = len(docs_validos)
     for i in range(0, total_docs, BATCH_SIZE):
+        # CORREÇÃO CRÍTICA: Fatiar a lista para criar um lote real.
         docs_batch = docs_validos
         
         if not docs_batch:
             continue
 
-        if vector_store is None:
-            # CORREÇÃO: A chamada 'Chroma.from_documents' foi indentada para pertencer ao bloco 'if'.
-            vector_store = Chroma.from_documents(
-                documents=docs_batch,
-                embedding=embeddings,
-                persist_directory=CHROMA_LOCAL_DIR
-            )
-            logging.info("Novo banco de dados Chroma inicializado com o primeiro lote.")
-        else:
-            # CORREÇÃO: O bloco try/except foi indentado para pertencer à cláusula 'else'.
-            try:
+        try:
+            if vector_store is None:
+                # Inicializa o banco com o primeiro lote
+                vector_store = Chroma.from_documents(
+                    documents=docs_batch,
+                    embedding=embeddings,
+                    persist_directory=CHROMA_LOCAL_DIR
+                )
+                logging.info("Novo banco de dados Chroma inicializado com o primeiro lote.")
+            else:
+                # Adiciona lotes subsequentes
                 add_documents_with_retry(vector_store, docs_batch)
-            except Exception as e:
-                logging.error(f"Falha ao adicionar lote de documentos após múltiplas tentativas: {e}")
-                sys.exit(1)
+        except Exception as e:
+            logging.error(f"Falha fatal ao adicionar lote de documentos: {e}")
+            sys.exit(1)
+
+        log_memory_usage(f"Após lote {i//BATCH_SIZE + 1}/{total_docs//BATCH_SIZE + 1}")
 
         if i + BATCH_SIZE < total_docs:
-            logging.info(f"Lote {i//BATCH_SIZE + 1} processado. Pausando por {SECONDS_BETWEEN_BATCHES} segundos...")
+            logging.info(f"Pausando por {SECONDS_BETWEEN_BATCHES} segundos...")
             time.sleep(SECONDS_BETWEEN_BATCHES)
 
-    logging.info("Persistindo alterações no banco de dados localmente.")
+    logging.info("Persistindo alterações finais no banco de dados localmente.")
     if vector_store:
         vector_store.persist()
     
-    # CORREÇÃO: A indentação desta linha foi removida para alinhá-la ao fluxo principal.
+    log_memory_usage("Após persistência local")
+    
     logging.info("Iniciando upload do banco de dados atualizado para o Cloud Storage.")
     upload_chroma_to_gcs(storage_client, BUCKET_NAME, CHROMA_LOCAL_DIR, CHROMA_BUCKET_PATH)
 
+    log_memory_usage("Fim do Job")
     logging.info("Atualização da base de dados concluída com sucesso.")
