@@ -1,7 +1,14 @@
-google-cloud-storage
+# requirements.txt
+
+# Dependências originais
 requests
 beautifulsoup4
-langchain
+google-cloud-storage
 langchain-community
 langchain-google-genai
-chromadb
+langchain
+tenacity
+google-api-core
+
+# Nova dependência para monitoramento de memória
+psutil
