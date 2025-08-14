@@ -57,30 +57,45 @@ try:
         embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         vector_store = Chroma(persist_directory=CHROMA_LOCAL_DIR, embedding_function=embeddings)
         llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.1)
+# 1. Importar a classe PromptTemplate no início do arquivo
+        from langchain.prompts import PromptTemplate
+
+        #... dentro da função executar_consulta...
+
+        # 2. Definir um template de prompt com placeholders para o contexto e a pergunta
+        prompt_template = """
+        Aja como um consultor tributário especialista em legislação de ICMS de Santa Catarina.
+        Baseando-se EXCLUSIVAMENTE no contexto fornecido abaixo, responda à pergunta do usuário.
+        Se a informação não estiver no contexto, informe claramente: "A informação sobre '{question}' não foi encontrada na legislação consultada."
+
+        Contexto:
+        {context}
+
+        Pergunta do usuário: "{question}"
+
+        Forneça uma resposta completa e bem estruturada em Markdown, cobrindo os seguintes pontos, se aplicável:
+        - **Alíquota Interna:**
+        - **Substituição Tributária (ICMS-ST):**
+        - **Isenção, Não Incidência ou Imunidade:**
+        - **Redução de Base de Cálculo:**
+        - **Crédito Presumido:**
+        - **Observações Importantes:**
+        - **Base Legal:** (Cite os artigos, anexos e seções para cada informação fornecida)
+        """
+        PROMPT = PromptTemplate(
+            template=prompt_template, input_variables=["context", "question"]
+        )
+
+        # 3. Criar a cadeia passando o prompt customizado
         qa_chain = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type="stuff",
-            retriever=vector_store.as_retriever(search_kwargs={"k": 5})
+            retriever=vector_store.as_retriever(search_kwargs={"k": 5}),
+            chain_type_kwargs={"prompt": PROMPT}
         )
 
-        prompt_otimizado = f"""
-        Aja como um consultor tributário especialista em legislação de ICMS de Santa Catarina.
-        Baseando-se EXCLUSIVAMENTE no contexto fornecido, responda à pergunta do usuário.
-        Se a informação não estiver no contexto, informe: "A informação não foi encontrada na legislação consultada."
-
-        Pergunta do usuário: "Qual o tratamento tributário para {query}?"
-
-        Forneça uma resposta estruturada em Markdown, cobrindo:
-        - Alíquota Interna
-        - Substituição Tributária (ICMS-ST)
-        - Isenção
-        - Redução de Base de Cálculo
-        - Crédito Presumido
-        - Observações Importantes
-        - Base Legal para cada item.
-        """
-
-        resultado = qa_chain.run(prompt_otimizado)
+        # 4. Executar a cadeia passando APENAS a consulta do usuário
+        resultado = qa_chain.run(query)
         return ({"resposta": resultado}, 200, headers)
 
     except Exception as e:
