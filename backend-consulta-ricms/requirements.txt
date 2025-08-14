@@ -1,14 +1,15 @@
 # requirements.txt
 
-# Dependências originais
+# Dependências principais da aplicação
 requests
 beautifulsoup4
 google-cloud-storage
+langchain
 langchain-community
 langchain-google-genai
-langchain
+chromadb  # Adicionado para o banco de dados vetorial
+psutil    # Adicionado para monitoramento de memória
+
+# Dependências transitórias (geralmente não precisam ser listadas se as principais as incluírem)
 tenacity
 google-api-core
-
-# Nova dependência para monitoramento de memória
-psutil
