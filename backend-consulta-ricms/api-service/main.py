@@ -23,11 +23,22 @@ def executar_consulta(request):
     if request.method == 'OPTIONS':
         return ('', 204, headers)
 
-    request_json = request.get_json(silent=True)
-    query = request_json.get("query") if request_json else None
+try:
+        request_json = request.get_json(force=True)
+        if request_json is None:
+            # Esta verificação captura casos onde o corpo é 'null'
+            raise ValueError("Corpo da requisição JSON não pode ser nulo.")
+        query = request_json.get("query")
+        if not query:
+            raise ValueError("O campo 'query' é obrigatório no corpo do JSON.")
+    except Exception as e:
+        # Captura erros de análise do JSON (force=True), ValueErrors, etc.
+        print(f"Erro na análise da requisição: {e}")
+        return ({"error": f"Requisição inválida: {e}"}, 400, headers)
 
-    if not query:
-        return ({"error": "A consulta (query) é obrigatória."}, 400, headers)
+    # A lógica principal agora pode assumir que 'query' é válido.
+    try:
+        #... Restante da lógica de negócio...
 
     try:
         storage_client = storage.Client()
