@@ -1,5 +1,8 @@
+# backend-consulta-ricms/api-service/main_corrigido.py
+
 import os
 import shutil
+import asyncio  # PASSO 3: Importar a biblioteca asyncio
 import functions_framework
 from google.cloud import storage
 from langchain_community.vectorstores import Chroma
@@ -14,21 +17,18 @@ CHROMA_LOCAL_DIR = "/tmp/chroma_db"
 
 # --- PONTO DE ENTRADA (ENTRY POINT) ---
 @functions_framework.http
-async def executar_consulta(request):
-    # Configura CORS para permitir requisições de qualquer origem
+# PASSO 1: A função principal deve ser síncrona (def) e não assíncrona (async def)
+def executar_consulta(request):
     headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
     }
 
-    # Trata requisições OPTIONS (preflight CORS)
     if request.method == 'OPTIONS':
         return ('', 204, headers)
 
-    # Inicia um único bloco try para toda a lógica de processamento
     try:
-        # 1. Análise e validação da requisição JSON
         request_json = request.get_json(force=True)
         if request_json is None:
             raise ValueError("Corpo da requisição JSON não pode ser nulo.")
@@ -37,14 +37,12 @@ async def executar_consulta(request):
         if not query:
             raise ValueError("O campo 'query' é obrigatório no corpo do JSON.")
 
-        # 2. Lógica de negócio principal
         storage_client = storage.Client()
         
         if os.path.exists(CHROMA_LOCAL_DIR):
             shutil.rmtree(CHROMA_LOCAL_DIR)
         os.makedirs(CHROMA_LOCAL_DIR, exist_ok=True)
 
-        # Baixa o banco de dados Chroma do GCS
         bucket = storage_client.bucket(BUCKET_NAME)
         blobs = storage_client.list_blobs(BUCKET_NAME, prefix=CHROMA_BUCKET_PATH)
         
@@ -59,34 +57,36 @@ async def executar_consulta(request):
         if downloaded_files == 0:
             raise FileNotFoundError(f"Nenhum arquivo de banco de dados vetorial encontrado em gs://{BUCKET_NAME}/{CHROMA_BUCKET_PATH}.")
 
-        # Inicializa os componentes do LangChain
         embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         vector_store = Chroma(persist_directory=CHROMA_LOCAL_DIR, embedding_function=embeddings)
-        llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.1)
 
-        prompt_template = """
-        Aja como um consultor tributário especialista em legislação de ICMS de Santa Catarina.
-        Baseando-se EXCLUSIVAMENTE no contexto fornecido abaixo, responda à pergunta do usuário.
-        Se a informação não estiver no contexto, informe claramente: "A informação sobre '{question}' não foi encontrada na legislação consultada."
-        Contexto:
-        {context}
+        # PASSO 2: Encapsular a lógica assíncrona em uma função interna `async def`
+        async def _get_qa_response_async(user_query, db):
+            llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.1)
+            prompt_template = """
+            Aja como um consultor tributário especialista em legislação de ICMS de Santa Catarina.
+            Baseando-se EXCLUSIVAMENTE no contexto fornecido abaixo, responda à pergunta do usuário.
+            Se a informação não estiver no contexto, informe claramente: "A informação sobre '{question}' não foi encontrada na legislação consultada."
+            Contexto:
+            {context}
 
-        Pergunta do usuário: "{question}"
+            Pergunta do usuário: "{question}"
 
-        Forneça uma resposta completa e bem estruturada em Markdown.
-        """
-        PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+            Forneça uma resposta completa e bem estruturada em Markdown.
+            """
+            PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+            qa_chain = RetrievalQA.from_chain_type(
+                llm=llm,
+                chain_type="stuff",
+                retriever=db.as_retriever(search_kwargs={"k": 5}),
+                chain_type_kwargs={"prompt": PROMPT}
+            )
+            # A chamada assíncrona real acontece aqui dentro
+            resultado_dict = await qa_chain.ainvoke({"query": user_query})
+            return resultado_dict.get("result", "Não foi possível obter uma resposta.")
 
-        qa_chain = RetrievalQA.from_chain_type(
-            llm=llm,
-            chain_type="stuff",
-            retriever=vector_store.as_retriever(search_kwargs={"k": 5}),
-            chain_type_kwargs={"prompt": PROMPT}
-        )
-
-        # 3. Executa a cadeia de forma assíncrona
-        resultado_dict = await qa_chain.ainvoke({"query": query})
-        resultado = resultado_dict.get("result", "Não foi possível obter uma resposta.")
+        # PASSO 3: Chamar a função assíncrona a partir do contexto síncrono usando asyncio.run()
+        resultado = asyncio.run(_get_qa_response_async(query, vector_store))
         
         return ({"resposta": resultado}, 200, headers)
 
