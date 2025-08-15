@@ -63,7 +63,8 @@ async def _initialize_async():
     print("DEBUG: Chroma vector store criado com sucesso.")
 
     print("DEBUG: Criando ChatGoogleGenerativeAI...")
-    llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.1)
+    # Linha Corrigida
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.1)
     print("DEBUG: ChatGoogleGenerativeAI criado com sucesso.")
     # --- FIM DOS LOGS DE DIAGNÓSTICO ---
 
