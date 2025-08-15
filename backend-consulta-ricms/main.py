@@ -27,6 +27,8 @@ CHROMA_LOCAL_DIR = "/tmp/chroma_db_ricms"
 
 URLS_LEGISLACAO = {
     "regulamento": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_00.htm",
+    "anexo_1": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_01_pas.htm",
+    "anexo_1a": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_01_a.htm",
     "anexo_2": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_02_pas.htm",
     "anexo_3": "https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_03_pas.htm",
 }
