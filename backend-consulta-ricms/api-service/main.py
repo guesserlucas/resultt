@@ -67,8 +67,7 @@ async def _initialize_async():
     print("DEBUG: Chroma vector store criado com sucesso.")
 
     print("DEBUG: Criando ChatGoogleGenerativeAI...")
-    # CORREÇÃO 1: O modelo "gemini-2.5-flash" não existe. Corrigido para "gemini-1.5-flash".
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.1)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
     print("DEBUG: ChatGoogleGenerativeAI criado com sucesso.")
 
     # --- DEFINIÇÃO DO PROMPT ---
