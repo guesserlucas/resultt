@@ -69,45 +69,46 @@ async def _initialize_async():
     print("DEBUG: ChatGoogleGenerativeAI criado com sucesso.")
     # --- FIM DOS LOGS DE DIAGNÓSTICO ---
 
-    prompt_template = """
-    Contexto:
-    {context}
-    
-    Faça levantamento sobre o item "{question}" e busque informações complementares sobre ele, como NCM, descrição completa, variações etc
+prompt_template = """
+Contexto:
+{context}
 
-    
-                    após isso, compare detalhadamente os dados levantados com o contexto fornecido acima verifique tratamentos tributários diferenciados, peculiaridades, alíquotas e etc. 
-                    
-                    Utilize a versão do contexto como fonte mais correta, toda a base legal deve ser estraída do contexto.
- 
-                    após isso, forneça um resumo detalhado e claro do tratamento tributário para o item.
-                   
-                    O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
+Faça um levantamento sobre o item "{question}" e busque informações complementares sobre ele, como NCM e descrição completa.
+Após isso, compare detalhadamente os dados levantados com o contexto fornecido acima e verifique tratamentos tributários diferenciados, peculiaridades, alíquotas, etc.
 
-                    1.  **Alíquota Interna:** Qual a alíquota padrão de ICMS para este produto em operações dentro de SC?
-                    2.  **Substituição Tributária (ICMS-ST):** O produto está sujeito ao regime de ST? Se sim, mencione o MVA/IVA-ST aplicável (original e ajustado para 4% e 12%, se houver) e a base legal (dispositivo do RICMS/SC).
-                    3.  **Isenção:** Existe alguma isenção de ICMS para este produto? Se sim, qual e sob quais condições? Citar a base legal.
-                    4.  **Redução de Base de Cálculo:** Há alguma redução na base de cálculo do ICMS? Se sim, qual o percentual e as condições? Citar a base legal.
-                    5.  **Crédito Presumido:** Existe algum benefício de crédito presumido? Se sim, qual o percentual e para qual tipo de empresa/operação se aplica? Citar a base legal.
-                    6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
+Utilize a versão do contexto como fonte mais correta. Toda a base legal deve ser extraída do contexto.
 
-                    Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
-                    Caso alguma informação não possa ser encontrata no contexto pode ser buscada fora dele, porém essas informações devem ser destacadas com o texto "obtida fora da Base de Dados".
-                    O sistema está livre para fazer inferências e conjecturas utilizando as informações obtidas.
-                    Aja como um consultor tributário especialista em legislação catarinense.
+Após a análise, forneça um resumo detalhado e claro do tratamento tributário para o item.
 
-    """
-    PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
 
-    qa_chain = RetrievalQA.from_chain_type(
-        llm=llm,
-        chain_type="stuff",
-     retriever = vector_store.as_retriever(
-    search_type="mmr",
-    search_kwargs={"k": 40, "fetch_k": 50}
-))
-    
-    print("INFO: Inicialização do worker concluída com sucesso.")
+1.  **Alíquota Interna:** Qual a alíquota padrão de ICMS para este produto em operações dentro de SC?
+2.  **Substituição Tributária (ICMS-ST):** O produto está sujeito ao regime de ST? Se sim, mencione o MVA/IVA-ST aplicável (original e ajustado para 4% e 12%, se houver) e a base legal (dispositivo do RICMS/SC).
+3.  **Isenção:** Existe alguma isenção de ICMS para este produto? Se sim, qual e sob quais condições? Citar a base legal.
+4.  **Redução de Base de Cálculo:** Há alguma redução na base de cálculo do ICMS? Se sim, qual o percentual e as condições? Citar a base legal.
+5.  **Crédito Presumido:** Existe algum benefício de crédito presumido? Se sim, qual o percentual e para qual tipo de empresa/operação se aplica? Citar a base legal.
+6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
+
+Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
+Caso alguma informação não possa ser encontrada no contexto, pode ser buscada fora dele, porém essas informações devem ser destacadas com o texto "obtida fora da Base de Dados".
+O sistema está livre para fazer inferências e conjecturas utilizando as informações obtidas.
+Aja como um consultor tributário especialista em legislação catarinense.
+"""
+
+PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type="stuff",
+    retriever=vector_store.as_retriever(
+        search_type="mmr",
+        search_kwargs={"k": 40, "fetch_k": 50}
+    ),
+    # A LINHA MAIS IMPORTANTE DA CORREÇÃO ESTÁ AQUI:
+    chain_type_kwargs={"prompt": PROMPT} 
+)
+
+print("INFO: Inicialização do worker concluída com sucesso.")
 
 def initialize_worker_state():
     """
