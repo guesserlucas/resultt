@@ -69,15 +69,23 @@ async def _initialize_async():
     # --- FIM DOS LOGS DE DIAGNÓSTICO ---
 
     prompt_template = """
-    Aja como um consultor tributário especialista em legislação de ICMS de Santa Catarina.
-    Baseando-se EXCLUSIVAMENTE no contexto fornecido abaixo, responda à pergunta do usuário.
-    Se a informação não estiver no contexto, informe claramente: "A informação sobre '{question}' não foi encontrada na legislação consultada."
     Contexto:
     {context}
+    Baseando-se EXCLUSIVAMENTE no contexto fornecido acima forneça um resumo detalhado e claro do tratamento tributário para o seguinte item: "{question}".
 
-    Pergunta do usuário: "{question}"
+                    O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
 
-    Forneça uma resposta completa e bem estruturada em Markdown.
+                    1.  **Alíquota Interna:** Qual a alíquota padrão de ICMS para este produto em operações dentro de SC?
+                    2.  **Substituição Tributária (ICMS-ST):** O produto está sujeito ao regime de ST? Se sim, mencione o MVA/IVA-ST aplicável (original e ajustado para 4% e 12%, se houver) e a base legal (dispositivo do RICMS/SC).
+                    3.  **Isenção:** Existe alguma isenção de ICMS para este produto? Se sim, qual e sob quais condições? Citar a base legal.
+                    4.  **Redução de Base de Cálculo:** Há alguma redução na base de cálculo do ICMS? Se sim, qual o percentual e as condições? Citar a base legal.
+                    5.  **Crédito Presumido:** Existe algum benefício de crédito presumido? Se sim, qual o percentual e para qual tipo de empresa/operação se aplica? Citar a base legal.
+                    6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
+
+                    Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
+                    Se o NCM não for encontrado ou a descrição for muito genérica, informe que não foi possível localizar uma tributação específica e peça mais detalhes.
+                    Aja como um consultor tributário especialista em legislação catarinense.
+
     """
     PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
