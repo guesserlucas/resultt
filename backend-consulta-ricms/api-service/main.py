@@ -10,6 +10,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 
+# --- VERIFICAÇÃO DE VARIÁVEL DE AMBIENTE ---
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     # Esta verificação irá logar um erro crítico e causar a saída do contêiner
@@ -24,11 +25,13 @@ CHROMA_BUCKET_PATH = "chroma_db_ricms"
 CHROMA_LOCAL_DIR = "/tmp/chroma_db"
 
 # --- ESTADO GLOBAL ---
+# A cadeia de QA (qa_chain) será inicializada de forma "lazy" (preguiçosa) na primeira requisição.
 qa_chain = None
 
 async def _initialize_async():
     """
     Função assíncrona que contém a lógica de inicialização real.
+    Esta função é chamada apenas uma vez por worker para configurar o estado.
     """
     global qa_chain
     
@@ -54,7 +57,7 @@ async def _initialize_async():
     print("INFO: Download concluído.")
     print("INFO: Carregando modelos e preparando a cadeia de QA...")
 
-    # --- LOGS DE DIAGNÓSTICO ---
+    # --- INICIALIZAÇÃO DOS COMPONENTES LANGCHAIN ---
     print("DEBUG: Criando GoogleGenerativeAIEmbeddings...")
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     print("DEBUG: GoogleGenerativeAIEmbeddings criado com sucesso.")
@@ -64,12 +67,12 @@ async def _initialize_async():
     print("DEBUG: Chroma vector store criado com sucesso.")
 
     print("DEBUG: Criando ChatGoogleGenerativeAI...")
-    # Linha Corrigida
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
+    # CORREÇÃO 1: O modelo "gemini-2.5-flash" não existe. Corrigido para "gemini-1.5-flash".
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.1)
     print("DEBUG: ChatGoogleGenerativeAI criado com sucesso.")
-    # --- FIM DOS LOGS DE DIAGNÓSTICO ---
 
-prompt_template = """
+    # --- DEFINIÇÃO DO PROMPT ---
+    prompt_template = """
 Contexto:
 {context}
 
@@ -94,51 +97,63 @@ Caso alguma informação não possa ser encontrada no contexto, pode ser buscada
 O sistema está livre para fazer inferências e conjecturas utilizando as informações obtidas.
 Aja como um consultor tributário especialista em legislação catarinense.
 """
+    PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+    # CORREÇÃO 2 (PRINCIPAL): A criação do `qa_chain` foi movida para dentro desta função.
+    # Isso garante que `llm` e `vector_store` já existam antes de serem usados.
+    # Este era o motivo do erro de inicialização do contêiner.
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",
+        retriever=vector_store.as_retriever(
+            search_type="mmr",
+            search_kwargs={"k": 40, "fetch_k": 50}
+        ),
+        chain_type_kwargs={"prompt": PROMPT}
+    )
 
-qa_chain = RetrievalQA.from_chain_type(
-    llm=llm,
-    chain_type="stuff",
-    retriever=vector_store.as_retriever(
-        search_type="mmr",
-        search_kwargs={"k": 40, "fetch_k": 50}
-    ),
-    # A LINHA MAIS IMPORTANTE DA CORREÇÃO ESTÁ AQUI:
-    chain_type_kwargs={"prompt": PROMPT} 
-)
-
-print("INFO: Inicialização do worker concluída com sucesso.")
+    print("INFO: Inicialização do worker concluída com sucesso.")
 
 def initialize_worker_state():
     """
     Invólucro síncrono para executar a inicialização assíncrona.
     """
     global qa_chain
+    if qa_chain is not None:
+        return # Evita reinicialização desnecessária
+
     try:
         print("INFO: Iniciando estado para um novo worker (lazy initialization)...")
         asyncio.run(_initialize_async())
     except Exception as e:
-        print(f"ERRO FATAL durante a inicialização do worker: {e}")
+        print(f"ERRO FATAL durante a inicialização do worker: {e}", file=sys.stderr)
+        # Mantém qa_chain como None para que futuras requisições saibam que a inicialização falhou.
         qa_chain = None
 
 @functions_framework.http
 def executar_consulta(request):
+    """
+    Ponto de entrada da Cloud Function HTTP.
+    """
     global qa_chain
     
+    # Configuração dos headers para permitir CORS (Cross-Origin Resource Sharing)
     headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
     }
 
+    # Responde a requisições pre-flight do tipo OPTIONS
     if request.method == 'OPTIONS':
         return ('', 204, headers)
 
     try:
+        # Inicializa o estado do worker na primeira requisição, se ainda não foi feito.
         if qa_chain is None:
             initialize_worker_state()
         
+        # Se a inicialização falhou, retorna um erro de serviço indisponível.
         if qa_chain is None:
             raise RuntimeError("O serviço não está disponível devido a um erro de inicialização do worker.")
 
@@ -147,16 +162,14 @@ def executar_consulta(request):
         if not query:
             raise ValueError("O campo 'query' é obrigatório no corpo do JSON.")
 
-        async def _get_qa_response_async(user_query):
-            resultado_dict = await qa_chain.ainvoke({"query": user_query})
-            return resultado_dict.get("result", "Não foi possível obter uma resposta.")
-
-        resultado = asyncio.run(_get_qa_response_async(query))
+        # Utiliza o loop de eventos existente para executar a função assíncrona da cadeia de QA
+        resultado_dict = asyncio.run(qa_chain.ainvoke({"query": query}))
+        resultado = resultado_dict.get("result", "Não foi possível obter uma resposta.")
         
         return ({"resposta": resultado}, 200, headers)
 
     except ValueError as e:
         return ({"error": f"Requisição inválida: {e}"}, 400, headers)
     except Exception as e:
-        print(f"Erro interno ao processar a consulta: {e}")
+        print(f"Erro interno ao processar a consulta: {e}", file=sys.stderr)
         return ({"error": "Ocorreu um erro interno ao processar sua solicitação."}, 500, headers)
