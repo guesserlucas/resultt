@@ -93,7 +93,7 @@ O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
 
 Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
 Caso alguma informação não possa ser encontrada no contexto, pode ser buscada fora dele, porém essas informações devem ser destacadas com o texto "obtida fora da Base de Dados".
-O sistema está livre para fazer inferências e conjecturas utilizando as informações obtidas.
+Caso não haja indicação explícita de substituição tributária, deve er considerado que não possui regime de substituição tributária.
 Aja como um consultor tributário especialista em legislação catarinense.
 """
     PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
@@ -106,7 +106,7 @@ Aja como um consultor tributário especialista em legislação catarinense.
         chain_type="stuff",
         retriever=vector_store.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": 40, "fetch_k": 50}
+            search_kwargs={"k": 1000, "fetch_k": 2000}
         ),
         chain_type_kwargs={"prompt": PROMPT}
     )
