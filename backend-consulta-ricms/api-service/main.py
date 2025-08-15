@@ -14,27 +14,23 @@ CHROMA_BUCKET_PATH = "chroma_db_ricms"
 CHROMA_LOCAL_DIR = "/tmp/chroma_db"
 
 # --- ESTADO GLOBAL (CACHE EM NÍVEL DE INSTÂNCIA) ---
-# Estas variáveis serão inicializadas UMA VEZ por instância do contêiner.
-# Elas são definidas como None inicialmente.
+# PASSO 1: Inicialize a variável global como None.
+# Ela será preenchida por cada worker na sua primeira requisição.
 qa_chain = None
 
-def initialize_global_state():
+def initialize_worker_state():
     """
-    Função para inicializar o estado global. Baixa o DB do GCS, carrega os modelos
-    e prepara a cadeia de QA. Executada apenas uma vez quando a instância do 
-    contêiner inicia (cold start).
+    Função para inicializar o estado para um worker específico.
+    Esta função será chamada de forma "preguiçosa" (lazy) na primeira
+    requisição que um worker receber.
     """
+    # Usamos 'global' para modificar a variável no escopo do módulo.
     global qa_chain
     
-    # Impede a re-inicialização se a função for chamada acidentalmente de novo.
-    if qa_chain is not None:
-        print("INFO: Estado global já inicializado.")
-        return
-
     try:
-        print("INFO: Iniciando inicialização do estado global (cold start)...")
+        print("INFO: Inicializando estado para um novo worker (lazy initialization)...")
         
-        # 1. Baixar o banco de dados do GCS (lógica movida para cá)
+        # 1. Baixar o banco de dados do GCS
         print(f"INFO: Baixando banco de dados de gs://{BUCKET_NAME}/{CHROMA_BUCKET_PATH}...")
         storage_client = storage.Client()
         
@@ -56,7 +52,7 @@ def initialize_global_state():
         
         print("INFO: Download concluído.")
 
-        # 2. Inicializar os componentes do LangChain (lógica movida para cá)
+        # 2. Inicializar os componentes do LangChain
         print("INFO: Carregando modelos e preparando a cadeia de QA...")
         embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         vector_store = Chroma(persist_directory=CHROMA_LOCAL_DIR, embedding_function=embeddings)
@@ -75,7 +71,7 @@ def initialize_global_state():
         """
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-        # 3. Montar e armazenar a cadeia de QA na variável global
+        # 3. Montar e atribuir a cadeia de QA à variável global
         qa_chain = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type="stuff",
@@ -83,21 +79,18 @@ def initialize_global_state():
             chain_type_kwargs={"prompt": PROMPT}
         )
         
-        print("INFO: Inicialização do estado global concluída com sucesso.")
+        print("INFO: Inicialização do worker concluída com sucesso.")
 
     except Exception as e:
-        # Se a inicialização falhar, registramos o erro. As requisições subsequentes falharão rapidamente.
-        print(f"ERRO FATAL durante a inicialização: {e}")
-        qa_chain = None # Garante que permaneça None em caso de falha
-
-# --- EXECUÇÃO DA INICIALIZAÇÃO ---
-# Chame a função aqui, no escopo global. O código neste escopo é executado
-# automaticamente quando uma nova instância do Cloud Run é criada.
-initialize_global_state()
+        print(f"ERRO FATAL durante a inicialização do worker: {e}")
+        # Deixar qa_chain como None para que futuras requisições a este worker falhem rapidamente.
+        qa_chain = None
 
 # --- PONTO DE ENTRADA (ENTRY POINT) ---
 @functions_framework.http
 def executar_consulta(request):
+    global qa_chain
+    
     headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -108,25 +101,24 @@ def executar_consulta(request):
         return ('', 204, headers)
 
     try:
-        # Etapa de inicialização foi removida daqui. Agora apenas processamos a requisição.
-        
-        # Verifica se a inicialização global falhou.
+        # PASSO 2: Implementar a lógica de inicialização lenta.
+        # Esta verificação garante que a inicialização ocorra apenas uma vez por worker.
         if qa_chain is None:
-            print("ERRO: O serviço não foi inicializado corretamente. Verifique os logs de inicialização da instância.")
-            raise RuntimeError("O serviço não está disponível devido a um erro de inicialização.")
+            initialize_worker_state()
+        
+        # Se a inicialização falhou, qa_chain ainda será None.
+        if qa_chain is None:
+            raise RuntimeError("O serviço não está disponível devido a um erro de inicialização do worker.")
 
         request_json = request.get_json(force=True)
         query = request_json.get("query")
         if not query:
             raise ValueError("O campo 'query' é obrigatório no corpo do JSON.")
 
-        # Função assíncrona interna para executar a consulta usando a cadeia global
         async def _get_qa_response_async(user_query):
-            # A chamada assíncrona real acontece aqui, usando a `qa_chain` pré-carregada
             resultado_dict = await qa_chain.ainvoke({"query": user_query})
             return resultado_dict.get("result", "Não foi possível obter uma resposta.")
 
-        # Chama a função assíncrona a partir do contexto síncrono
         resultado = asyncio.run(_get_qa_response_async(query))
         
         return ({"resposta": resultado}, 200, headers)
