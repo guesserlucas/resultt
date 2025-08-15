@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import asyncio
 import functions_framework
@@ -7,6 +8,14 @@ from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
+
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    # Esta verificação irá logar um erro crítico e causar a saída do contêiner
+    # na inicialização se a variável GOOGLE_API_KEY não estiver definida,
+    # impedindo que uma revisão quebrada seja implantada com sucesso.
+    print("ERRO FATAL: A variável de ambiente GOOGLE_API_KEY não foi definida.", file=sys.stderr)
+    sys.exit(1)
 
 # --- CONFIGURAÇÃO GLOBAL ---
 BUCKET_NAME = os.environ.get("BUCKET_NAME")
