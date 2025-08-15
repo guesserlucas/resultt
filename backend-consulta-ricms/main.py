@@ -69,10 +69,21 @@ def coletar_toda_legislacao():
     """Coleta e consolida os textos de todas as URLs configuradas."""
     textos = []
     for chave, url in URLS_LEGISLACAO.items():
-        logging.info(f"Coletando dados de: {chave}")
+        logging.info(f"Coletando dados de: {chave} ({url})")
         texto = extrair_texto_sef(url)
-        if texto:
+
+        if texto and len(texto.strip()) > 200:  # mínimo de conteúdo
+            logging.info(f"✔ Conteúdo coletado para '{chave}': {len(texto)} caracteres.")
             textos.append(texto)
+        else:
+            logging.warning(f"⚠ Nenhum conteúdo útil encontrado para '{chave}'. "
+                            f"Tamanho recebido: {len(texto.strip()) if texto else 0}")
+
+    if not textos:
+        logging.error("Nenhum texto válido foi coletado. Abortando.")
+        return ""
+
+    # Só adiciona o separador entre textos realmente válidos
     return "\n\n--- FIM DA SEÇÃO ---\n\n".join(textos)
 
 def download_chroma_from_gcs(storage_client, bucket_name, bucket_path, local_path):
@@ -155,36 +166,34 @@ if __name__ == "__main__":
     # A recomendação arquitetural é usar um banco de dados vetorial gerenciado.
     logging.info("Criando um novo banco de dados Chroma.")
 
-    total_docs = len(docs_validos)
-    for i in range(0, total_docs, BATCH_SIZE):
-        # CORREÇÃO CRÍTICA: Fatiar a lista para criar um lote real.
-        docs_batch = docs_validos
-        
-        if not docs_batch:
-            continue
+total_docs = len(docs_validos)
+for i in range(0, total_docs, BATCH_SIZE):
+    docs_batch = docs_validos[i : i + BATCH_SIZE]  # ← corrigido
 
-        try:
-            if vector_store is None:
-                # Inicializa o banco com o primeiro lote
-                vector_store = Chroma.from_documents(
-                    documents=docs_batch,
-                    embedding=embeddings,
-                    persist_directory=CHROMA_LOCAL_DIR
-                )
-                logging.info("Novo banco de dados Chroma inicializado com o primeiro lote.")
-            else:
-                # Adiciona lotes subsequentes
-                add_documents_with_retry(vector_store, docs_batch)
-        except Exception as e:
-            logging.error(f"Falha fatal ao adicionar lote de documentos: {e}")
-            sys.exit(1)
+    if not docs_batch:
+        continue
 
-        log_memory_usage(f"Após lote {i//BATCH_SIZE + 1}/{total_docs//BATCH_SIZE + 1}")
+    try:
+        if vector_store is None:
+            vector_store = Chroma.from_documents(
+                documents=docs_batch,
+                embedding=embeddings,
+                persist_directory=CHROMA_LOCAL_DIR
+            )
+            logging.info("Novo banco de dados Chroma inicializado com o primeiro lote.")
+        else:
+            add_documents_with_retry(vector_store, docs_batch)
+    except Exception as e:
+        logging.error(f"Falha fatal ao adicionar lote de documentos: {e}")
+        sys.exit(1)
 
-        if i + BATCH_SIZE < total_docs:
-            logging.info(f"Pausando por {SECONDS_BETWEEN_BATCHES} segundos...")
-            time.sleep(SECONDS_BETWEEN_BATCHES)
+    log_memory_usage(f"Após lote {i//BATCH_SIZE + 1}/{(total_docs-1)//BATCH_SIZE + 1}")
 
+    if i + BATCH_SIZE < total_docs:
+        logging.info(f"Pausando por {SECONDS_BETWEEN_BATCHES} segundos...")
+        time.sleep(SECONDS_BETWEEN_BATCHES)
+
+    
     logging.info("Persistindo alterações finais no banco de dados localmente.")
     if vector_store:
         vector_store.persist()
