@@ -19,12 +19,9 @@ qa_chain = None
 async def _initialize_async():
     """
     Função assíncrona que contém a lógica de inicialização real.
-    Isso garante que todas as operações, incluindo a instanciação de
-    clientes da LangChain, ocorram dentro de um event loop.
     """
     global qa_chain
     
-    # 1. Baixar o banco de dados do GCS
     print(f"INFO: Baixando banco de dados de gs://{BUCKET_NAME}/{CHROMA_BUCKET_PATH}...")
     storage_client = storage.Client()
     
@@ -45,12 +42,21 @@ async def _initialize_async():
             blob.download_to_filename(destination_file_name)
     
     print("INFO: Download concluído.")
-
-    # 2. Inicializar os componentes do LangChain (agora dentro de um contexto async)
     print("INFO: Carregando modelos e preparando a cadeia de QA...")
+
+    # --- LOGS DE DIAGNÓSTICO ---
+    print("DEBUG: Criando GoogleGenerativeAIEmbeddings...")
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    print("DEBUG: GoogleGenerativeAIEmbeddings criado com sucesso.")
+
+    print("DEBUG: Criando Chroma vector store...")
     vector_store = Chroma(persist_directory=CHROMA_LOCAL_DIR, embedding_function=embeddings)
+    print("DEBUG: Chroma vector store criado com sucesso.")
+
+    print("DEBUG: Criando ChatGoogleGenerativeAI...")
     llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.1)
+    print("DEBUG: ChatGoogleGenerativeAI criado com sucesso.")
+    # --- FIM DOS LOGS DE DIAGNÓSTICO ---
 
     prompt_template = """
     Aja como um consultor tributário especialista em legislação de ICMS de Santa Catarina.
@@ -65,7 +71,6 @@ async def _initialize_async():
     """
     PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-    # 3. Montar e atribuir a cadeia de QA à variável global
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
@@ -77,19 +82,16 @@ async def _initialize_async():
 
 def initialize_worker_state():
     """
-    Função síncrona que serve como um invólucro para executar
-    a lógica de inicialização assíncrona.
+    Invólucro síncrono para executar a inicialização assíncrona.
     """
     global qa_chain
     try:
         print("INFO: Iniciando estado para um novo worker (lazy initialization)...")
-        # Usa asyncio.run() para criar um event loop e executar a inicialização
         asyncio.run(_initialize_async())
     except Exception as e:
         print(f"ERRO FATAL durante a inicialização do worker: {e}")
-        qa_chain = None # Garante que o estado falhe de forma limpa
+        qa_chain = None
 
-# --- PONTO DE ENTRADA (ENTRY POINT) ---
 @functions_framework.http
 def executar_consulta(request):
     global qa_chain
