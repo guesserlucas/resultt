@@ -1,8 +1,14 @@
+# Framework do Google Cloud para executar a função
+functions-framework==3.*
+
+# Bibliotecas principais da LangChain e integração com Google
+langchain==0.2.*
+langchain-community==0.2.*
+langchain-google-genai==1.0.*
+
+# Cliente de armazenamento do Google Cloud
 google-cloud-storage
-requests
-beautifulsoup4
-langchain
-langchain-community
-langchain-google-genai
-chromadb
-functions-framework
+
+# Banco de dados vetorial Chroma e suas dependências
+chromadb==0.5.*
+pysqlite3-binary
