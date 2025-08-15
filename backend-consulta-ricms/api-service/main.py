@@ -1,4 +1,4 @@
-#Otto Guesser
+#Otto P. S. Guesser
 import os
 import sys
 import shutil
