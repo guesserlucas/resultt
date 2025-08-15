@@ -71,7 +71,7 @@ async def _initialize_async():
     prompt_template = """
     Contexto:
     {context}
-    Baseando-se EXCLUSIVAMENTE no contexto fornecido acima forneça um resumo detalhado e claro do tratamento tributário para o seguinte item: "{question}".
+    Faça levantamento sobre o item "{question}" e busque informações complementares sobre ele, como NCM, descrição completa, variações etc então baseando-se EXCLUSIVAMENTE no contexto fornecido acima forneça um resumo detalhado e claro do tratamento tributário para o item.
 
                     O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
 
