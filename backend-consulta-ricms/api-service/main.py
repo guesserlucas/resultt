@@ -72,24 +72,13 @@ async def _initialize_async():
     prompt_template = """
     Contexto:
     {context}
+    
     Faça levantamento sobre o item "{question}" e busque informações complementares sobre ele, como NCM, descrição completa, variações etc
 
-                   após isso, forneça um resumo detalhado e claro do tratamento tributário para o item.
     
-                    O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
-
-                    1.  **Alíquota Interna:** Qual a alíquota padrão de ICMS para este produto em operações dentro de SC?
-                    2.  **Substituição Tributária (ICMS-ST):** O produto está sujeito ao regime de ST? Se sim, mencione o MVA/IVA-ST aplicável (original e ajustado para 4% e 12%, se houver) e a base legal (dispositivo do RICMS/SC).
-                    3.  **Isenção:** Existe alguma isenção de ICMS para este produto? Se sim, qual e sob quais condições? Citar a base legal.
-                    4.  **Redução de Base de Cálculo:** Há alguma redução na base de cálculo do ICMS? Se sim, qual o percentual e as condições? Citar a base legal.
-                    5.  **Crédito Presumido:** Existe algum benefício de crédito presumido? Se sim, qual o percentual e para qual tipo de empresa/operação se aplica? Citar a base legal.
-                    6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
-
-                    Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
-                    Se o NCM não for encontrado ou a descrição for muito genérica, informe que não foi possível localizar uma tributação específica e peça mais detalhes.
-                    Aja como um consultor tributário especialista em legislação catarinense.
-    
-                    após isso, compare os dados levantados com o contexto fornecido acima verifique se existem discrepâncias - todo levantamento deve ter embasamento no contexto. Caso hajam divergênias, utilize a versão do contexto como fonte mais correta corrigindo o levantamento anterior.
+                    após isso, compare detalhadamente os dados levantados com o contexto fornecido acima verifique tratamentos tributários diferenciados, peculiaridades, alíquotas e etc. 
+                    
+                    Utilize a versão do contexto como fonte mais correta, toda a base legal deve ser estraída do contexto.
  
                     após isso, forneça um resumo detalhado e claro do tratamento tributário para o item.
                    
@@ -103,7 +92,8 @@ async def _initialize_async():
                     6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
 
                     Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
-                    Se o NCM não for encontrado ou a descrição for muito genérica, informe que não foi possível localizar uma tributação específica e peça mais detalhes.
+                    Caso alguma informação não possa ser encontrata no contexto pode ser buscada fora dele, porém essas informações devem ser destacadas com o texto "obtida fora da Base de Dados".
+                    O sistema está livre para fazer inferências e conjecturas utilizando as informações obtidas.
                     Aja como um consultor tributário especialista em legislação catarinense.
 
     """
