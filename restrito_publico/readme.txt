@@ -1336,8 +1336,23 @@ ricms_sc_.html
             try {
                 // Monta o prompt para a API do Gemini
                 const prompt = `
-                    Com base na legislação do RICMS/SC (Regulamento do ICMS de Santa Catarina) ATUALIZADA, 
-                    forneça um resumo detalhado e claro do tratamento tributário para o seguinte item: "${query}".
+                   Use como contexto exclusivo o conteúdo das seguinte páginas:
+				   
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_00.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_01.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_01_a.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_02.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_03.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_04.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_05.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_06.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_07.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_08.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_09.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_10.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_11.htm
+
+                    Com base exclusivamente no contexto forneça um resumo detalhado e claro do tratamento tributário para o seguinte item: "${query}".
 
                     O resumo deve obrigatoriamente incluir os seguintes pontos, quando aplicáveis:
 
@@ -1346,11 +1361,13 @@ ricms_sc_.html
                     3.  **Isenção:** Existe alguma isenção de ICMS para este produto? Se sim, qual e sob quais condições? Citar a base legal.
                     4.  **Redução de Base de Cálculo:** Há alguma redução na base de cálculo do ICMS? Se sim, qual o percentual e as condições? Citar a base legal.
                     5.  **Crédito Presumido:** Existe algum benefício de crédito presumido? Se sim, qual o percentual e para qual tipo de empresa/operação se aplica? Citar a base legal.
-                    6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação.
+                    6.  **Observações Importantes:** Qualquer outra informação relevante, como regimes especiais, diferimento, ou particularidades da operação. Citar a base legal.
 
                     Formate a resposta usando Markdown, com títulos claros para cada seção (ex: ## Alíquota, ## Substituição Tributária).
                     Se o NCM não for encontrado ou a descrição for muito genérica, informe que não foi possível localizar uma tributação específica e peça mais detalhes.
                     Aja como um consultor tributário especialista em legislação catarinense.
+					
+				Seja extremamente detalhista e verifique as informações levantadas.
                 `;
 
                 const responseText = await callGeminiApi(prompt);
