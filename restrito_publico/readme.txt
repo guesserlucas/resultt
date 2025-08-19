@@ -2318,295 +2318,169 @@ NCM;DESCRIÇÃO;ALÍQUOTA ICMS;ISENÇÃO;OUTRAS PARTICULARIDADES;BASE LEGAL
 9999.99.99;PRODUTO DO TRABALHO DE DETENTOS;zero;SIM;Saida de produto resultante do trabalho de reeducacao dos detentos promovida pelos estabelecimentos do Sistema Penitenciario do Estado;Anexo 2 Art 1 Inciso VIII
 
 SUBSTITUIÇÃO TRIBUTÁRIA:
-NCM;DESCRIÇÃO;SUBSTITUIÇÃO TRIBUTÁRIA;MVA ORIGINAL;BASE LEGAL
-04011010;Leite UHT Ultra High Temperature;SIM;N/A;Anexo 1-A Secao XVII
-04011090;Outro leite UHT Ultra High Temperature;SIM;N/A;Anexo 1-A Secao XVII
-04012010;Leite UHT Ultra High Temperature;SIM;N/A;Anexo 1-A Secao XVII
-04012090;Outros leites UHT Ultra High Temperature;SIM;N/A;Anexo 1-A Secao XVII
-04014010;Leite;SIM;N/A;Anexo 1-A Secao XVII
-04014021;Creme de leite nata UHT Ultra High Temperature;SIM;N/A;Anexo 1-A Secao XVII
-04014029;Outros cremes de leite nata;SIM;N/A;Anexo 1-A Secao XVII
-04015010;Leite;SIM;N/A;Anexo 1-A Secao XVII
-04015021;Creme de leite nata UHT Ultra High Temperature;SIM;N/A;Anexo 1-A Secao XVII
-04015029;Outros cremes de leite nata;SIM;N/A;Anexo 1-A Secao XVII
-04021010;Leite em po granulos ou outras formas solidas com um teor de materias gordas nao superior a 1,5% com um teor de arsenio chumbo ou cobre considerados isoladamente inferior a 5 ppm;SIM;N/A;Anexo 1-A Secao XVII
-04021090;Outros leites em po granulos ou outras formas solidas com um teor de materias gordas nao superior a 1,5%;SIM;N/A;Anexo 1-A Secao XVII
-04022110;Leite integral em po granulos ou outras formas solidas sem adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04022120;Leite parcialmente desnatado em po granulos ou outras formas solidas sem adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04022130;Creme de leite nata em po granulos ou outras formas solidas sem adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04022910;Leite integral em po granulos ou outras formas solidas com adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04022920;Leite parcialmente desnatado em po granulos ou outras formas solidas com adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04022930;Creme de leite nata em po granulos ou outras formas solidas com adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04029100;Leite e creme de leite nata concentrados ou adicionados de acucar ou de outros edulcorantes sem adicao de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04029900;Outros leites e cremes de leite nata concentrados ou adicionados de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04032000;Iogurte;SIM;N/A;Anexo 1-A Secao XVII
-04039000;Outros leites e cremes de leite natas fermentados ou acidificados;SIM;N/A;Anexo 1-A Secao XVII
-04041000;Soro de leite modificado ou nao mesmo concentrado ou adicionado de acucar ou de outros edulcorantes;SIM;N/A;Anexo 1-A Secao XVII
-04049000;Produtos constituidos por componentes naturais do leite nao especificados nem compreendidos noutras posicoes;SIM;N/A;Anexo 1-A Secao XVII
-04051000;Manteiga;SIM;N/A;Anexo 1-A Secao XVII
-04052000;Pasta de espalhar barrar de produtos provenientes do leite;SIM;N/A;Anexo 1-A Secao XVII
-04059010;Oleo butirico de manteiga butter oil;SIM;N/A;Anexo 1-A Secao XVII
-04059090;Outras materias gordas provenientes do leite;SIM;N/A;Anexo 1-A Secao XVII
-04061010;Mozarela;SIM;N/A;Anexo 1-A Secao XVII
-04061090;Outros queijos frescos nao curados incluindo o queijo de soro de leite e o requeijao;SIM;N/A;Anexo 1-A Secao XVII
-04062000;Queijos ralados ou em po de qualquer tipo;SIM;N/A;Anexo 1-A Secao XVII
-04063000;Queijos fundidos exceto ralados ou em po;SIM;N/A;Anexo 1-A Secao XVII
-04064000;Queijos de pasta mofada azul e outros queijos que apresentem veios obtidos utilizando Penicillium roqueforti;SIM;N/A;Anexo 1-A Secao XVII
-04069010;Outros queijos com um teor de umidade inferior a 36,0% em peso massa dura;SIM;N/A;Anexo 1-A Secao XVII
-04069020;Outros queijos com um teor de umidade igual ou superior a 36,0% e inferior a 46,0% em peso massa semidura;SIM;N/A;Anexo 1-A Secao XVII
-04069030;Outros queijos com um teor de umidade igual ou superior a 46,0% e inferior a 55,0% em peso massa macia;SIM;N/A;Anexo 1-A Secao XVII
-04069090;Outros queijos;SIM;N/A;Anexo 1-A Secao XVII
-09012100;Cafe torrado nao descafeinado;SIM;N/A;Anexo 1-A Secao XVII
-09012200;Cafe torrado descafeinado;SIM;N/A;Anexo 1-A Secao XVII
-09019000;Outros cafe mesmo torrado ou descafeinado cascas e peliculas de cafe sucedaneos do cafe que contenham cafe em qualquer proporcao;SIM;N/A;Anexo 1-A Secao XVII
-15079011;Oleo de soja refinado em recipientes com capacidade inferior ou igual a 5 l;SIM;N/A;Anexo 1-A Secao XVII
-15089000;Outros oleos de amendoim e respectivas fracoes mesmo refinados mas nao quimicamente modificados;SIM;N/A;Anexo 1-A Secao XVII
-15092000;Azeite de oliva oliveira extra virgem;SIM;N/A;Anexo 1-A Secao XVII
-15093000;Azeite de oliva oliveira virgem;SIM;N/A;Anexo 1-A Secao XVII
-15094000;Outros azeites de oliva oliveira virgens;SIM;N/A;Anexo 1-A Secao XVII
-15099010;Azeite de oliva refinado;SIM;N/A;Anexo 1-A Secao XVII
-15099090;Outros azeites de oliva oliveira e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15101000;Oleo de bagaco de azeitona em bruto;SIM;N/A;Anexo 1-A Secao XVII
-15109000;Outros oleos e respectivas fracoes obtidos exclusivamente a partir de azeitonas;SIM;N/A;Anexo 1-A Secao XVII
-15121911;Oleo de girassol refinado em recipientes com capacidade inferior ou igual a 5 l;SIM;N/A;Anexo 1-A Secao XVII
-15122910;Oleo de algodao refinado;SIM;N/A;Anexo 1-A Secao XVII
-15131900;Outros oleos de coco copra e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15132911;Oleo de cocombocaya Acrocomia totai;SIM;N/A;Anexo 1-A Secao XVII
-15132919;Outros oleos de amendoa de palma palmiste coconote;SIM;N/A;Anexo 1-A Secao XVII
-15132920;Oleo de babacu;SIM;N/A;Anexo 1-A Secao XVII
-15141910;Oleos de nabo silvestre ou de colza com baixo teor de acido erucico refinados;SIM;N/A;Anexo 1-A Secao XVII
-15149910;Outros oleos de nabo silvestre de colza ou de mostarda refinados;SIM;N/A;Anexo 1-A Secao XVII
-15151900;Outros oleos de linhaca sementes de linho e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15152910;Oleo de milho refinado em recipientes com capacidade inferior ou igual a 5 l;SIM;N/A;Anexo 1-A Secao XVII
-15152990;Outros oleos de milho e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15153000;Oleo de ricino mamona e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15155000;Oleo de gergelim sesamo e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15159010;Oleo de jojoba e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15159022;Oleo de tungue refinado;SIM;N/A;Anexo 1-A Secao XVII
-15159090;Outras gorduras e oleos vegetais ou de origem microbiana e respectivas fracoes fixos mesmo refinados mas nao quimicamente modificados;SIM;N/A;Anexo 1-A Secao XVII
-15162000;Gorduras e oleos vegetais e respectivas fracoes;SIM;N/A;Anexo 1-A Secao XVII
-15171000;Margarina exceto a margarina liquida;SIM;N/A;Anexo 1-A Secao XVII
-15179010;Misturas de oleos refinados em recipientes com capacidade inferior ou igual a 5 l;SIM;N/A;Anexo 1-A Secao XVII
-15179090;Outras misturas ou preparacoes alimenticias de gorduras ou de oleos vegetais;SIM;N/A;Anexo 1-A Secao XVII
-20089100;Palmitos;SIM;N/A;Anexo 1-A Secao XVII
-20091100;Suco sumo de laranja congelado;SIM;N/A;Anexo 1-A Secao XVII
-20091200;Suco sumo de laranja nao congelado com valor Brix nao superior a 20;SIM;N/A;Anexo 1-A Secao XVII
-20091900;Outros sucos sumos de laranja;SIM;N/A;Anexo 1-A Secao XVII
-20092100;Suco sumo de toranja suco sumo de pomelo com valor Brix nao superior a 20;SIM;N/A;Anexo 1-A Secao XVII
-20092900;Outros sucos sumos de toranja ou de pomelo;SIM;N/A;Anexo 1-A Secao XVII
-20093100;Suco sumo de qualquer outro citrico com valor Brix nao superior a 20;SIM;N/A;Anexo 1-A Secao XVII
-20093900;Outros sucos sumos de qualquer outro citrico;SIM;N/A;Anexo 1-A Secao XVII
-20094100;Suco sumo de abacaxi ananas com valor Brix nao superior a 20;SIM;N/A;Anexo 1-A Secao XVII
-20094900;Outros sucos sumos de abacaxi ananas;SIM;N/A;Anexo 1-A Secao XVII
-20095000;Suco sumo de tomate;SIM;N/A;Anexo 1-A Secao XVII
-20096100;Suco sumo de uva incluindo os mostos de uvas com valor Brix nao superior a 30;SIM;N/A;Anexo 1-A Secao XVII
-20096900;Outros sucos sumos de uva incluindo os mostos de uvas;SIM;N/A;Anexo 1-A Secao XVII
-20097100;Suco sumo de maca com valor Brix nao superior a 20;SIM;N/A;Anexo 1-A Secao XVII
-20097900;Outros sucos sumos de maca;SIM;N/A;Anexo 1-A Secao XVII
-20098100;Suco sumo de arando vermelho cranberries Vaccinium macrocarpon Vaccinium oxycoccos airela vermelha Vaccinium vitis-idaea;SIM;N/A;Anexo 1-A Secao XVII
-20098911;Suco sumo de caju;SIM;N/A;Anexo 1-A Secao XVII
-20098912;Suco sumo de maracuja;SIM;N/A;Anexo 1-A Secao XVII
-20098913;Suco sumo de manga;SIM;N/A;Anexo 1-A Secao XVII
-20098919;Outros sucos sumos de uma unica fruta;SIM;N/A;Anexo 1-A Secao XVII
-20098921;Agua de coco;SIM;N/A;Anexo 1-A Secao XVII
-20098922;Suco sumo de acerola;SIM;N/A;Anexo 1-A Secao XVII
-20098990;Outros sucos sumos de fruta ou de produtos horticulas;SIM;N/A;Anexo 1-A Secao XVII
-20099000;Misturas de sucos sumos;SIM;N/A;Anexo 1-A Secao XVII
-21069010;Xarope ou extrato concentrado destinados ao preparo de refrigerante em maquina pre-mix ou post-mix;SIM;N/A;Anexo 1-A Secao IV
-21069010;Capsula de refrigerante;SIM;N/A;Anexo 1-A Secao IV
-21069090;Bebidas energeticas;SIM;N/A;Anexo 1-A Secao IV
-21069090;Bebidas hidroeletroliticas;SIM;N/A;Anexo 1-A Secao IV
-22021000;Agua aromatizada artificialmente exceto os refrescos e refrigerantes;SIM;N/A;Anexo 1-A Secao IV
-22021000;Refrigerante;SIM;N/A;Anexo 1-A Secao IV
-22029100;Cerveja sem alcool;SIM;N/A;Anexo 1-A Secao IV
-22029900;Outras aguas minerais gasosa ou nao ou potavel naturais inclusive gaseificadas ou aromatizadas artificialmente exceto os refrescos e refrigerantes;SIM;N/A;Anexo 1-A Secao IV
-22029900;Refrigerante;SIM;N/A;Anexo 1-A Secao IV
-22029900;Bebidas energeticas;SIM;N/A;Anexo 1-A Secao IV
-22029900;Bebidas hidroeletroliticas;SIM;N/A;Anexo 1-A Secao IV
-22030000;Cervejas de malte;SIM;N/A;Anexo 1-A Secao IV
-22030000;Chope;SIM;N/A;Anexo 1-A Secao IV
-22051000;Vermutes e outros vinhos de uvas frescas aromatizados por plantas ou substancias aromaticas em recipientes de capacidade nao superior a 2 l;SIM;N/A;Anexo 1-A Secao III-A
-22059000;Outros vermutes e vinhos de uvas frescas aromatizados por plantas ou substancias aromaticas;SIM;N/A;Anexo 1-A Secao III-A
-22060010;Sidra;SIM;N/A;Anexo 1-A Secao III-A
-22060090;Outras bebidas fermentadas por exemplo perada hidromel saque misturas de bebidas fermentadas e misturas de bebidas fermentadas com bebidas nao alcoolicas;SIM;N/A;Anexo 1-A Secao III-A
-22071010;Alcool etilico nao desnaturado com um teor de agua inferior ou igual a 1% vol;SIM;N/A;Anexo 1-A Secao III-A
-22071090;Outros alcoois etilicos nao desnaturados com um teor alcoolico em volume igual ou superior a 80% vol;SIM;N/A;Anexo 1-A Secao III-A
-22072011;Alcool etilico desnaturado com um teor de agua inferior ou igual a 1% vol;SIM;N/A;Anexo 1-A Secao III-A
-22072019;Outros alcoois etilicos desnaturados;SIM;N/A;Anexo 1-A Secao III-A
-22072020;Aguardente desnaturada;SIM;N/A;Anexo 1-A Secao III-A
-22082000;Aguardentes de vinho ou de bagaco de uvas;SIM;N/A;Anexo 1-A Secao III-A
-22083010;Uisques com um teor alcoolico em volume superior a 50% vol em recipientes de capacidade igual ou superior a 50 l;SIM;N/A;Anexo 1-A Secao III-A
-22083020;Uisques em embalagens de capacidade inferior ou igual a 2 l;SIM;N/A;Anexo 1-A Secao III-A
-22083090;Outros uisques;SIM;N/A;Anexo 1-A Secao III-A
-22084000;Rum e outras aguardentes provenientes da destilacao apos fermentacao de produtos da cana-de-acucar;SIM;N/A;Anexo 1-A Secao III-A
-22085000;Gim e genebra;SIM;N/A;Anexo 1-A Secao III-A
-22086000;Vodca;SIM;N/A;Anexo 1-A Secao III-A
-22087000;Licores;SIM;N/A;Anexo 1-A Secao III-A
-22089000;Outros alcoois etilicos nao desnaturados com um teor alcoolico em volume inferior a 80% vol aguardentes licores e outras bebidas espirituosas;SIM;N/A;Anexo 1-A Secao III-A
-23091000;Alimentos para caes ou gatos acondicionados para venda a retalho;SIM;N/A;Anexo 1-A Secao XXI
-23099010;Alimentos para caes ou gatos acondicionados para venda a retalho;SIM;N/A;Anexo 1-A Secao XXI
-23099030;Bolachas e biscoitos;SIM;N/A;Anexo 1-A Secao XXI
-23099060;Alimentos para caes ou gatos acondicionados para venda a retalho;SIM;N/A;Anexo 1-A Secao XXI
-23099090;Outras preparacoes do tipo utilizado na alimentacao de animais;SIM;N/A;Anexo 1-A Secao XXI
-24021000;Charutos e cigarrilhas que contenham tabaco;SIM;N/A;Anexo 1-A Secao V
-24022000;Cigarros que contenham tabaco;SIM;N/A;Anexo 1-A Secao V
-24029000;Outros charutos cigarrilhas e cigarros de tabaco ou dos seus sucedaneos;SIM;N/A;Anexo 1-A Secao V
-24031100;Tabaco para narguile cachimbo de agua mencionado na Nota de subposicao 1 do presente Capitulo;SIM;N/A;Anexo 1-A Secao V
-24031900;Outros tabacos para fumar mesmo que contenha sucedaneos do tabaco em qualquer proporcao;SIM;N/A;Anexo 1-A Secao V
-25231000;Cimentos nao pulverizados denominados clinkers;SIM;N/A;Anexo 1-A Secao VI
-25232100;Cimentos Portland brancos mesmo corados artificialmente;SIM;N/A;Anexo 1-A Secao VI
-25232910;Cimento Portland comum;SIM;N/A;Anexo 1-A Secao VI
-25232990;Outros cimentos Portland;SIM;N/A;Anexo 1-A Secao VI
-25233000;Cimentos aluminosos;SIM;N/A;Anexo 1-A Secao VI
-25239000;Outros cimentos hidraulicos;SIM;N/A;Anexo 1-A Secao VI
-40111000;Pneumaticos novos de borracha do tipo utilizado em automoveis de passageiros incluindo os veiculos de uso misto station wagons e os automoveis de corrida;SIM;N/A;Anexo 1-A Secao XVI
-40112010;Pneumaticos novos de borracha do tipo utilizado em onibus autocarros ou caminhoes de medida 11,00-24;SIM;N/A;Anexo 1-A Secao XVI
-40112090;Outros pneumaticos novos de borracha do tipo utilizado em onibus autocarros ou caminhoes;SIM;N/A;Anexo 1-A Secao XVI
-40114000;Pneumaticos novos de borracha do tipo utilizado em motocicletas;SIM;N/A;Anexo 1-A Secao XVI
-40115000;Pneumaticos novos de borracha do tipo utilizado em bicicletas;SIM;N/A;Anexo 1-A Secao XVI
-40117010;Pneumaticos novos de borracha do tipo utilizado em veiculos e maquinas agricolas ou florestais nas seguintes medidas 4,00-15 4,00-18 4,00-19 5,00-15 5,00-16 5,50-16 6,00-16 6,00-19 6,00-20 6,50-16 6,50-20 7,50-16 7,50-18 7,50-20;SIM;N/A;Anexo 1-A Secao XVI
-40117090;Outros pneumaticos novos de borracha do tipo utilizado em veiculos e maquinas agricolas ou florestais;SIM;N/A;Anexo 1-A Secao XVI
-40118010;Pneumaticos novos de borracha radiais para dumpers concebidos para serem utilizados fora de rodovias com secao de largura igual ou superior a 940 mm 37 para aros de diametro igual ou superior a 1448 mm 57;SIM;N/A;Anexo 1-A Secao XVI
-40118020;Outros pneumaticos novos de borracha com secao de largura igual ou superior a 1143 mm 45 para aros de diametro igual ou superior a 1143 mm 45;SIM;N/A;Anexo 1-A Secao XVI
-40118090;Outros pneumaticos novos de borracha do tipo utilizado em veiculos e maquinas para a construcao civil de mineracao e de manutencao industrial;SIM;N/A;Anexo 1-A Secao XVI
-40119010;Pneumaticos novos de borracha com secao de largura igual ou superior a 1143 mm 45 para aros de diametro igual ou superior a 1143 mm 45;SIM;N/A;Anexo 1-A Secao XVI
-40119090;Outros pneumaticos novos de borracha;SIM;N/A;Anexo 1-A Secao XVI
-40121100;Pneumaticos recauchutados do tipo utilizado em automoveis de passageiros incluindo os veiculos de uso misto station wagons e os automoveis de corrida;SIM;N/A;Anexo 1-A Secao XVI
-40121200;Pneumaticos recauchutados do tipo utilizado em onibus autocarros ou caminhoes;SIM;N/A;Anexo 1-A Secao XVI
-40121900;Outros pneumaticos recauchutados;SIM;N/A;Anexo 1-A Secao XVI
-40129010;Flaps de borracha;SIM;N/A;Anexo 1-A Secao XVI
-40129090;Protetores de borracha;SIM;N/A;Anexo 1-A Secao XVI
-40131010;Camaras de ar de borracha para pneumaticos do tipo utilizado em onibus ou caminhoes de medida 11,00-24;SIM;N/A;Anexo 1-A Secao XVI
-40131090;Outras camaras de ar de borracha do tipo utilizado em automoveis de passageiros onibus ou caminhoes;SIM;N/A;Anexo 1-A Secao XVI
-40132000;Camaras de ar de borracha do tipo utilizado em bicicletas;SIM;N/A;Anexo 1-A Secao XVI
-40139000;Outras camaras de ar de borracha;SIM;N/A;Anexo 1-A Secao XVI
-48030090;Outros papeis do tipo utilizado para papel higienico lencos toalhitas demaquilantes toalhas guardanapos ou para papel semelhante de uso domestico higienico ou toucador;SIM;N/A;Anexo 1-A Secao XV
-48059100;Outro papel e cartao nao revestidos em rolos ou em folhas de peso igual ou superior a 150 g/m² mas inferior a 225 g/m²;SIM;N/A;Anexo 1-A Secao XVIII
-48062000;Papel impermeavel a gordura;SIM;N/A;Anexo 1-A Secao XVIII
-48081000;Papel e cartao ondulados canelados mesmo perfurados;SIM;N/A;Anexo 1-A Secao XVIII
-48115122;De peso superior a 150 g/m² com um conteudo de fibras de madeira obtidas por processo mecanico superior a 50% branqueado com face superior lisa;SIM;N/A;Anexo 1-A Secao XVIII
-48115923;Outros de peso superior a 150 g/m²;SIM;N/A;Anexo 1-A Secao XVIII
-48181000;Papel higienico;SIM;N/A;Anexo 1-A Secao XIX
-48182000;Lencos incluindo os demaquilantes e toalhas de mao;SIM;N/A;Anexo 1-A Secao XIX
-48183000;Toalhas de mesa e guardanapos;SIM;N/A;Anexo 1-A Secao XIX
-48189090;Outros artigos de uso domestico higienico ou de toucador de pasta de papel papel ouate de celulose ou mantas de fibras de celulose;SIM;N/A;Anexo 1-A Secao XIX
-48201000;Livros de registro e de contabilidade blocos de notas de encomendas de recibos de apontamentos de papel para cartas memorandos agendas e artigos semelhantes;SIM;N/A;Anexo 1-A Secao XVIII
-48202000;Cadernos;SIM;N/A;Anexo 1-A Secao XVIII
-48203000;Classificadores pastas para documentos capas para processos e capas de folhas moveis;SIM;N/A;Anexo 1-A Secao XVIII
-48204000;Formularios em blocos de papel multiplo mesmo com folhas intercaladas de papel-carbono papel quimico;SIM;N/A;Anexo 1-A Secao XVIII
-48205000;Albuns para amostras ou para colecoes;SIM;N/A;Anexo 1-A Secao XVIII
-48209000;Outros artigos escolares de escritorio ou de papelaria;SIM;N/A;Anexo 1-A Secao XVIII
-48211000;Etiquetas de papel ou cartao impressas;SIM;N/A;Anexo 1-A Secao XVIII
-48219000;Outras etiquetas de papel ou cartao;SIM;N/A;Anexo 1-A Secao XVIII
-4823209;Outros filtros de papel e cartao;SIM;N/A;Anexo 1-A Secao XVIII
-48236;Bandejas travessas pratos copos e artigos semelhantes de papel ou cartao;SIM;N/A;Anexo 1-A Secao XVIII
-48237000;Artigos moldados ou prensados de pasta de papel;SIM;N/A;Anexo 1-A Secao XVIII
-4823909;Outros artigos de pasta de papel papel cartao ouate de celulose ou mantas de fibras de celulose;SIM;N/A;Anexo 1-A Secao XVIII
-70091000;Espelhos retrovisores para veiculos;SIM;N/A;Anexo 1-A Secao II
-7013;Objetos de vidro para servico de mesa cozinha toucador escritorio ornamentacao de interiores ou usos semelhantes exceto os das posicoes 7010 ou 7018;SIM;N/A;Anexo 1-A Secao XV
-8211;Facas de laminas cortantes ou serrilhadas incluindo as podadeiras exceto as da posicao 8208 e suas laminas;SIM;N/A;Anexo 1-A Secao IX
-82130000;Tesouras e suas laminas;SIM;N/A;Anexo 1-A Secao IX
-8214;Outros artigos de cutelaria por exemplo maquinas de cortar o cabelo ou tosquiar maquinas de picar carne fendeleiras cutelos de acougue ou de cozinha espalmadeiras;SIM;N/A;Anexo 1-A Secao IX
-8215;Colheres garfos conchas escumadeiras pas para tortas facas especiais para peixe ou para manteiga pincas para acucar e objetos semelhantes;SIM;N/A;Anexo 1-A Secao IX
-83021000;Dobradicas de qualquer tipo incluindo os gonzos e charneiras;SIM;N/A;Anexo 1-A Secao XI
-83024100;Outras guarnicoes artigos de ferragem e artigos semelhantes para edificios;SIM;N/A;Anexo 1-A Secao XI
-83024200;Outras guarnicoes artigos de ferragem e artigos semelhantes para moveis;SIM;N/A;Anexo 1-A Secao XI
-83024900;Outras guarnicoes artigos de ferragem e artigos semelhantes;SIM;N/A;Anexo 1-A Secao XI
-83025000;Pateras cabides chapeleiras e artigos semelhantes;SIM;N/A;Anexo 1-A Secao XI
-83026000;Fechos automaticos para portas;SIM;N/A;Anexo 1-A Secao XI
-83081000;Grampos de fio curvado;SIM;N/A;Anexo 1-A Secao IX
-83082000;Rebites tubulares ou de haste fendida;SIM;N/A;Anexo 1-A Secao IX
-830890;Outras obras de metais comuns incluindo as partes;SIM;N/A;Anexo 1-A Secao IX
-841510;Maquinas e aparelhos de ar-condicionado do tipo concebido para ser fixado numa janela parede teto ou piso pavimento formando um corpo unico ou do tipo split-system sistema com elementos separados;SIM;N/A;Anexo 1-A Secao XX
-841582;Outras maquinas e aparelhos de ar-condicionado com dispositivo de refrigeracao;SIM;N/A;Anexo 1-A Secao XX
-84181000;Combinacoes de refrigeradores e congeladores freezers munidos de portas ou gavetas exteriores separadas ou de uma combinacao desses elementos;SIM;N/A;Anexo 1-A Secao XX
-84182100;Refrigeradores do tipo domestico de compressao;SIM;N/A;Anexo 1-A Secao XX
-84182900;Outros refrigeradores do tipo domestico;SIM;N/A;Anexo 1-A Secao XX
-84183000;Congeladores freezers horizontais arcas de capacidade nao superior a 800 l;SIM;N/A;Anexo 1-A Secao XX
-84184000;Congeladores freezers verticais de capacidade nao superior a 900 l;SIM;N/A;Anexo 1-A Secao XX
-841850;Outros moveis arcas armarios vitrines balcoes e moveis semelhantes para a conservacao e exposicao de produtos que incorporem um equipamento para a producao de frio;SIM;N/A;Anexo 1-A Secao XX
-8418699;Outros materiais maquinas e aparelhos para a producao de frio;SIM;N/A;Anexo 1-A Secao XX
-842112;Secadores de roupa;SIM;N/A;Anexo 1-A Secao XX
-84212100;Aparelhos para filtrar ou depurar agua;SIM;N/A;Anexo 1-A Secao XX
-842211;Maquinas de lavar louca do tipo domestico;SIM;N/A;Anexo 1-A Secao XX
-84221900;Outras maquinas de lavar louca;SIM;N/A;Anexo 1-A Secao XX
-844331;Maquinas que executem pelo menos duas das seguintes funcoes impressao copia ou transmissao de telecopia fax capazes de ser conectadas a uma maquina automatica para processamento de dados ou a uma rede;SIM;N/A;Anexo 1-A Secao XX
-844332;Outras impressoras aparelhos de copiar e aparelhos de telecopiar fax mesmo combinados entre si capazes de ser conectadas a uma maquina automatica para processamento de dados ou a uma rede;SIM;N/A;Anexo 1-A Secao XX
-845011;Maquinas de lavar roupa de uso domestico inteiramente automaticas de capacidade nao superior a 10 kg em peso de roupa seca;SIM;N/A;Anexo 1-A Secao XX
-845012;Outras maquinas de lavar roupa de uso domestico com secador centrifugo incorporado de capacidade nao superior a 10 kg em peso de roupa seca;SIM;N/A;Anexo 1-A Secao XX
-845019;Outras maquinas de lavar roupa de uso domestico de capacidade nao superior a 10 kg em peso de roupa seca;SIM;N/A;Anexo 1-A Secao XX
-845020;Maquinas de lavar roupa de uso domestico de capacidade superior a 10 kg em peso de roupa seca;SIM;N/A;Anexo 1-A Secao XX
-845121;Maquinas de secar de uso domestico de capacidade nao superior a 10 kg em peso de roupa seca;SIM;N/A;Anexo 1-A Secao XX
-845129;Outras maquinas de secar de uso domestico;SIM;N/A;Anexo 1-A Secao XX
-847130;Maquinas automaticas para processamento de dados portateis de peso nao superior a 10 kg que contenham pelo menos uma unidade central de processamento um teclado e uma tela ecra;SIM;N/A;Anexo 1-A Secao XX
-84714;Outras maquinas automaticas para processamento de dados;SIM;N/A;Anexo 1-A Secao XX
-847150;Unidades de processamento exceto as das subposicoes 847141 ou 847149 podendo conter no mesmo corpo um ou dois dos seguintes tipos de unidades unidade de memoria unidade de entrada e unidade de saida;SIM;N/A;Anexo 1-A Secao XX
-847160;Unidades de entrada ou de saida podendo conter no mesmo corpo unidades de memoria;SIM;N/A;Anexo 1-A Secao XX
-847170;Unidades de memoria;SIM;N/A;Anexo 1-A Secao XX
-847190;Outras unidades de maquinas automaticas para processamento de dados;SIM;N/A;Anexo 1-A Secao XX
-85043;Outros transformadores de potencia nao superior a 16 kVA;SIM;N/A;Anexo 1-A Secao XX
-850440;Conversores estaticos;SIM;N/A;Anexo 1-A Secao XX
-8506;Pilhas e baterias de pilhas eletricas;SIM;N/A;Anexo 1-A Secao XX
-8507;Acumuladores eletricos incluindo os seus separadores mesmo de forma quadrada ou retangular;SIM;N/A;Anexo 1-A Secao XX
-8508;Aspiradores;SIM;N/A;Anexo 1-A Secao XX
-8509;Aparelhos eletromecanicos de motor eletrico incorporado de uso domestico exceto os aspiradores da posicao 8508;SIM;N/A;Anexo 1-A Secao XX
-8510;Aparelhos ou maquinas de barbear maquinas de cortar o cabelo ou de tosquiar e aparelhos de depilar com motor eletrico incorporado;SIM;N/A;Anexo 1-A Secao XX
-8513;Lanternas eletricas portateis destinadas a funcionar por meio de sua propria fonte de energia por exemplo de pilhas de acumuladores de magnetos exceto os aparelhos de iluminacao da posicao 8512;SIM;N/A;Anexo 1-A Secao XX
-85161000;Aquecedores eletricos de agua incluindo os de imersao;SIM;N/A;Anexo 1-A Secao XX
-85162;Aparelhos eletricos para aquecimento de ambientes do solo ou para usos semelhantes;SIM;N/A;Anexo 1-A Secao XX
-85163;Aparelhos eletrotermicos para arranjos do cabelo ou para secar as maos;SIM;N/A;Anexo 1-A Secao XX
-85164000;Ferros eletricos de passar;SIM;N/A;Anexo 1-A Secao XX
-85165000;Fornos de micro-ondas;SIM;N/A;Anexo 1-A Secao XX
-85166000;Outros fornos fogoes de cozinha fogareiros incluindo as chapas de coccao grelhas e assadeiras;SIM;N/A;Anexo 1-A Secao XX
-85167;Outros aparelhos eletrotermicos;SIM;N/A;Anexo 1-A Secao XX
-85171100;Aparelhos telefonicos por fio com unidade auscultador-microfone sem fio;SIM;N/A;Anexo 1-A Secao XX
-85171300;Smartphones e outros telefones para redes celulares ou para outras redes sem fio;SIM;N/A;Anexo 1-A Secao XX
-851714;Outros telefones para redes celulares ou para outras redes sem fio;SIM;N/A;Anexo 1-A Secao XX
-851718;Outros aparelhos telefonicos;SIM;N/A;Anexo 1-A Secao XX
-851762;Aparelhos para recepcao conversao transmissao e regeneracao de voz imagens ou outros dados incluindo os aparelhos de comutacao e roteamento;SIM;N/A;Anexo 1-A Secao XX
-8518;Microfones e seus suportes alto-falantes mesmo montados nas suas caixas acusticas fones de ouvido mesmo combinados com um microfone e conjuntos ou sortidos constituidos por um microfone e um ou mais alto-falantes amplificadores eletricos de audiofrequencia aparelhos eletricos de amplificacao de som;SIM;N/A;Anexo 1-A Secao XX
-8519;Aparelhos de gravacao de som aparelhos de reproducao de som aparelhos de gravacao e de reproducao de som;SIM;N/A;Anexo 1-A Secao XX
-8521;Aparelhos de gravacao ou de reproducao de video mesmo com um receptor de sinais de video incorporado;SIM;N/A;Anexo 1-A Secao XX
-8522;Partes e acessorios reconheciveis como sendo exclusiva ou principalmente destinados aos aparelhos das posicoes 8519 a 8521;SIM;N/A;Anexo 1-A Secao XX
-852589;Outras cameras de televisao cameras de video de imagens fixas e outras cameras de video;SIM;N/A;Anexo 1-A Secao XX
-8527;Aparelhos receptores para radiodifusao mesmo combinados num mesmo involucro com um aparelho de gravacao ou de reproducao de som ou com um relogio;SIM;N/A;Anexo 1-A Secao XX
-8528;Monitores e projetores que nao incorporem aparelho receptor de televisao aparelhos receptores de televisao mesmo que incorporem um aparelho receptor de radiodifusao ou um aparelho de gravacao ou de reproducao de som ou de imagens;SIM;N/A;Anexo 1-A Secao XX
-8539;Lampadas e tubos eletricos de incandescencia ou de descarga incluindo os artigos denominados farois e projetores em unidades seladas e as lampadas e tubos de raios ultravioleta ou infravermelhos lampadas de arco lampadas e tubos de diodos emissores de luz LED;SIM;N/A;Anexo 1-A Secao X
-8540;Lampadas tubos e valvulas eletronicas de catodo quente catodo frio ou fotocatodo por exemplo lampadas tubos e valvulas de vacuo de vapor ou de gas tubos retificadores de vapor de mercurio tubos catodicos tubos e valvulas para cameras de televisao;SIM;N/A;Anexo 1-A Secao X
-8544;Fios cabos incluindo os cabos coaxiais e outros condutores isolados para usos eletricos mesmo com pecas de conexao fios de fibras opticas constituidos por fibras embainhadas individualmente mesmo com condutores eletricos ou munidos de pecas de conexao;SIM;N/A;Anexo 1-A Secao XIII
-8702;Veiculos automoveis para transporte de 10 pessoas ou mais incluindo o motorista;SIM;N/A;Anexo 1-A Secao XXIV
-8703;Automoveis de passageiros e outros veiculos automoveis principalmente concebidos para transporte de pessoas exceto os da posicao 8702 incluindo os veiculos de uso misto station wagons e os automoveis de corrida;SIM;N/A;Anexo 1-A Secao XXIV
-8704;Veiculos automoveis para transporte de mercadorias;SIM;N/A;Anexo 1-A Secao XXIV
-8705;Veiculos automoveis para usos especiais exceto os concebidos principalmente para transporte de pessoas ou de mercadorias por exemplo auto-socorros caminhoes-guindastes veiculos de combate a incendios caminhoes-betoneiras veiculos para varrer veiculos para espalhar veiculos-oficinas veiculos radiologicos;SIM;N/A;Anexo 1-A Secao XXIV
-870600;Chassis com motor para veiculos automoveis das posicoes 8701 a 8705;SIM;N/A;Anexo 1-A Secao XXIV
-8711;Motocicletas incluindo os ciclomotores e outros veiculos equipados com motor auxiliar mesmo com carro lateral carros laterais;SIM;N/A;Anexo 1-A Secao XXV
-8716;Reboques e semirreboques para quaisquer veiculos outros veiculos nao autopropulsados e suas partes;SIM;N/A;Anexo 1-A Secao XXIV
-9006;Cameras fotograficas aparelhos e dispositivos incluindo as lampadas e tubos de luz relampago flash para fotografia exceto as da posicao 8539;SIM;N/A;Anexo 1-A Secao XX
-9007;Cameras e projetores cinematograficos mesmo com aparelhos de gravacao ou de reproducao de som incorporados;SIM;N/A;Anexo 1-A Secao XX
-90189099;Outros instrumentos e aparelhos para medicina cirurgia odontologia e veterinaria;SIM;N/A;Anexo 1-A Secao XIV
-90191000;Aparelhos de mecanoterapia aparelhos de massagem aparelhos de psicotecnica;SIM;N/A;Anexo 1-A Secao XIV
-902000;Outros aparelhos respiratorios e mascaras contra gases exceto as mascaras de protecao desprovidas de mecanismo e de elemento filtrante amovivel;SIM;N/A;Anexo 1-A Secao XIV
-9021;Artigos e aparelhos ortopedicos incluindo as cintas e fundas medico-cirurgicas e as muletas talas goteiras e outros artigos e aparelhos para fraturas artigos e aparelhos de protese aparelhos para facilitar a audicao dos surdos e outros aparelhos para compensar uma deficiencia ou uma incapacidade destinados a serem transportados a mao ou sobre as pessoas ou a serem implantados no organismo;SIM;N/A;Anexo 1-A Secao XIV
-90328911;Reguladores de voltagem eletronicos;SIM;N/A;Anexo 1-A Secao XIII
-9101;Relogios de pulso de bolso e semelhantes incluindo os contadores de tempo dos mesmos tipos com caixa de metais preciosos ou de metais folheados ou chapeados de metais preciosos plaque;SIM;N/A;Anexo 1-A Secao XXVI
-9102;Relogios de pulso de bolso e semelhantes incluindo os contadores de tempo dos mesmos tipos exceto os da posicao 9101;SIM;N/A;Anexo 1-A Secao XXVI
-9103;Despertadores e outros relogios com mecanismo de pequeno volume;SIM;N/A;Anexo 1-A Secao XXVI
-9105;Despertadores outros relogios e aparelhos de relojoaria semelhantes exceto os com mecanismo de pequeno volume;SIM;N/A;Anexo 1-A Secao XXVI
-9401;Assentos exceto os da posicao 9402 mesmo transformaveis em camas e suas partes;SIM;N/A;Anexo 1-A Secao XI
-9403;Outros moveis e suas partes;SIM;N/A;Anexo 1-A Secao XI
-9405;Luminarias e aparelhos de iluminacao incluindo os projetores e suas partes nao especificados nem compreendidos noutras posicoes anuncios cartazes ou tabuletas e placas indicadoras luminosos e artigos semelhantes com uma fonte de luz fixa permanente e suas partes nao especificadas nem compreendidas noutras posicoes;SIM;N/A;Anexo 1-A Secao XI
-9504;Consoles e maquinas de jogos de video artigos para jogos de salao incluindo os jogos com motor ou outro mecanismo os bilhares as mesas especiais para jogos de cassino e os jogos de balizas automaticos boliches;SIM;N/A;Anexo 1-A Secao XX
-9506;Artigos e equipamentos para cultura fisica ginasia atletismo outros esportes incluindo o tenis de mesa e o badminton ou para jogos ao ar livre nao especificados nem compreendidos noutras posicoes deste Capitulo piscinas incluindo as infantis;SIM;N/A;Anexo 1-A Secao XXVI
-9603;Vassouras escovas mesmo as que sejam partes de maquinas de aparelhos ou de veiculos escovas mecanicas de uso manual nao motorizadas e espanadores pinceis e brochas exceto os da subposicao 960330 rolos para pintura bonecas e rolos para pintura preparacoes como escovas;SIM;N/A;Anexo 1-A Secao XII
-96050000;Sortidos de viagem para toucador de pessoas para costura ou para limpeza de calcado ou de roupas;SIM;N/A;Anexo 1-A Secao XIX
-9608;Canetas esferograficas canetas e marcadores com ponta de feltro ou com outras pontas porosas canetas-tinteiro tinteiros e outras canetas lapiseiras canetas porta-penas porta-lapis e artigos semelhantes partes incluindo as tampas e prendedores desses artigos exceto os da posicao 9609;SIM;N/A;Anexo 1-A Secao XVIII
-9609;Lapis minas para lapis ou para lapiseiras pasteis e carvoes lapis de ardosa ou de greda e giz para escrever ou para desenhar;SIM;N/A;Anexo 1-A Secao XVIII
-9613;Isqueiros e outros acendedores mesmo mecanicos ou eletricos e suas partes exceto pedras e pavios;SIM;N/A;Anexo 1-A Secao XXVI
-96140000;Cachimbos incluindo os seus fornilhos e piteiras boquilhas para charutos ou cigarros e suas partes;SIM;N/A;Anexo 1-A Secao XXVI
-9615;Pentes travessas para cabelo e artigos semelhantes grampos ganchos para cabelo alfinetes para cabelo pincas onduladores bobs e artigos semelhantes para penteados exceto os da posicao 8516 e suas partes;SIM;N/A;Anexo 1-A Secao XIX
-9616;Vaporizadores de toucador e suas armacoes e cabecas de vaporizadores borlas e esponjas para po ou para aplicacao de outros cosmeticos ou de produtos de toucador;SIM;N/A;Anexo 1-A Secao XIX
-961700;Garrafas termicas e outros recipientes isotermicos montados com isolamento a vacuo bem como suas partes exceto ampolas de vidro;SIM;N/A;Anexo 1-A Secao XX
-9619;Absorventes higienicos externos e tampoes higienicos fraldas e cueiros para bebes e artigos higienicos semelhantes de qualquer materia;SIM;N/A;Anexo 1-A Secao XIX"
+NCM;DESCRICAO;SUBSTITUICAO TRIBUTARIA;MVA ORIGINAL;BASE LEGAL
+21069010;Preparações do tipo utilizado para elaboração de bebidas;SIM;11205;RICMS-SC/01 Anexo 3 Art 15
+21069010;Cápsula de refrigerante;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+21069010;Bebidas energéticas em lata;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+21069010;Bebidas energéticas em embalagem PET;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+21069010;Bebidas energéticas em vidro;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22021000;Água aromatizada artificialmente exceto os refrescos e refrigerantes;SIM;7000;RICMS-SC/01 Anexo 3 Art 15
+22021000;Refrigerante em vidro descartável;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22021000;Refrigerante em embalagem PET;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22021000;Demais refrigerantes exceto os classificados nos CEST 0301000 0301001 0301002 0301101;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22021000;Espumantes sem álcool;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029100;Cerveja sem álcool;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029900;Outras águas minerais gasosa ou não ou potável naturais inclusive gaseificadas ou aromatizadas artificialmente exceto os refrescos e refrigerantes;SIM;7000;RICMS-SC/01 Anexo 3 Art 15
+22029900;Refrigerante em vidro descartável;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029900;Refrigerante em embalagem PET;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029900;Demais refrigerantes exceto os classificados nos CEST 0301000 0301001 0301002 0301101;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029900;Bebidas energéticas em lata;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029900;Bebidas energéticas em embalagem PET;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22029900;Bebidas energéticas em vidro;SIM;8024;RICMS-SC/01 Anexo 3 Art 15
+22030000;Cervejas de malte;SIM;7000;RICMS-SC/01 Anexo 3 Art 15
+22030000;Chope;SIM;11500;RICMS-SC/01 Anexo 3 Art 15
+22051000;Aperitivos amargos bitter e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22051000;Catuaba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22051000;Jurubeba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22051000;Vermute e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22051000;Sangrias e coquetéis;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22051000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22059000;Aperitivos amargos bitter e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22059000;Catuaba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22059000;Jurubeba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22059000;Vermute e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22059000;Sangrias e coquetéis;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22059000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060010;Sidra e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060010;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060090;Catuaba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060090;Cooler;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060090;Jurubeba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060090;Saquê;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060090;Sangrias e coquetéis;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22060090;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22071010;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22071090;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22072011;Cachaça e aguardentes;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22072011;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22072019;Cachaça e aguardentes;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22072019;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22072020;Cachaça e aguardentes;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22072020;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22082000;Conhaque brandy e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22082000;Pisco;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22082000;Aguardente vínica grappa;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22082000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22083010;Uísque;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22083010;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22083020;Uísque;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22083020;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22083090;Uísque;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22083090;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22084000;Cachaça e aguardentes;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22084000;Rum;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22084000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22085000;Gim gin e genebra;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22085000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22086000;Vodka;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22086000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22087000;Licores e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22087000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Aperitivos amargos bitter e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Batida e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Bebida ice;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Catuaba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Cooler;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Jurubeba e similares;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Steinhaeger;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Tequila;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Derivados de vodka;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Arak;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Sangrias e coquetéis;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+22089000;Outras bebidas alcoólicas não especificadas nos itens anteriores;SIM;7415;RICMS-SC/01 Anexo 3 Art 15
+24011010;Tabaco não destalado em folhas sem secar nem fermentar;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24011020;Tabaco não destalado em folhas secas ou fermentadas tipo capeiro;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24011030;Tabaco não destalado em folhas secas em secador de ar quente flue cured do tipo Virginia;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24011040;Tabaco não destalado em folhas secas com um conteúdo de óleos voláteis superior a 02 em peso do tipo turco;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24011090;Outro tabaco não destalado;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24012010;Tabaco total ou parcialmente destalado em folhas sem secar nem fermentar;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24012020;Tabaco total ou parcialmente destalado em folhas secas ou fermentadas tipo capeiro;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24012030;Tabaco total ou parcialmente destalado em folhas secas em secador de ar quente flue cured do tipo Virginia;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24012040;Tabaco total ou parcialmente destalado em folhas secas light air cured do tipo Burley;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24012090;Outro tabaco total ou parcialmente destalado;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24013000;Desperdícios de tabaco;SIM;;RICMS-SC/01 Anexo 3 Art 15
+24021000;Charutos e cigarrilhas que contenham tabaco;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24022000;Cigarros que contenham tabaco;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24029000;Outros charutos cigarrilhas e cigarros de tabaco ou dos seus sucedâneos;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24031100;Tabaco para narguilé cachimbo de água;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24031900;Outro tabaco para fumar;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24039100;Tabaco homogeneizado ou reconstituído;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24039910;Extratos e molhos de tabaco;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24039990;Outros produtos de tabaco e seus sucedâneos manufaturados;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24041100;Produtos que contenham tabaco ou tabaco reconstituído destinados à inalação sem combustão;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24041200;Outros produtos que contenham nicotina destinados à inalação sem combustão;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24041900;Outros produtos destinados à inalação sem combustão;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24049100;Produtos que contenham nicotina para aplicação oral;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24049200;Produtos que contenham nicotina para aplicação percutânea;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+24049900;Outros produtos que contenham nicotina destinados à absorção pelo corpo humano;SIM;5000;RICMS-SC/01 Anexo 3 Art 15
+25231000;Cimentos não pulverizados denominados clinkers;SIM;2000;RICMS-SC/01 Anexo 3 Art 15
+25232100;Cimentos brancos mesmo corados artificialmente;SIM;2000;RICMS-SC/01 Anexo 3 Art 15
+25232910;Cimento comum;SIM;2000;RICMS-SC/01 Anexo 3 Art 15
+25232990;Outros cimentos Portland;SIM;2000;RICMS-SC/01 Anexo 3 Art 15
+25233000;Cimentos aluminosos;SIM;2000;RICMS-SC/01 Anexo 3 Art 15
+25239000;Outros cimentos hidráulicos;SIM;2000;RICMS-SC/01 Anexo 3 Art 15
+27101259;Gasolina automotiva C;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101259;Gasolina de aviação;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101919;Querosene de aviação;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101921;Óleo diesel A;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101921;Óleo diesel B;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101921;Óleo diesel marítimo;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101922;Óleo combustível;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27101932;Óleos lubrificantes;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27111910;Gás Liquefeito de Petróleo GLP/GLGN;SIM;;RICMS-SC/01 Anexo 3 Art 15
+27160000;Energia elétrica;SIM;;RICMS-SC/01 Anexo 3 Art 15
+38260000;Biodiesel B100;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87021000;Veículos automóveis para transporte de 10 pessoas ou mais incluindo o motorista com motor de pistão de ignição por compressão diesel ou semidiesel com volume interno de habitáculo superior a 6 m3 mas inferior a 9 m3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87022000;Veículos automóveis para transporte de 10 pessoas ou mais incluindo o motorista com motor de pistão de ignição por compressão diesel ou semidiesel e um motor elétrico com volume interno de habitáculo superior a 6 m3 mas inferior a 9 m3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87023000;Veículos automóveis para transporte de 10 pessoas ou mais incluindo o motorista com motor de pistão alternativo de ignição por centelha e um motor elétrico com volume interno de habitáculo superior a 6 m3 mas inferior a 9 m3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87024090;Veículos automóveis para transporte de 10 pessoas ou mais incluindo o motorista unicamente com motor elétrico para propulsão com volume interno de habitáculo superior a 6 m3 mas inferior a 9 m3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87029000;Outros veículos automóveis para transporte de 10 pessoas ou mais incluindo o motorista com volume interno de habitáculo superior a 6 m3 mas inferior a 9 m3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032100;Automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada não superior a 1000 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032210;Automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada superior a 1000 cm3 mas não superior a 1500 cm3 com capacidade de transporte de pessoas sentadas inferior ou igual a 6 incluído o condutor exceto carro celular;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032290;Outros automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada superior a 1000 cm3 mas não superior a 1500 cm3 exceto carro celular;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032310;Automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada superior a 1500 cm3 mas não superior a 3000 cm3 com capacidade de transporte de pessoas sentadas inferior ou igual a 6 incluído o condutor exceto carro celular carro funerário e automóveis de corrida;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032390;Outros automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada superior a 1500 cm3 mas não superior a 3000 cm3 exceto carro celular carro funerário e automóveis de corrida;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032410;Automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada superior a 3000 cm3 com capacidade de transporte de pessoas sentadas inferior ou igual a 6 incluído o condutor exceto carro celular carro funerário e automóveis de corrida;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87032490;Outros automóveis unicamente com motor de pistão alternativo de ignição por centelha de cilindrada superior a 3000 cm3 exceto carro celular carro funerário e automóveis de corrida;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87033210;Automóveis unicamente com motor diesel ou semidiesel de cilindrada superior a 1500 cm3 mas não superior a 2500 cm3 com capacidade de transporte de pessoas sentadas inferior ou igual a 6 incluído o condutor exceto ambulância carro celular e carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87033290;Outros automóveis unicamente com motor diesel ou semidiesel de cilindrada superior a 1500 cm3 mas não superior a 2500 cm3 exceto ambulância carro celular e carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87033310;Automóveis unicamente com motor diesel ou semidiesel de cilindrada superior a 2500 cm3 com capacidade de transporte de pessoas sentadas inferior ou igual a 6 incluído o condutor exceto carro celular e carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87033390;Outros automóveis unicamente com motor diesel ou semidiesel de cilindrada superior a 2500 cm3 exceto carro celular e carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87034000;Automóveis equipados para propulsão simultaneamente com um motor de pistão alternativo de ignição por centelha e um motor elétrico exceto os suscetíveis de serem carregados por conexão a uma fonte externa de energia elétrica o carro celular e o carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87035000;Automóveis equipados para propulsão simultaneamente com um motor de pistão por compressão diesel ou semidiesel e um motor elétrico exceto os suscetíveis de serem carregados por conexão a uma fonte externa de energia elétrica exceto o carro celular e o carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87036000;Automóveis equipados para propulsão simultaneamente com um motor de pistão alternativo de ignição por centelha e um motor elétrico suscetíveis de serem carregados por conexão a uma fonte externa de energia elétrica exceto o carro celular e o carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87037000;Automóveis equipados para propulsão simultaneamente com um motor de pistão por compressão diesel ou semidiesel e um motor elétrico suscetíveis de serem carregados por conexão a uma fonte externa de energia elétrica exceto o carro celular e o carro funerário;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87038000;Outros veículos equipados unicamente com motor elétrico para propulsão;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87042110;Veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas chassis com motor diesel ou semidiesel e cabina exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87042120;Veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas com motor diesel ou semidiesel com caixa basculante exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87042130;Veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas frigoríficos ou isotérmicos com motor diesel ou semidiesel exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87042190;Outros veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas com motor diesel ou semidiesel exceto carro-forte para transporte de valores e caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87043110;Veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas com motor a explosão chassis cabina exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87043120;Veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas com motor explosão e caixa basculante exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87043130;Veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas frigoríficos ou isotérmicos com motor explosão exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87043190;Outros veículos automóveis para transporte de mercadorias de peso em carga máxima não superior a 5 toneladas com motor a explosão exceto carro-forte para transporte de valores e caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87044100;Outros veículos para transportes de mercadorias equipados para propulsão simultaneamente com motor de pistão de ignição por compressão diesel ou semidiesel e motor elétrico de peso em carga máxima bruto não superior a 5 toneladas exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87045100;Outros veículos para transportes de mercadorias equipados para propulsão simultaneamente com motor de pistão de ignição por centelha faísca e motor elétrico de peso em carga máxima bruto não superior a 5 toneladas exceto caminhão de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87046000;Outros veículos para transporte de mercadorias unicamente com motor elétrico para propulsão exceto veículo de peso em carga máxima superior a 39 toneladas;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87111000;Motocicletas incluídos os ciclomotores e outros ciclos equipados com motor auxiliar mesmo com carro lateral com motor de pistão de cilindrada não superior a 50 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87112010;Motocicletas de cilindrada inferior ou igual a 125 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87112020;Motocicletas de cilindrada superior a 125 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87112090;Outros ciclos com motor de pistão de cilindrada superior a 50 cm3 mas não superior a 250 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87113000;Motocicletas com motor de pistão de cilindrada superior a 250 cm3 mas não superior a 500 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87114000;Motocicletas com motor de pistão de cilindrada superior a 500 cm3 mas não superior a 800 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87115000;Motocicletas com motor de pistão de cilindrada superior a 800 cm3;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87116000;Motocicletas com motor elétrico para propulsão;SIM;;RICMS-SC/01 Anexo 3 Art 15
+87119000;Outros ciclos equipados com motor auxiliar;SIM;;RICMS-SC/01 Anexo 3 Art 15
 
 
                     Com base EXCLUSIVAMENTE no contexto forneça um resumo detalhado e claro do tratamento tributário para o seguinte item: "${query}".
