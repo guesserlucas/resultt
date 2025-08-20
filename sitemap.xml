@@ -56,7 +56,7 @@
   </url>
   <url>
     <loc>https://www.resulttcontabilidade.com.br/biblioteca.html</loc>
-    <lastmod>2025-08-08</lastmod>
+    <lastmod>2025-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -66,7 +66,26 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.resulttcontabilidade.com.br/restrito_publico/pis_cofins.html</loc>
+    <lastmod>2025-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+    <url>
+    <loc>https://www.resulttcontabilidade.com.br/restrito_publico/reforma_tributaria.htmll</loc>
+    <lastmod>2025-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+    <url>
+    <loc>https://www.resulttcontabilidade.com.br/restrito_publico/ricms_sc_.html</loc>
+    <lastmod>2025-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>  
   </urlset>
+
 
 
 
