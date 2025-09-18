@@ -3,14 +3,7 @@ https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_01.htm
 https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_01_a.htm
 https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_02.htm
 https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_03.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_04.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_05.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_06.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_07.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_08.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_09.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_10.htm
-https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_11.htm
+https://legislacao.sef.sc.gov.br/html/regulamentos/icms/ricms_01_12.htm
 
 PROMPT:
 
@@ -23,6 +16,7 @@ NÃO UTILIZAR DADOS EXTERNOS: Como contexto EXCLUSIVO apenas o arquivo RICMS, ge
 NÃO UTILIZAR DADOS EXTERNOS: Como contexto EXCLUSIVO apenas o arquivo RICMS, gerar tabela CSV separado por ";", sem caracteres especiais e sem pontuação no interior das células, buscando TODOS os produtos com tratamento diferenciado ISENÇÃO; colunas: NCM(preencher em todos os produtos); DESCRIÇÃO(preencher em todos os produtos); ALÍQUOTA ICMS (preencher em todos os produtos); ISENÇÃO (SIM OU NÃO);  OUTRAS PARTICULARIDADES(condicinantes para isenção); BASE LEGAL(preencher em todos os produtos); dados objetivos omissos de NCM podem ser buscados NO ARQUIVO TIPI para preenchimento completo da tabela; a planilha deve contar pesquisa exaustiva e super detalhada, Organizar os dados extraídos, garantindo que cada produto e cada código NCM sejam listados em linhas individuais, mesmo que compartilhem a mesma base legal ou tratamento. Agrupar as informações por NCM em mesma linha, utilizando apenas os 4 primeiros dígitos do código, Classificar os dados por código NCM do menor para o maior, temperature 0.1
 
 NÃO UTILIZAR DADOS EXTERNOS: Como contexto EXCLUSIVO apenas o arquivo RICMS, gerar tabela CSV separado por ";", sem caracteres especiais e sem pontuação no interior das células, buscando TODOS os produtos com SUBSTITUIÇÃO TRIBUTÁRIA (apenas vigentes, desconsiderar revogadas) colunas: NCM(preencher em todos os produtos); DESCRIÇÃO(preencher em todos os produtos); SUBSTITUIÇÃO TRIBUTÁRIA(SIM OU NÃO); MVA ORIGINAL(se houver); BASE LEGAL(do RICMS-SC, preencher em todos os produtos); dados objetivos omissos de NCM podem ser buscados NO ARQUIVO TIPI para preenchimento completo da tabela; a planilha deve contar pesquisa exaustiva e super detalhada, Organizar os dados extraídos, garantindo que cada produto e cada código NCM sejam listados em linhas individuais, mesmo que compartilhem a mesma base legal ou tratamento. Agrupar as informações por NCM, utilizando apenas os 4 primeiros dígitos do código, Classificar os dados por código NCM do menor para o maior, temperature 0.1
+
 
 
 
