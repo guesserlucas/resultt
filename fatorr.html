@@ -33,7 +33,6 @@
 
     <div class="w-full max-w-4xl bg-white shadow-2xl rounded-lg p-6 md:p-8">
 
-        <!-- Cabeçalho -->
         <header class="flex flex-col md:flex-row justify-between items-center pb-4 border-b">
             <div class="flex-shrink-0 mb-4 md:mb-0">
                 <img src="https://www.resulttcontabilidade.com.br/01.png" alt="Logo Resultt Contabilidade" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/200x80/cccccc/000000?text=Logo';">
@@ -49,9 +48,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- Coluna de Entradas -->
                 <div class="space-y-6">
-                    <!-- Seção de Dados -->
                     <div>
                         <div class="flex justify-between items-center bg-gray-700 text-white p-2 rounded-t-md">
                             <h2 class="font-bold">DADOS PARA O CÁLCULO</h2>
@@ -61,25 +58,21 @@
                             </div>
                         </div>
                         <div class="space-y-2 p-4 border rounded-b-md">
-                            <!-- Faturamento -->
                             <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="faturamento_mensal" class="text-sm font-medium text-gray-700 text-right">Faturamento Bruto:</label>
                                 <input type="number" id="faturamento_mensal" class="input-field p-2 rounded-md text-right" value="12000" oninput="calcularTudo()">
                                 <span id="faturamento_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
-                            <!-- Pro-labore -->
                             <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="pro_labore_mensal" class="text-sm font-medium text-gray-700 text-right">Pró-labore:</label>
                                 <input type="number" id="pro_labore_mensal" class="input-field p-2 rounded-md text-right" value="3360" oninput="calcularTudo()">
                                 <span id="pro_labore_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
-                            <!-- INSS (Calculado) -->
-                             <div class="grid grid-cols-3 items-center gap-2">
+                            <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="inss_pro_labore" class="text-sm font-medium text-gray-700 text-right">INSS Pró-labore (11%):</label>
                                 <span id="inss_pro_labore_mensal" class="calculated-field p-2 rounded-md text-right"></span>
                                 <span id="inss_anual" class="p-2 rounded-md text-right bg-gray-200"></span>
                             </div>
-                            <!-- Imposto de Renda (Calculado) -->
                             <div class="grid grid-cols-3 items-center gap-2">
                                 <label for="imposto_renda_mensal" class="text-sm font-medium text-gray-700 text-right">Imposto de Renda (IRPF):</label>
                                 <span id="imposto_renda_mensal" class="calculated-field p-2 rounded-md text-right"></span>
@@ -88,7 +81,6 @@
                         </div>
                     </div>
 
-                    <!-- Opção Fator R -->
                     <div>
                         <h2 class="font-bold bg-gray-700 text-white p-2 rounded-t-md">OPÇÃO FATOR R</h2>
                         <div class="flex justify-between items-center p-4 border rounded-b-md">
@@ -101,9 +93,7 @@
                     </div>
                 </div>
 
-                <!-- Coluna de Resultados -->
                 <div class="space-y-6">
-                    <!-- Seção Alíquotas -->
                     <div>
                         <h2 class="font-bold bg-gray-700 text-white p-2 rounded-t-md">RESULTADO DO CÁLCULO (SIMPLES NACIONAL)</h2>
                         <div class="space-y-3 p-4 border rounded-b-md bg-gray-50">
@@ -129,7 +119,6 @@
                         </div>
                     </div>
                     
-                    <!-- Imposto a Pagar -->
                     <div>
                         <h2 class="font-bold resultt-green text-white p-2 rounded-t-md text-center">IMPOSTO A PAGAR (DAS)</h2>
                         <div class="p-4 border rounded-b-md text-center bg-green-50">
@@ -139,12 +128,11 @@
                 </div>
             </div>
 
-            <!-- Seção Importante -->
             <div class="mt-8 p-4 border-2 border-dashed rounded-md text-center">
                 <h3 class="font-bold text-gray-800">IMPORTANTE</h3>
                 <p class="text-xs text-gray-600 mt-2">
                     O benefício do Fator R (tributação pelo Anexo III) só é aplicado quando a relação pró-labore/faturamento for igual ou superior a 28%.
-                    Esta calculadora tem finalidade demonstrativa e educativa. O cálculo do IRPF é uma estimativa que considera a opção mais vantajosa entre a dedução padrão (INSS) e o desconto simplificado. Consulte sempre um profissional de contabilidade para analisar seu caso específico.
+                    Esta calculadora tem finalidade demonstrativa e educativa. O cálculo do IRPF é uma estimativa que considera a opção mais vantajosa entre a dedução padrão (INSS) e o desconto simplificado, <strong>já considerando a isenção de IRPF para rendimentos até R$ 5.000,00 e a regra de transição vigentes em 2026</strong>. Consulte sempre um profissional de contabilidade para analisar seu caso específico.
                 </p>
             </div>
         </main>
@@ -190,9 +178,9 @@
         }
 
         function calcularIrpfProLabore(proLaboreMensal) {
-            // --- Parâmetros para Julho/2025 ---
+            // --- Parâmetros para 2026 ---
             const ALIQUOTA_INSS = 0.11;
-            const TETO_INSS_2025 = 8157.41;
+            const TETO_INSS_2026 = 8157.41;
             const DESCONTO_SIMPLIFICADO = 607.20;
             const TABELA_IRPF = [
                 { limite: 2428.80, aliquota: 0.0, deducao: 0.0 },
@@ -203,7 +191,7 @@
             ];
 
             // Passo 1: Calcular a dedução legal do INSS (respeitando o teto)
-            const baseCalculoInss = Math.min(proLaboreMensal, TETO_INSS_2025);
+            const baseCalculoInss = Math.min(proLaboreMensal, TETO_INSS_2026);
             const deducaoInss = baseCalculoInss * ALIQUOTA_INSS;
 
             // Passo 2: Determinar a dedução ótima
@@ -213,16 +201,28 @@
             let baseCalculoIrpf = proLaboreMensal - deducaoOtima;
             baseCalculoIrpf = Math.max(0, baseCalculoIrpf); // Não pode ser negativa
 
-            // Passo 4: Aplicar a alíquota e a parcela a deduzir
+            // Passo 4: Aplicar a alíquota e a parcela a deduzir (Cálculo Padrão)
             const faixaIrpf = getFaixa(baseCalculoIrpf, TABELA_IRPF);
             const impostoBruto = baseCalculoIrpf * faixaIrpf.aliquota;
             let impostoDevido = impostoBruto - faixaIrpf.deducao;
             
-            impostoDevido = Math.max(0, impostoDevido); // Não pode ser negativo
+            impostoDevido = Math.max(0, impostoDevido);
+
+            // --- PASSO 5: NOVA REGRA DE ISENÇÃO E REDUÇÃO IRPF 2026 ---
+            if (proLaboreMensal <= 5000.00) {
+                impostoDevido = 0; // Isenção total para rendimentos até R$ 5.000,00
+            } else if (proLaboreMensal > 5000.00 && proLaboreMensal <= 7350.00) {
+                // Aplica a redução decrescente linearmente
+                const reducao = 978.62 - (0.133145 * proLaboreMensal);
+                
+                if (reducao > 0) {
+                    impostoDevido = impostoDevido - reducao;
+                    impostoDevido = Math.max(0, impostoDevido); // Garante que não fique negativo
+                }
+            }
 
             return impostoDevido;
         }
-
 
         function calcularTudo() {
             // Obter valores dos inputs principais
