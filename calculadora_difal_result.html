@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora DIFAL - Result+</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'result-orange': '#EF8B1C', // Extracted from logo
+                        'result-green': '#8AC79B',  // Extracted from logo
+                        'result-gray': '#58595B',   // Dark gray text color
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            color: #374151; /* Default text color */
+        }
+
+        /* Hide up/down arrows in number inputs for a cleaner look */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Custom focus rings using brand colors */
+        .input-field:focus, .select-field:focus {
+            outline: none;
+            border-color: #EF8B1C;
+            box-shadow: 0 0 0 3px rgba(239, 139, 28, 0.2);
+        }
+
+        /* Styling for the results card */
+        .result-card {
+            transition: all 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex justify-center items-start">
+
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+        
+        <!-- Header with Logo -->
+        <div class="bg-gray-50 border-b border-gray-200 px-6 py-8 flex flex-col items-center justify-center">
+            <img src="https://guesserlucas.github.io/resultt/01.png" alt="Result+ Soluções em Contabilidade Logo" class="h-24 object-contain mb-4">
+            <h1 class="text-2xl font-bold text-result-gray text-center">Calculadora de DIFAL</h1>
+            <p class="text-sm text-gray-500 mt-2 text-center">Base Simples e Base Dupla (com FCP)</p>
+        </div>
+
+        <div class="p-6 sm:p-8 flex flex-col lg:flex-row gap-8">
+            
+            <div class="w-full lg:w-1/2 space-y-6">
+                <h2 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Dados da Operação</h2>
+                
+                <!-- Valores Fields -->
+                <div class="space-y-4">
+                    <div>
+                        <label for="valorNota" class="block text-sm font-medium text-gray-700 mb-1">Valor da Nota Fiscal (R$)</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">R$</span>
+                            </div>
+                            <input type="number" id="valorNota" class="input-field block w-full pl-10 pr-3 py-2 sm:text-sm border border-gray-300 rounded-md bg-gray-50" placeholder="0,00" value="0.00" step="0.01" oninput="calculate()">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="frete" class="block text-sm font-medium text-gray-700 mb-1">Frete (R$)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">R$</span>
+                                </div>
+                                <input type="number" id="frete" class="input-field block w-full pl-10 pr-3 py-2 sm:text-sm border border-gray-300 rounded-md bg-gray-50" placeholder="0,00" value="0.00" step="0.01" oninput="calculate()">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="seguro" class="block text-sm font-medium text-gray-700 mb-1">Seguro (R$)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">R$</span>
+                                </div>
+                                <input type="number" id="seguro" class="input-field block w-full pl-10 pr-3 py-2 sm:text-sm border border-gray-300 rounded-md bg-gray-50" placeholder="0,00" value="0.00" step="0.01" oninput="calculate()">
+                            </div>
+                        </div>
+                        
+                         <div class="sm:col-span-2">
+                            <label for="outrasDespesas" class="block text-sm font-medium text-gray-700 mb-1">Outras Despesas (R$)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">R$</span>
+                                </div>
+                                <input type="number" id="outrasDespesas" class="input-field block w-full pl-10 pr-3 py-2 sm:text-sm border border-gray-300 rounded-md bg-gray-50" placeholder="0,00" value="0.00" step="0.01" oninput="calculate()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Alíquotas</h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="aliquotaInterestadual" class="block text-sm font-medium text-gray-700 mb-1">Alíquota Interestadual Origem</label>
+                            <select id="aliquotaInterestadual" class="select-field block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-result-orange focus:border-result-orange sm:text-sm rounded-md bg-white" onchange="calculate()">
+                                <option value="0">0%</option>
+                                <option value="4" selected>4% (Importado)</option>
+                                <option value="7">7% (N/NE/CO/ES para S/SE)</option>
+                                <option value="12">12% (Demais origens)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="aliquotaInterna" class="block text-sm font-medium text-gray-700 mb-1">Alíquota Interna Destino (s/ FCP)</label>
+                            <select id="aliquotaInterna" class="select-field block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-result-orange focus:border-result-orange sm:text-sm rounded-md bg-white" onchange="calculate()">
+                                <option value="12">12%</option>
+                                <option value="17" selected>17%</option>
+                                <option value="18">18%</option>
+                                <option value="19">19%</option>
+                                <option value="20">20%</option>
+                                <option value="21">21%</option>
+                                <option value="22">22%</option>
+                            </select>
+                        </div>
+                        
+                         <div>
+                            <label for="aliquotaFCP" class="block text-sm font-medium text-gray-700 mb-1">Alíquota FCP Destino</label>
+                            <select id="aliquotaFCP" class="select-field block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-result-orange focus:border-result-orange sm:text-sm rounded-md bg-white" onchange="calculate()">
+                                <option value="0" selected>0% (Sem FCP)</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/2 space-y-6">
+                <div class="bg-white border-2 border-result-green rounded-xl p-5 result-card shadow-sm">
+                    <h3 class="text-xl font-bold text-result-green mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        DIFAL Base Simples
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span class="text-sm text-gray-600">Base de Cálculo:</span>
+                            <span id="baseCalculoSimples" class="font-medium text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span class="text-sm text-gray-600">ICMS Origem:</span>
+                            <span id="icmsOrigemSimples" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span class="text-sm text-gray-600">ICMS Destino (Base Simples):</span>
+                            <span id="icmsDestinoSimples" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span class="text-sm text-gray-600">Valor do FCP:</span>
+                            <span id="valorFCPSimples" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 mt-2">
+                            <span class="text-base font-bold text-gray-800">DIFAL a Pagar:</span>
+                            <span id="difalPagarSimples" class="text-xl font-bold text-result-orange">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-1">
+                            <span class="text-sm font-bold text-gray-800">Total (DIFAL + FCP):</span>
+                            <span id="totalSimples" class="text-lg font-bold text-result-green">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 result-card">
+                    <h3 class="text-xl font-bold text-gray-700 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                        DIFAL Base Dupla
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">Base de Cálculo 1 (Origem):</span>
+                            <span id="baseCalculoDupla1" class="font-medium text-gray-800">R$ 0,00</span>
+                        </div>
+                         <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">Base de Cálculo 2 (Destino):</span>
+                            <span id="baseCalculoDupla2" class="font-medium text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">ICMS Origem:</span>
+                            <span id="icmsOrigemDupla" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">ICMS Destino (Base Dupla):</span>
+                            <span id="icmsDestinoDupla" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">Valor do FCP:</span>
+                            <span id="valorFCPDupla" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 mt-2">
+                            <span class="text-base font-bold text-gray-800">DIFAL a Pagar:</span>
+                            <span id="difalPagarDupla" class="text-xl font-bold text-gray-700">R$ 0,00</span>
+                        </div>
+                         <div class="flex justify-between items-center pb-1">
+                            <span class="text-sm font-bold text-gray-800">Total (DIFAL + FCP):</span>
+                            <span id="totalDupla" class="text-lg font-bold text-gray-700">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-gray-50 border-t border-gray-200 px-6 py-4 text-center">
+            <p class="text-xs text-gray-500">Desenvolvido com padrão visual Result+. Cálculos baseados nas regras gerais de ICMS/DIFAL. Recomendamos validação fiscal.</p>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to format numbers as BRL Currency
+        const formatBRL = (value) => {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        };
+
+        // Helper function to get numerical value from input safely
+        const getFloatValue = (id) => {
+            const val = document.getElementById(id).value;
+            const parsed = parseFloat(val);
+            return isNaN(parsed) ? 0 : parsed;
+        };
+
+        // Main calculation function
+        function calculate() {
+            // 1. Get Inputs
+            const valorNota = getFloatValue('valorNota');
+            const frete = getFloatValue('frete');
+            const seguro = getFloatValue('seguro');
+            const outrasDespesas = getFloatValue('outrasDespesas');
+            
+            const aliqInter = getFloatValue('aliquotaInterestadual') / 100;
+            const aliqInterna = getFloatValue('aliquotaInterna') / 100;
+            const aliqFCP = getFloatValue('aliquotaFCP') / 100;
+
+            // Total Alíquota Destino (ICMS Interno + FCP)
+            const aliqInternaTotal = aliqInterna + aliqFCP;
+
+            // --- CÁLCULO BASE SIMPLES ---
+            
+            // Base de Cálculo Simples é a soma de tudo (Valor da Operação)
+            const baseSimples = valorNota + frete + seguro + outrasDespesas;
+            
+            const icmsOrigemSimples = baseSimples * aliqInter;
+            
+            // O ICMS destino e FCP na base simples usam a mesma base
+            const icmsDestinoSimples = baseSimples * aliqInterna;
+            const valorFCPSimples = baseSimples * aliqFCP;
+            
+            // DIFAL = (Base * AliqInterna) - ICMS Origem
+            const difalSimples = icmsDestinoSimples - icmsOrigemSimples;
+            
+            // O valor total a pagar inclui o FCP
+            // Nota: Em algumas interpretações, o FCP já está embutido se a alíquota for total,
+            // mas geralmente calcula-se separado e soma.
+            const difalTotalSimples = (difalSimples > 0 ? difalSimples : 0);
+            const totalPagarSimples = difalTotalSimples + valorFCPSimples;
+
+            // Update UI Simples
+            document.getElementById('baseCalculoSimples').textContent = formatBRL(baseSimples);
+            document.getElementById('icmsOrigemSimples').textContent = formatBRL(icmsOrigemSimples);
+            document.getElementById('icmsDestinoSimples').textContent = formatBRL(icmsDestinoSimples);
+            document.getElementById('valorFCPSimples').textContent = formatBRL(valorFCPSimples);
+            document.getElementById('difalPagarSimples').textContent = formatBRL(difalTotalSimples);
+            document.getElementById('totalSimples').textContent = formatBRL(totalPagarSimples);
+
+
+            // --- CÁLCULO BASE DUPLA ---
+            
+            // Base 1 é o valor da operação (igual a base simples)
+            const baseDupla1 = baseSimples;
+            const icmsOrigemDupla = baseDupla1 * aliqInter;
+            
+            // Base 2 (Base Dupla real) = (Base 1 - ICMS Origem) / (1 - Alíquota Interna Total Destino)
+            // É preciso "por por dentro" a alíquota do destino.
+            
+            let baseDupla2 = 0;
+            let icmsDestinoDupla = 0;
+            let valorFCPDupla = 0;
+            let difalDupla = 0;
+            let totalPagarDupla = 0;
+
+            // Previne divisão por zero ou negativa se as alíquotas forem 100% (impossível na prática)
+            if (aliqInternaTotal < 1) {
+                baseDupla2 = (baseDupla1 - icmsOrigemDupla) / (1 - aliqInternaTotal);
+                
+                icmsDestinoDupla = baseDupla2 * aliqInterna;
+                valorFCPDupla = baseDupla2 * aliqFCP;
+                
+                // DIFAL = ICMS Destino - ICMS Origem
+                difalDupla = icmsDestinoDupla - icmsOrigemDupla;
+                
+                const difalTotalDupla = (difalDupla > 0 ? difalDupla : 0);
+                totalPagarDupla = difalTotalDupla + valorFCPDupla;
+            }
+
+            // Update UI Dupla
+            document.getElementById('baseCalculoDupla1').textContent = formatBRL(baseDupla1);
+            document.getElementById('baseCalculoDupla2').textContent = formatBRL(baseDupla2);
+            document.getElementById('icmsOrigemDupla').textContent = formatBRL(icmsOrigemDupla);
+            document.getElementById('icmsDestinoDupla').textContent = formatBRL(icmsDestinoDupla);
+            document.getElementById('valorFCPDupla').textContent = formatBRL(valorFCPDupla);
+            document.getElementById('difalPagarDupla').textContent = formatBRL(difalDupla > 0 ? difalDupla : 0);
+            document.getElementById('totalDupla').textContent = formatBRL(totalPagarDupla);
+        }
+
+        // Run calculation on initial load to populate fields with defaults
+        window.onload = calculate;
+    </script>
+</body>
+</html>
