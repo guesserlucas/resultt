@@ -10,9 +10,9 @@
             theme: {
                 extend: {
                     colors: {
-                        'result-orange': '#EF8B1C', // Extracted from logo
-                        'result-green': '#8AC79B',  // Extracted from logo
-                        'result-gray': '#58595B',   // Dark gray text color
+                        'result-orange': '#EF8B1C',
+                        'result-green': '#8AC79B',
+                        'result-gray': '#58595B',
                     }
                 }
             }
@@ -23,11 +23,10 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-            color: #374151; /* Default text color */
+            background-color: #f3f4f6;
+            color: #374151;
         }
 
-        /* Hide up/down arrows in number inputs for a cleaner look */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
             -webkit-appearance: none; 
@@ -37,14 +36,12 @@
             -moz-appearance: textfield;
         }
 
-        /* Custom focus rings using brand colors */
         .input-field:focus, .select-field:focus {
             outline: none;
             border-color: #EF8B1C;
             box-shadow: 0 0 0 3px rgba(239, 139, 28, 0.2);
         }
 
-        /* Styling for the results card */
         .result-card {
             transition: all 0.3s ease;
         }
@@ -59,7 +56,6 @@
 
     <div class="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
         
-        <!-- Header with Logo -->
         <div class="bg-gray-50 border-b border-gray-200 px-6 py-8 flex flex-col items-center justify-center">
             <img src="https://guesserlucas.github.io/resultt/01.png" alt="Result+ Soluções em Contabilidade Logo" class="h-24 object-contain mb-4">
             <h1 class="text-2xl font-bold text-result-gray text-center">Calculadora de DIFAL</h1>
@@ -71,7 +67,6 @@
             <div class="w-full lg:w-1/2 space-y-6">
                 <h2 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Dados da Operação</h2>
                 
-                <!-- Valores Fields -->
                 <div class="space-y-4">
                     <div>
                         <label for="valorNota" class="block text-sm font-medium text-gray-700 mb-1">Valor da Nota Fiscal (R$)</label>
@@ -156,12 +151,93 @@
             </div>
 
             <div class="w-full lg:w-1/2 space-y-6">
+                
+                <!-- CARD BASE DUPLA -->
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 result-card shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-700 mb-4 flex flex-col items-start gap-3">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                            </svg>
+                            <span>DIFAL Base Dupla</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <!-- SC 30% Maior -->
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Bandeira_de_Santa_Catarina.svg" alt="Santa Catarina" class="h-[26px] w-[36px] rounded-sm shadow-sm border border-gray-300 object-cover" title="Santa Catarina">
+                            <!-- Demais Estados Base Dupla -->
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Bandeira_de_Alagoas.svg" title="Alagoas" alt="Alagoas" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Bandeira_da_Bahia.svg" title="Bahia" alt="Bahia" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Bandeira_do_Esp%C3%ADrito_Santo.svg" title="Espírito Santo" alt="Espírito Santo" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Flag_of_Goi%C3%A1s.svg" title="Goiás" alt="Goiás" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Bandeira_do_Maranh%C3%A3o.svg" title="Maranhão" alt="Maranhão" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Bandeira_de_Mato_Grosso_do_Sul.svg" title="Mato Grosso do Sul" alt="Mato Grosso do Sul" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Bandeira_de_Minas_Gerais.svg" title="Minas Gerais" alt="Minas Gerais" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Bandeira_do_Par%C3%A1.svg" title="Pará" alt="Pará" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Bandeira_da_Para%C3%ADba.svg" title="Paraíba" alt="Paraíba" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Bandeira_do_Paran%C3%A1.svg" title="Paraná" alt="Paraná" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Bandeira_de_Pernambuco.svg" title="Pernambuco" alt="Pernambuco" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Bandeira_do_Piau%C3%AD.svg" title="Piauí" alt="Piauí" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Bandeira_do_estado_do_Rio_de_Janeiro.svg" title="Rio de Janeiro" alt="Rio de Janeiro" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Bandeira_do_Rio_Grande_do_Sul.svg" title="Rio Grande do Sul" alt="Rio Grande do Sul" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg" title="São Paulo" alt="São Paulo" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Bandeira_de_Sergipe.svg" title="Sergipe" alt="Sergipe" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Bandeira_do_Tocantins.svg" title="Tocantins" alt="Tocantins" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                        </div>
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">Base de Cálculo 1 (Origem):</span>
+                            <span id="baseCalculoDupla1" class="font-medium text-gray-800">R$ 0,00</span>
+                        </div>
+                         <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">Base de Cálculo 2 (Destino):</span>
+                            <span id="baseCalculoDupla2" class="font-medium text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">ICMS Origem:</span>
+                            <span id="icmsOrigemDupla" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">ICMS Destino (Base Dupla):</span>
+                            <span id="icmsDestinoDupla" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                            <span class="text-sm text-gray-600">Valor do FCP:</span>
+                            <span id="valorFCPDupla" class="text-gray-800">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 mt-2">
+                            <span class="text-base font-bold text-gray-800">DIFAL a Pagar:</span>
+                            <span id="difalPagarDupla" class="text-xl font-bold text-result-orange">R$ 0,00</span>
+                        </div>
+                         <div class="flex justify-between items-center pb-1">
+                            <span class="text-sm font-bold text-gray-800">Total (DIFAL + FCP):</span>
+                            <span id="totalDupla" class="text-lg font-bold text-result-green">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD BASE SIMPLES -->
                 <div class="bg-white border-2 border-result-green rounded-xl p-5 result-card shadow-sm">
-                    <h3 class="text-xl font-bold text-result-green mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        DIFAL Base Simples
+                    <h3 class="text-xl font-bold text-result-green mb-4 flex flex-col items-start gap-3">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>DIFAL Base Simples</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <!-- Bandeiras Estados Base Simples -->
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Bandeira_do_Acre.svg" title="Acre" alt="Acre" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Bandeira_do_Amazonas.svg" title="Amazonas" alt="Amazonas" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Bandeira_do_Amap%C3%A1.svg" title="Amapá" alt="Amapá" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Bandeira_do_Cear%C3%A1.svg" title="Ceará" alt="Ceará" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Bandeira_do_Distrito_Federal_%C2%A8Brasil%C2%A8.svg" title="Distrito Federal" alt="Distrito Federal" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Bandeira_de_Mato_Grosso.svg" title="Mato Grosso" alt="Mato Grosso" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Bandeira_do_Rio_Grande_do_Norte.svg" title="Rio Grande do Norte" alt="Rio Grande do Norte" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Bandeira_de_Rond%C3%B4nia.svg" title="Rondônia" alt="Rondônia" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Bandeira_de_Roraima.svg" title="Roraima" alt="Roraima" class="h-5 w-7 rounded-sm shadow-sm border border-gray-200 object-cover">
+                        </div>
                     </h3>
                     
                     <div class="space-y-3">
@@ -192,56 +268,15 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 result-card">
-                    <h3 class="text-xl font-bold text-gray-700 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                        </svg>
-                        DIFAL Base Dupla
-                    </h3>
-                    
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
-                            <span class="text-sm text-gray-600">Base de Cálculo 1 (Origem):</span>
-                            <span id="baseCalculoDupla1" class="font-medium text-gray-800">R$ 0,00</span>
-                        </div>
-                         <div class="flex justify-between items-center py-1 border-b border-gray-200">
-                            <span class="text-sm text-gray-600">Base de Cálculo 2 (Destino):</span>
-                            <span id="baseCalculoDupla2" class="font-medium text-gray-800">R$ 0,00</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
-                            <span class="text-sm text-gray-600">ICMS Origem:</span>
-                            <span id="icmsOrigemDupla" class="text-gray-800">R$ 0,00</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
-                            <span class="text-sm text-gray-600">ICMS Destino (Base Dupla):</span>
-                            <span id="icmsDestinoDupla" class="text-gray-800">R$ 0,00</span>
-                        </div>
-                        <div class="flex justify-between items-center py-1 border-b border-gray-200">
-                            <span class="text-sm text-gray-600">Valor do FCP:</span>
-                            <span id="valorFCPDupla" class="text-gray-800">R$ 0,00</span>
-                        </div>
-                        <div class="flex justify-between items-center pt-3 mt-2">
-                            <span class="text-base font-bold text-gray-800">DIFAL a Pagar:</span>
-                            <span id="difalPagarDupla" class="text-xl font-bold text-gray-700">R$ 0,00</span>
-                        </div>
-                         <div class="flex justify-between items-center pb-1">
-                            <span class="text-sm font-bold text-gray-800">Total (DIFAL + FCP):</span>
-                            <span id="totalDupla" class="text-lg font-bold text-gray-700">R$ 0,00</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         
-        <!-- Footer -->
         <div class="bg-gray-50 border-t border-gray-200 px-6 py-4 text-center">
             <p class="text-xs text-gray-500">Desenvolvido com padrão visual Result+. Cálculos baseados nas regras gerais de ICMS/DIFAL. Recomendamos validação fiscal.</p>
         </div>
     </div>
 
     <script>
-        // Helper function to format numbers as BRL Currency
         const formatBRL = (value) => {
             return new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
@@ -249,16 +284,13 @@
             }).format(value);
         };
 
-        // Helper function to get numerical value from input safely
         const getFloatValue = (id) => {
             const val = document.getElementById(id).value;
             const parsed = parseFloat(val);
             return isNaN(parsed) ? 0 : parsed;
         };
 
-        // Main calculation function
         function calculate() {
-            // 1. Get Inputs
             const valorNota = getFloatValue('valorNota');
             const frete = getFloatValue('frete');
             const seguro = getFloatValue('seguro');
@@ -268,30 +300,18 @@
             const aliqInterna = getFloatValue('aliquotaInterna') / 100;
             const aliqFCP = getFloatValue('aliquotaFCP') / 100;
 
-            // Total Alíquota Destino (ICMS Interno + FCP)
             const aliqInternaTotal = aliqInterna + aliqFCP;
 
             // --- CÁLCULO BASE SIMPLES ---
-            
-            // Base de Cálculo Simples é a soma de tudo (Valor da Operação)
             const baseSimples = valorNota + frete + seguro + outrasDespesas;
-            
             const icmsOrigemSimples = baseSimples * aliqInter;
-            
-            // O ICMS destino e FCP na base simples usam a mesma base
             const icmsDestinoSimples = baseSimples * aliqInterna;
             const valorFCPSimples = baseSimples * aliqFCP;
             
-            // DIFAL = (Base * AliqInterna) - ICMS Origem
             const difalSimples = icmsDestinoSimples - icmsOrigemSimples;
-            
-            // O valor total a pagar inclui o FCP
-            // Nota: Em algumas interpretações, o FCP já está embutido se a alíquota for total,
-            // mas geralmente calcula-se separado e soma.
             const difalTotalSimples = (difalSimples > 0 ? difalSimples : 0);
             const totalPagarSimples = difalTotalSimples + valorFCPSimples;
 
-            // Update UI Simples
             document.getElementById('baseCalculoSimples').textContent = formatBRL(baseSimples);
             document.getElementById('icmsOrigemSimples').textContent = formatBRL(icmsOrigemSimples);
             document.getElementById('icmsDestinoSimples').textContent = formatBRL(icmsDestinoSimples);
@@ -299,15 +319,9 @@
             document.getElementById('difalPagarSimples').textContent = formatBRL(difalTotalSimples);
             document.getElementById('totalSimples').textContent = formatBRL(totalPagarSimples);
 
-
             // --- CÁLCULO BASE DUPLA ---
-            
-            // Base 1 é o valor da operação (igual a base simples)
             const baseDupla1 = baseSimples;
             const icmsOrigemDupla = baseDupla1 * aliqInter;
-            
-            // Base 2 (Base Dupla real) = (Base 1 - ICMS Origem) / (1 - Alíquota Interna Total Destino)
-            // É preciso "por por dentro" a alíquota do destino.
             
             let baseDupla2 = 0;
             let icmsDestinoDupla = 0;
@@ -315,21 +329,18 @@
             let difalDupla = 0;
             let totalPagarDupla = 0;
 
-            // Previne divisão por zero ou negativa se as alíquotas forem 100% (impossível na prática)
             if (aliqInternaTotal < 1) {
                 baseDupla2 = (baseDupla1 - icmsOrigemDupla) / (1 - aliqInternaTotal);
                 
                 icmsDestinoDupla = baseDupla2 * aliqInterna;
                 valorFCPDupla = baseDupla2 * aliqFCP;
                 
-                // DIFAL = ICMS Destino - ICMS Origem
                 difalDupla = icmsDestinoDupla - icmsOrigemDupla;
                 
                 const difalTotalDupla = (difalDupla > 0 ? difalDupla : 0);
                 totalPagarDupla = difalTotalDupla + valorFCPDupla;
             }
 
-            // Update UI Dupla
             document.getElementById('baseCalculoDupla1').textContent = formatBRL(baseDupla1);
             document.getElementById('baseCalculoDupla2').textContent = formatBRL(baseDupla2);
             document.getElementById('icmsOrigemDupla').textContent = formatBRL(icmsOrigemDupla);
@@ -339,7 +350,6 @@
             document.getElementById('totalDupla').textContent = formatBRL(totalPagarDupla);
         }
 
-        // Run calculation on initial load to populate fields with defaults
         window.onload = calculate;
     </script>
 </body>
